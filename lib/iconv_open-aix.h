@@ -1,5 +1,5 @@
-/* ANSI-C code produced by gperf version 3.0.3 */
-/* Command-line: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/gperf -m 10 /Users/akim/src/gnu/bison/lib/iconv_open-aix.gperf  */
+/* ANSI-C code produced by gperf version 3.1 */
+/* Command-line: gperf -m 10 ./lib/iconv_open-aix.gperf  */
 /* Computed positions: -k'4,$' */
 
 #if !((' ' == 32) && ('!' == 33) && ('"' == 34) && ('#' == 35) \
@@ -26,10 +26,10 @@
       && ('w' == 119) && ('x' == 120) && ('y' == 121) && ('z' == 122) \
       && ('{' == 123) && ('|' == 124) && ('}' == 125) && ('~' == 126))
 /* The character set is not based on ISO-646.  */
-#error "gperf generated tables don't work with this execution character set. Please report a bug to <bug-gnu-gperf@gnu.org>."
+#error "gperf generated tables don't work with this execution character set. Please report a bug to <bug-gperf@gnu.org>."
 #endif
 
-#line 17 "/Users/akim/src/gnu/bison/lib/iconv_open-aix.gperf"
+#line 17 "./lib/iconv_open-aix.gperf"
 struct mapping { int standard_name; const char vendor_name[10 + 1]; };
 
 #define TOTAL_KEYWORDS 32
@@ -47,7 +47,7 @@ inline
 #endif
 #endif
 static unsigned int
-mapping_hash (register const char *str, register unsigned int len)
+mapping_hash (register const char *str, register size_t len)
 {
   static const unsigned char asso_values[] =
     {
@@ -156,83 +156,83 @@ static const struct stringpool_t stringpool_contents =
 static const struct mapping mappings[] =
   {
     {-1}, {-1}, {-1}, {-1}, {-1}, {-1},
-#line 59 "/Users/akim/src/gnu/bison/lib/iconv_open-aix.gperf"
-    {offsetof(struct stringpool_t, stringpool_str6), "IBM-eucTW"},
-#line 58 "/Users/akim/src/gnu/bison/lib/iconv_open-aix.gperf"
-    {offsetof(struct stringpool_t, stringpool_str7), "IBM-eucKR"},
-#line 41 "/Users/akim/src/gnu/bison/lib/iconv_open-aix.gperf"
-    {offsetof(struct stringpool_t, stringpool_str8), "IBM-852"},
-#line 57 "/Users/akim/src/gnu/bison/lib/iconv_open-aix.gperf"
-    {offsetof(struct stringpool_t, stringpool_str9), "IBM-eucJP"},
-#line 30 "/Users/akim/src/gnu/bison/lib/iconv_open-aix.gperf"
-    {offsetof(struct stringpool_t, stringpool_str10), "ISO8859-2"},
-#line 43 "/Users/akim/src/gnu/bison/lib/iconv_open-aix.gperf"
-    {offsetof(struct stringpool_t, stringpool_str11), "IBM-857"},
-#line 40 "/Users/akim/src/gnu/bison/lib/iconv_open-aix.gperf"
-    {offsetof(struct stringpool_t, stringpool_str12), "IBM-850"},
-#line 35 "/Users/akim/src/gnu/bison/lib/iconv_open-aix.gperf"
-    {offsetof(struct stringpool_t, stringpool_str13), "ISO8859-7"},
-#line 49 "/Users/akim/src/gnu/bison/lib/iconv_open-aix.gperf"
-    {offsetof(struct stringpool_t, stringpool_str14), "IBM-932"},
-#line 56 "/Users/akim/src/gnu/bison/lib/iconv_open-aix.gperf"
-    {offsetof(struct stringpool_t, stringpool_str15), "IBM-eucCN"},
-#line 60 "/Users/akim/src/gnu/bison/lib/iconv_open-aix.gperf"
-    {offsetof(struct stringpool_t, stringpool_str16), "big5"},
-#line 39 "/Users/akim/src/gnu/bison/lib/iconv_open-aix.gperf"
-    {offsetof(struct stringpool_t, stringpool_str17), "IBM-437"},
+#line 59 "./lib/iconv_open-aix.gperf"
+    {(int)(size_t)&((struct stringpool_t *)0)->stringpool_str6, "IBM-eucTW"},
+#line 58 "./lib/iconv_open-aix.gperf"
+    {(int)(size_t)&((struct stringpool_t *)0)->stringpool_str7, "IBM-eucKR"},
+#line 41 "./lib/iconv_open-aix.gperf"
+    {(int)(size_t)&((struct stringpool_t *)0)->stringpool_str8, "IBM-852"},
+#line 57 "./lib/iconv_open-aix.gperf"
+    {(int)(size_t)&((struct stringpool_t *)0)->stringpool_str9, "IBM-eucJP"},
+#line 30 "./lib/iconv_open-aix.gperf"
+    {(int)(size_t)&((struct stringpool_t *)0)->stringpool_str10, "ISO8859-2"},
+#line 43 "./lib/iconv_open-aix.gperf"
+    {(int)(size_t)&((struct stringpool_t *)0)->stringpool_str11, "IBM-857"},
+#line 40 "./lib/iconv_open-aix.gperf"
+    {(int)(size_t)&((struct stringpool_t *)0)->stringpool_str12, "IBM-850"},
+#line 35 "./lib/iconv_open-aix.gperf"
+    {(int)(size_t)&((struct stringpool_t *)0)->stringpool_str13, "ISO8859-7"},
+#line 49 "./lib/iconv_open-aix.gperf"
+    {(int)(size_t)&((struct stringpool_t *)0)->stringpool_str14, "IBM-932"},
+#line 56 "./lib/iconv_open-aix.gperf"
+    {(int)(size_t)&((struct stringpool_t *)0)->stringpool_str15, "IBM-eucCN"},
+#line 60 "./lib/iconv_open-aix.gperf"
+    {(int)(size_t)&((struct stringpool_t *)0)->stringpool_str16, "big5"},
+#line 39 "./lib/iconv_open-aix.gperf"
+    {(int)(size_t)&((struct stringpool_t *)0)->stringpool_str17, "IBM-437"},
     {-1},
-#line 33 "/Users/akim/src/gnu/bison/lib/iconv_open-aix.gperf"
-    {offsetof(struct stringpool_t, stringpool_str19), "ISO8859-5"},
-#line 38 "/Users/akim/src/gnu/bison/lib/iconv_open-aix.gperf"
-    {offsetof(struct stringpool_t, stringpool_str20), "ISO8859-15"},
-#line 31 "/Users/akim/src/gnu/bison/lib/iconv_open-aix.gperf"
-    {offsetof(struct stringpool_t, stringpool_str21), "ISO8859-3"},
-#line 47 "/Users/akim/src/gnu/bison/lib/iconv_open-aix.gperf"
-    {offsetof(struct stringpool_t, stringpool_str22), "IBM-921"},
-#line 51 "/Users/akim/src/gnu/bison/lib/iconv_open-aix.gperf"
-    {offsetof(struct stringpool_t, stringpool_str23), "IBM-1046"},
-#line 36 "/Users/akim/src/gnu/bison/lib/iconv_open-aix.gperf"
-    {offsetof(struct stringpool_t, stringpool_str24), "ISO8859-8"},
-#line 42 "/Users/akim/src/gnu/bison/lib/iconv_open-aix.gperf"
-    {offsetof(struct stringpool_t, stringpool_str25), "IBM-856"},
-#line 53 "/Users/akim/src/gnu/bison/lib/iconv_open-aix.gperf"
-    {offsetof(struct stringpool_t, stringpool_str26), "IBM-1125"},
-#line 34 "/Users/akim/src/gnu/bison/lib/iconv_open-aix.gperf"
-    {offsetof(struct stringpool_t, stringpool_str27), "ISO8859-6"},
-#line 45 "/Users/akim/src/gnu/bison/lib/iconv_open-aix.gperf"
-    {offsetof(struct stringpool_t, stringpool_str28), "IBM-865"},
-#line 48 "/Users/akim/src/gnu/bison/lib/iconv_open-aix.gperf"
-    {offsetof(struct stringpool_t, stringpool_str29), "IBM-922"},
-#line 55 "/Users/akim/src/gnu/bison/lib/iconv_open-aix.gperf"
-    {offsetof(struct stringpool_t, stringpool_str30), "IBM-1252"},
-#line 37 "/Users/akim/src/gnu/bison/lib/iconv_open-aix.gperf"
-    {offsetof(struct stringpool_t, stringpool_str31), "ISO8859-9"},
+#line 33 "./lib/iconv_open-aix.gperf"
+    {(int)(size_t)&((struct stringpool_t *)0)->stringpool_str19, "ISO8859-5"},
+#line 38 "./lib/iconv_open-aix.gperf"
+    {(int)(size_t)&((struct stringpool_t *)0)->stringpool_str20, "ISO8859-15"},
+#line 31 "./lib/iconv_open-aix.gperf"
+    {(int)(size_t)&((struct stringpool_t *)0)->stringpool_str21, "ISO8859-3"},
+#line 47 "./lib/iconv_open-aix.gperf"
+    {(int)(size_t)&((struct stringpool_t *)0)->stringpool_str22, "IBM-921"},
+#line 51 "./lib/iconv_open-aix.gperf"
+    {(int)(size_t)&((struct stringpool_t *)0)->stringpool_str23, "IBM-1046"},
+#line 36 "./lib/iconv_open-aix.gperf"
+    {(int)(size_t)&((struct stringpool_t *)0)->stringpool_str24, "ISO8859-8"},
+#line 42 "./lib/iconv_open-aix.gperf"
+    {(int)(size_t)&((struct stringpool_t *)0)->stringpool_str25, "IBM-856"},
+#line 53 "./lib/iconv_open-aix.gperf"
+    {(int)(size_t)&((struct stringpool_t *)0)->stringpool_str26, "IBM-1125"},
+#line 34 "./lib/iconv_open-aix.gperf"
+    {(int)(size_t)&((struct stringpool_t *)0)->stringpool_str27, "ISO8859-6"},
+#line 45 "./lib/iconv_open-aix.gperf"
+    {(int)(size_t)&((struct stringpool_t *)0)->stringpool_str28, "IBM-865"},
+#line 48 "./lib/iconv_open-aix.gperf"
+    {(int)(size_t)&((struct stringpool_t *)0)->stringpool_str29, "IBM-922"},
+#line 55 "./lib/iconv_open-aix.gperf"
+    {(int)(size_t)&((struct stringpool_t *)0)->stringpool_str30, "IBM-1252"},
+#line 37 "./lib/iconv_open-aix.gperf"
+    {(int)(size_t)&((struct stringpool_t *)0)->stringpool_str31, "ISO8859-9"},
     {-1},
-#line 50 "/Users/akim/src/gnu/bison/lib/iconv_open-aix.gperf"
-    {offsetof(struct stringpool_t, stringpool_str33), "IBM-943"},
-#line 32 "/Users/akim/src/gnu/bison/lib/iconv_open-aix.gperf"
-    {offsetof(struct stringpool_t, stringpool_str34), "ISO8859-4"},
-#line 29 "/Users/akim/src/gnu/bison/lib/iconv_open-aix.gperf"
-    {offsetof(struct stringpool_t, stringpool_str35), "ISO8859-1"},
+#line 50 "./lib/iconv_open-aix.gperf"
+    {(int)(size_t)&((struct stringpool_t *)0)->stringpool_str33, "IBM-943"},
+#line 32 "./lib/iconv_open-aix.gperf"
+    {(int)(size_t)&((struct stringpool_t *)0)->stringpool_str34, "ISO8859-4"},
+#line 29 "./lib/iconv_open-aix.gperf"
+    {(int)(size_t)&((struct stringpool_t *)0)->stringpool_str35, "ISO8859-1"},
     {-1}, {-1},
-#line 54 "/Users/akim/src/gnu/bison/lib/iconv_open-aix.gperf"
-    {offsetof(struct stringpool_t, stringpool_str38), "IBM-1129"},
+#line 54 "./lib/iconv_open-aix.gperf"
+    {(int)(size_t)&((struct stringpool_t *)0)->stringpool_str38, "IBM-1129"},
     {-1},
-#line 46 "/Users/akim/src/gnu/bison/lib/iconv_open-aix.gperf"
-    {offsetof(struct stringpool_t, stringpool_str40), "IBM-869"},
-#line 52 "/Users/akim/src/gnu/bison/lib/iconv_open-aix.gperf"
-    {offsetof(struct stringpool_t, stringpool_str41), "IBM-1124"},
+#line 46 "./lib/iconv_open-aix.gperf"
+    {(int)(size_t)&((struct stringpool_t *)0)->stringpool_str40, "IBM-869"},
+#line 52 "./lib/iconv_open-aix.gperf"
+    {(int)(size_t)&((struct stringpool_t *)0)->stringpool_str41, "IBM-1124"},
     {-1}, {-1},
-#line 44 "/Users/akim/src/gnu/bison/lib/iconv_open-aix.gperf"
-    {offsetof(struct stringpool_t, stringpool_str44), "IBM-861"}
+#line 44 "./lib/iconv_open-aix.gperf"
+    {(int)(size_t)&((struct stringpool_t *)0)->stringpool_str44, "IBM-861"}
   };
 
 const struct mapping *
-mapping_lookup (register const char *str, register unsigned int len)
+mapping_lookup (register const char *str, register size_t len)
 {
   if (len <= MAX_WORD_LENGTH && len >= MIN_WORD_LENGTH)
     {
-      unsigned int key = mapping_hash (str, len);
+      register unsigned int key = mapping_hash (str, len);
 
       if (key <= MAX_HASH_VALUE)
         {

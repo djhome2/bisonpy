@@ -110,17 +110,21 @@ id    [a-zA-Z][a-zA-Z_0-9]*
 int   [0-9]+
 blank [ \t\r]
 
+ /**/
 %{
   // Code run each time a pattern is matched.
   # define YY_USER_ACTION  loc.columns (yyleng);
 %}
+ /**/
 %%
+ /**/
 %{
   // A handy shortcut to the location held by the driver.
   yy::location& loc = drv.location;
   // Code run each time yylex is called.
   loc.step ();
 %}
+ /**/
 {blank}+   loc.step ();
 \n+        loc.lines (yyleng); loc.step ();
 
@@ -134,13 +138,16 @@ blank [ \t\r]
 
 {int}      return make_NUMBER (yytext, loc);
 {id}       return yy::parser::make_IDENTIFIER (yytext, loc);
+ /**/
 .          {
              throw yy::parser::syntax_error
                (loc, "invalid character: " + std::string(yytext));
 }
+ /**/
 <<EOF>>    return yy::parser::make_YYEOF (loc);
 %%
 
+ /**/
 yy::parser::symbol_type
 make_NUMBER (const std::string &s, const yy::parser::location_type& loc)
 {
@@ -150,7 +157,9 @@ make_NUMBER (const std::string &s, const yy::parser::location_type& loc)
     throw yy::parser::syntax_error (loc, "integer is out of range: " + s);
   return yy::parser::make_NUMBER ((int) n, loc);
 }
+ /**/
 
+ /**/
 void
 driver::scan_begin ()
 {
@@ -163,9 +172,12 @@ driver::scan_begin ()
       exit (EXIT_FAILURE);
     }
 }
+ /**/
 
+ /**/
 void
 driver::scan_end ()
 {
   fclose (yyin);
 }
+ /**/

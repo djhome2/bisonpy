@@ -18,6 +18,7 @@
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <https://www.gnu.org/licenses/>.  */
 
+ /**/
 %{
   #include <stdio.h>  /* For printf, etc. */
   #include <math.h>   /* For pow, used in the grammar. */
@@ -25,17 +26,20 @@
   int yylex (void);
   void yyerror (char const *);
 %}
+ /**/
 
 %define api.value.type union /* Generate YYSTYPE from these types: */
 %token <double>  NUM     /* Double precision number. */
 %token <symrec*> VAR FUN /* Symbol table pointer: variable/function. */
 %nterm <double>  exp
 
+ /**/
 %precedence '='
 %left '-' '+'
 %left '*' '/'
 %precedence NEG /* negation--unary minus */
 %right '^'      /* exponentiation */
+ /**/
 /* Generate the parser description file. */
 %verbose
 /* Enable run-time traces (yydebug). */
@@ -46,17 +50,22 @@
 %printer { fprintf (yyo, "%s()", $$->name); } FUN;
 %printer { fprintf (yyo, "%g", $$); } <double>;
 %% /* The grammar follows. */
+ /**/
 input:
   %empty
 | input line
 ;
+ /**/
 
+ /**/
 line:
   '\n'
 | exp '\n'   { printf ("%.10g\n", $1); }
 | error '\n' { yyerrok;                }
 ;
+ /**/
 
+ /**/
 exp:
   NUM
 | VAR                { $$ = $1->value.var;              }
@@ -70,15 +79,19 @@ exp:
 | exp '^' exp        { $$ = pow ($1, $3);               }
 | '(' exp ')'        { $$ = $2;                         }
 ;
+ /**/
 /* End of grammar. */
 %%
 
+ /**/
 struct init
 {
   char const *name;
   func_t *fun;
 };
+ /**/
 
+ /**/
 struct init const funs[] =
 {
   { "atan", atan },
@@ -89,13 +102,19 @@ struct init const funs[] =
   { "sqrt", sqrt },
   { 0, 0 },
 };
+ /**/
 
+ /**/
 /* The symbol table: a chain of 'struct symrec'. */
 symrec *sym_table;
+ /**/
 
+ /**/
 /* Put functions in table. */
 static void
 init_table (void)
+ /**/
+ /**/
 {
   for (int i = 0; funs[i].name; i++)
     {
@@ -103,7 +122,9 @@ init_table (void)
       ptr->value.fun = funs[i].fun;
     }
 }
+ /**/
 
+ /**/
 /* The mfcalc code assumes that malloc and realloc
    always succeed, and that integer calculations
    never overflow.  Production-quality code should
@@ -111,7 +132,9 @@ init_table (void)
 #include <assert.h>
 #include <stdlib.h> /* malloc, realloc. */
 #include <string.h> /* strlen. */
+ /**/
 
+ /**/
 symrec *
 putsym (char const *name, int sym_type)
 {
@@ -123,7 +146,9 @@ putsym (char const *name, int sym_type)
   sym_table = res;
   return res;
 }
+ /**/
 
+ /**/
 symrec *
 getsym (char const *name)
 {
@@ -132,10 +157,12 @@ getsym (char const *name)
       return p;
   return NULL;
 }
+ /**/
 
 #include <ctype.h>
 #include <stddef.h>
 
+ /**/
 int
 yylex (void)
 {
@@ -147,7 +174,9 @@ yylex (void)
 
   if (c == EOF)
     return YYEOF;
+ /**/
 
+ /**/
   /* Char starts a number => parse the number. */
   if (c == '.' || isdigit (c))
     {
@@ -156,14 +185,18 @@ yylex (void)
         abort ();
       return NUM;
     }
+ /**/
 
+ /**/
   /* Char starts an identifier => read the name. */
   if (isalpha (c))
     {
       static ptrdiff_t bufsize = 0;
       static char *symbuf = 0;
+ /**/
       ptrdiff_t i = 0;
       do
+ /**/
         {
           /* If buffer is full, make it bigger. */
           if (bufsize <= i)
@@ -176,11 +209,15 @@ yylex (void)
           /* Get another character. */
           c = getchar ();
         }
+ /**/
+ /**/
       while (isalnum (c));
 
       ungetc (c, stdin);
       symbuf[i] = '\0';
+ /**/
 
+ /**/
       symrec *s = getsym (symbuf);
       if (!s)
         s = putsym (symbuf, VAR);
@@ -191,18 +228,27 @@ yylex (void)
   /* Any other character is a token by itself. */
   return c;
 }
+ /**/
 
+ /**/
 /* Called by yyparse on error. */
 void yyerror (char const *s)
 {
   fprintf (stderr, "%s\n", s);
 }
+ /**/
 
+ /**/
 int main (int argc, char const* argv[])
+ /**/
+ /**/
 {
   /* Enable parse traces on option -p. */
   if (argc == 2 && strcmp(argv[1], "-p") == 0)
     yydebug = 1;
+ /**/
+ /**/
   init_table ();
   return yyparse ();
 }
+ /**/

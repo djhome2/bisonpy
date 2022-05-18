@@ -1,0 +1,7 @@
+*.o
+.deps
+.dirstamp
+*.class
+*.log
+src/bison
+*.a

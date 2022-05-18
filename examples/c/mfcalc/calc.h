@@ -18,9 +18,12 @@
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <https://www.gnu.org/licenses/>.  */
 
+ /**/
 /* Function type. */
 typedef double (func_t) (double);
+ /**/
 
+ /**/
 /* Data type for links in the chain of symbols. */
 struct symrec
 {
@@ -33,7 +36,9 @@ struct symrec
   } value;
   struct symrec *next;  /* link field */
 };
+ /**/
 
+ /**/
 typedef struct symrec symrec;
 
 /* The symbol table: a chain of 'struct symrec'. */
@@ -41,3 +46,4 @@ extern symrec *sym_table;
 
 symrec *putsym (char const *name, int sym_type);
 symrec *getsym (char const *name);
+ /**/
