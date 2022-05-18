@@ -100,3 +100,4 @@ include %D%/c/local.mk
 include %D%/c++/local.mk
 include %D%/d/local.mk
 include %D%/java/local.mk
+include %D%/python/local.mk

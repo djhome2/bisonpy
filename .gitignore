@@ -1,3 +1,4 @@
 *.Po
 *.o
 .dirstamp
+.vscode/
