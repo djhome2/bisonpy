@@ -59,10 +59,10 @@ extern bool nondeterministic_parser;
 /* --language.  */
 struct bison_language
 {
-  char language[256];
-  char skeleton[256];
-  char src_extension[256];
-  char header_extension[256];
+  char language[sizeof "Java"];
+  char skeleton[sizeof "java-skel.m4"];
+  char src_extension[sizeof ".java"];
+  char header_extension[sizeof ".java"];
   bool add_tab;
 };
 
