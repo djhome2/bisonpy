@@ -1,6 +1,6 @@
                                                             -*- Autoconf -*-
 
-# Java language support for Bison
+# python language support for Bison
 
 # Copyright (C) 2007-2015, 2018-2021 Free Software Foundation, Inc.
 

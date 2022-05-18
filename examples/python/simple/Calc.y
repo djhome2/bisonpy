@@ -17,7 +17,7 @@
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <https://www.gnu.org/licenses/>.  */
 
-%language "Java"
+%language "python"
 
 %define api.parser.class {Calc}
 %define api.parser.public

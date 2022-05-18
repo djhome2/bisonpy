@@ -2,20 +2,20 @@
 # aim at portability.  It requires GNU Make.
 
 BISON = bison
-JAVAC = python
-JAVA = python
+# JAVAC = python
+PYTHON = python
 
-all: Calc.class
+all: Calc.py
 
-%.java %.html %.gv: %.y
-	$(BISON) $(BISONFLAGS) --html --graph -o $*.java $<
+%.py %.html %.gv: %.y
+	$(BISON) $(BISONFLAGS) --html --graph -o $*.py $<
 
-%.class: %.java
-	$(JAVAC) $(JAVACFLAGS) $<
+# %.class: %.java
+# 	$(JAVAC) $(JAVACFLAGS) $<
 
-run: Calc.class
+run: Calc.py
 	@echo "Type arithmetic expressions.  Quit with ctrl-d."
-	$(JAVA) $(JAVAFLAGS) Calc
+	$(PYTHON) $(JAVAFLAGS) Calc
 
 clean:
-	rm -f *.class Calc.java Calc.html Calc.xml Calc.gv
+	rm -f *.py Calc.py Calc.html Calc.xml Calc.gv

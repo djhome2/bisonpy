@@ -1,6 +1,6 @@
-# Examples in Java
+# Examples in python
 
-This directory contains examples of Bison grammar files in Java.
+This directory contains examples of Bison grammar files in python.
 
 You can run `make` to compile these examples.  And `make clean` to tidy
 afterwards.

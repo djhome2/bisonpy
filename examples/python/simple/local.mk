@@ -13,24 +13,24 @@
 ## You should have received a copy of the GNU General Public License
 ## along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-java_simpledir = $(docdir)/%D%
+python_simpledir = $(docdir)/%D%
 
 ## ------ ##
 ## Calc.  ##
 ## ------ ##
 
-if ENABLE_JAVA
-  check_SCRIPTS += %D%/Calc.class
+# if ENABLE_JAVA
+  check_SCRIPTS += %D%/Calc.py
   TESTS += %D%/Calc.test
-endif
+# endif
 EXTRA_DIST += %D%/Calc.test
 
-%D%/Calc.java: %D%/Calc.y $(dependencies)
+%D%/Calc.py: %D%/Calc.y $(dependencies)
 	$(AM_V_GEN)$(MKDIR_P) %D%
 	$(AM_V_at)$(BISON) -o $@ $(srcdir)/%D%/Calc.y
 
-%D%/Calc.class: %D%/Calc.java
-	$(AM_V_GEN) $(SHELL) $(top_builddir)/javacomp.sh %D%/Calc.java
+# %D%/Calc.class: %D%/Calc.java
+# 	$(AM_V_GEN) $(SHELL) $(top_builddir)/javacomp.sh %D%/Calc.java
 
-dist_java_simple_DATA = %D%/Calc.y %D%/Makefile
-CLEANFILES += %D%/*.class %D%/Calc.java
+dist_python_simple_DATA = %D%/Calc.y %D%/Makefile
+CLEANFILES += %D%/*.py %D%/Calc.py
