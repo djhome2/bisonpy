@@ -20,6 +20,18 @@
 m4_include(b4_skeletonsdir/[c-like.m4])
 
 
+# b4_comment(TEXT, [PREFIX])
+# --------------------------
+# Put TEXT in comment.  Prefix all the output lines with PREFIX.
+m4_define([b4_comment],
+[m4_bpatsubst(
+    [$1], 
+    [.*], 
+    [$2#\&]
+  )
+])
+
+
 # b4_list2(LIST1, LIST2)
 # ----------------------
 # Join two lists with a comma if necessary.

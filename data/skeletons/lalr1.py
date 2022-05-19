@@ -94,7 +94,7 @@ m4_define([b4_lac_flag],
 ## ------------- ##
 
 b4_output_begin([b4_parser_file_name])[
-]b4_copyright([Skeleton implementation for Bison LALR(1) parsers in Java],
+]b4_copyright([Skeleton implementation for Bison LALR(1) parsers in python],
               [2007-2015, 2018-2021])[
 ]b4_disclaimer[
 ]b4_percent_define_ifdef([api.package], [package b4_percent_define_get([api.package]);[
