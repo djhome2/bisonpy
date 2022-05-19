@@ -129,14 +129,14 @@
 # 
 #  @author LALR (1) parser skeleton written by Paolo Bonzini.
 #  
-public class Calc
+class Calc
 {
   
   # Version number for the Bison executable that generated this parser.  
-  public static final String bisonVersion = "3.8.2";
+  bisonVersion = "3.8.2";
 
   # Name of the skeleton that generated this parser. 
-  public static final String bisonSkeleton = "lalr1.py";
+  bisonSkeleton = "lalr1.py";
 
 
 

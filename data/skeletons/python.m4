@@ -64,14 +64,14 @@ b4_percent_define_default([[api.parser.public]],   [[false]])
 b4_percent_define_default([[api.parser.strictfp]], [[false]])
 
 m4_define([b4_parser_class_declaration],
-[b4_percent_define_get3([api.parser.annotations], [], [ ])dnl
-b4_percent_define_flag_if([api.parser.public],   [public ])dnl
-b4_percent_define_flag_if([api.parser.abstract], [abstract ])dnl
-b4_percent_define_flag_if([api.parser.final],    [final ])dnl
-b4_percent_define_flag_if([api.parser.strictfp], [strictfp ])dnl
+[b4_percent_define_get3([api.parser.annotations], [], [])dnl
+b4_percent_define_flag_if([api.parser.public],   [])dnl
+b4_percent_define_flag_if([api.parser.abstract], [])dnl
+b4_percent_define_flag_if([api.parser.final],    [])dnl
+b4_percent_define_flag_if([api.parser.strictfp], [])dnl
 [class ]b4_parser_class[]dnl
-b4_percent_define_get3([api.parser.extends], [ extends ])dnl
-b4_percent_define_get3([api.parser.implements], [ implements ])])
+b4_percent_define_get3([api.parser.extends], [])dnl
+b4_percent_define_get3([api.parser.implements], [])])
 
 
 # b4_lexer_if(TRUE, FALSE)
@@ -85,10 +85,10 @@ m4_define([b4_lexer_if],
 m4_define([b4_identification],
 [[  
   # Version number for the Bison executable that generated this parser.  
-  public static final String bisonVersion = "]b4_version_string[";
+  bisonVersion = "]b4_version_string[";
 
   # Name of the skeleton that generated this parser. 
-  public static final String bisonSkeleton = ]b4_skeleton[;
+  bisonSkeleton = ]b4_skeleton[;
 ]])
 
 
