@@ -35,36 +35,38 @@
 %define parse.trace
 
 %code imports {
-  import java.io.BufferedReader;
-  import java.io.IOException;
-  import java.io.InputStream;
-  import java.io.InputStreamReader;
-  import java.io.Reader;
-  import java.io.StreamTokenizer;
-  import java.nio.CharBuffer;
+  #import java.io.BufferedReader;
+  #import java.io.IOException;
+  #import java.io.InputStream;
+  #import java.io.InputStreamReader;
+  #import java.io.Reader;
+  #import java.io.StreamTokenizer;
+  #import java.nio.CharBuffer;
 }
 
 %code {
-  public static void main(String[] args) throws IOException {
-    CalcLexer scanner = new CalcLexer(System.in);
-    Calc parser = new Calc(scanner);
-    for (String arg : args)
-      if (arg.equals("-p"))
+  import sys
+  def main(args):
+    scanner = CalcLexer(System.in);
+    parser = Calc(scanner);
+    for arg in args:
+      if (arg =="-p")
         parser.setDebugLevel(1);
-    int status;
-    do {
-      int token = scanner.getToken();
-      Object lval = scanner.getValue();
-      Calc.Location yyloc = scanner.getLocation();
+    status = 0;
+    while(true):
+      token = scanner.getToken();
+      lval = scanner.getValue();
+      yyloc = scanner.getLocation();
       status = parser.push_parse(token, lval, yyloc);
-    } while (status == Calc.YYPUSH_MORE);
+      if(status != Calc.YYPUSH_MORE):
+        break      
     if (status != Calc.YYACCEPT)
-      System.exit(1);
-  }
+      sys.exit(1);
+    return
 
-  static String i18n(String s) {
+  def i18n(s):
     return s;
-  }
+  
 }
 
 /* Bison Declarations */

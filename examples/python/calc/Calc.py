@@ -111,13 +111,13 @@
   
 
 
-  import java.io.BufferedReader;
-  import java.io.IOException;
-  import java.io.InputStream;
-  import java.io.InputStreamReader;
-  import java.io.Reader;
-  import java.io.StreamTokenizer;
-  import java.nio.CharBuffer;
+  #import java.io.BufferedReader;
+  #import java.io.IOException;
+  #import java.io.InputStream;
+  #import java.io.InputStreamReader;
+  #import java.io.Reader;
+  #import java.io.StreamTokenizer;
+  #import java.nio.CharBuffer;
 
 #"Calc.py":123
   #
@@ -662,7 +662,7 @@ public class Calc
   
 
   if (yyn == 5)
-    #"Calc.y":101
+    #"Calc.y":103
   #
   
 
@@ -675,7 +675,7 @@ public class Calc
   
 
   if (yyn == 7)
-    #"Calc.y":106
+    #"Calc.y":108
   #
   
 
@@ -688,7 +688,7 @@ public class Calc
   
 
   if (yyn == 8)
-    #"Calc.y":108
+    #"Calc.y":110
   #
   
 
@@ -704,7 +704,7 @@ public class Calc
   
 
   if (yyn == 9)
-    #"Calc.y":112
+    #"Calc.y":114
   #
   
 
@@ -717,7 +717,7 @@ public class Calc
   
 
   if (yyn == 10)
-    #"Calc.y":113
+    #"Calc.y":115
   #
   
 
@@ -730,7 +730,7 @@ public class Calc
   
 
   if (yyn == 11)
-    #"Calc.y":114
+    #"Calc.y":116
   #
   
 
@@ -743,7 +743,7 @@ public class Calc
   
 
   if (yyn == 12)
-    #"Calc.y":115
+    #"Calc.y":117
   #
   
 
@@ -756,7 +756,7 @@ public class Calc
   
 
   if (yyn == 13)
-    #"Calc.y":116
+    #"Calc.y":118
   #
   
 
@@ -769,7 +769,7 @@ public class Calc
   
 
   if (yyn == 14)
-    #"Calc.y":117
+    #"Calc.y":119
   #
   
 
@@ -782,7 +782,7 @@ public class Calc
   
 
   if (yyn == 15)
-    #"Calc.y":118
+    #"Calc.y":120
   #
   
 
@@ -795,7 +795,7 @@ public class Calc
   
 
   if (yyn == 16)
-    #"Calc.y":119
+    #"Calc.y":121
   #
   
 
@@ -808,7 +808,7 @@ public class Calc
   
 
   if (yyn == 17)
-    #"Calc.y":120
+    #"Calc.y":122
   #
   
 
@@ -821,7 +821,7 @@ public class Calc
   
 
   if (yyn == 18)
-    #"Calc.y":121
+    #"Calc.y":123
   #
   
 
@@ -1589,8 +1589,8 @@ private static final byte[] yycheck_ = yycheck_init();
   {
     return new byte[]
     {
-       0,    95,    95,    96,   100,   101,   102,   106,   107,   112,
-     113,   114,   115,   116,   117,   118,   119,   120,   121
+       0,    97,    97,    98,   102,   103,   104,   108,   109,   114,
+     115,   116,   117,   118,   119,   120,   121,   122,   123
     };
   }
 
@@ -1678,34 +1678,36 @@ private static final byte[] yycheck_ = yycheck_init();
   
 
 
-  public static void main(String[] args) throws IOException {
-    CalcLexer scanner = new CalcLexer(System.in);
-    Calc parser = new Calc(scanner);
-    for (String arg : args)
-      if (arg.equals("-p"))
+  import sys
+  def main(args):
+    scanner = CalcLexer(System.in);
+    parser = Calc(scanner);
+    for arg in args:
+      if (arg =="-p")
         parser.setDebugLevel(1);
-    int status;
-    do {
-      int token = scanner.getToken();
-      Object lval = scanner.getValue();
-      Calc.Location yyloc = scanner.getLocation();
+    status = 0;
+    while(true):
+      token = scanner.getToken();
+      lval = scanner.getValue();
+      yyloc = scanner.getLocation();
       status = parser.push_parse(token, lval, yyloc);
-    } while (status == Calc.YYPUSH_MORE);
+      if(status != Calc.YYPUSH_MORE):
+        break      
     if (status != Calc.YYACCEPT)
-      System.exit(1);
-  }
+      sys.exit(1);
+    return
 
-  static String i18n(String s) {
+  def i18n(s):
     return s;
-  }
+  
 
-#"Calc.py":1703
+#"Calc.py":1705
   #
   
 
 
 }
-#"Calc.y":124
+#"Calc.y":126
   #
   
 
