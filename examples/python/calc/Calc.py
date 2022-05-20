@@ -102,6 +102,8 @@
 
 # import java.text.MessageFormat;
 # import java.util.ArrayList;
+from abc import ABCMeta,abstractmethod
+import sys
 #"%code imports" blocks.
   #
   
@@ -119,7 +121,7 @@
   #import java.io.StreamTokenizer;
   #import java.nio.CharBuffer;
 
-#"Calc.py":123
+#"Calc.py":125
   #
   
 
@@ -129,8 +131,8 @@
 # 
 #  @author LALR (1) parser skeleton written by Paolo Bonzini.
 #  
-class Calc
-{
+class Calc():
+# {
   
   # Version number for the Bison executable that generated this parser.  
   bisonVersion = "3.8.2";
@@ -142,62 +144,70 @@ class Calc
 
 
 
-  /**
-   * A class defining a pair of positions.  Positions, defined by the
-   * <code>Position</code> class, denote a point in the input.
-   * Locations represent a part of the input through the beginning
-   * and ending positions.
-   */
-  public static class Location {
-    /**
-     * The first, inclusive, position in the range.
-     */
-    public Position begin;
+  # /**
+  #  * A class defining a pair of positions.  Positions, defined by the
+  #  * <code>Position</code> class, denote a point in the input.
+  #  * Locations represent a part of the input through the beginning
+  #  * and ending positions.
+  #  */
+  class Location():
+    # /**
+    #  * The first, inclusive, position in the range.
+    #  */
+    def __init__(self, *args):
+      count = len(args)
+      self.begin = None
+      self.begin = None
+      if(count > 0):
+        self.begin = args[0]
+      if(count > 1):
+        self.end = args[1]
+      return
+    # public Position begin;
 
-    /**
-     * The first position beyond the range.
-     */
-    public Position end;
+    # /**
+    #  * The first position beyond the range.
+    #  */
+    # public Position end;
 
-    /**
-     * Create a <code>Location</code> denoting an empty range located at
-     * a given point.
-     * @param loc The position at which the range is anchored.
-     */
-    public Location (Position loc) {
-      this.begin = this.end = loc;
-    }
+    # /**
+    #  * Create a <code>Location</code> denoting an empty range located at
+    #  * a given point.
+    #  * @param loc The position at which the range is anchored.
+    #  */
+    # public Location (Position loc) {
+      # this.begin = this.end = loc;
+    # }
 
-    /**
-     * Create a <code>Location</code> from the endpoints of the range.
-     * @param begin The first position included in the range.
-     * @param end   The first position beyond the range.
-     */
-    public Location (Position begin, Position end) {
-      this.begin = begin;
-      this.end = end;
-    }
+    # /**
+    #  * Create a <code>Location</code> from the endpoints of the range.
+    #  * @param begin The first position included in the range.
+    #  * @param end   The first position beyond the range.
+    #  */
+    # public Location (Position begin, Position end) {
+      # this.begin = begin;
+      # this.end = end;
+    # }
 
-    /**
-     * Print a representation of the location.  For this to be correct,
-     * <code>Position</code> should override the <code>equals</code>
-     * method.
-     */
-    public String toString() {
-      if (begin.equals (end))
-        return begin.toString();
-      else
-        return begin.toString() + "-" + end.toString();
-    }
-  }
+    # /**
+    #  * Print a representation of the location.  For this to be correct,
+    #  * <code>Position</code> should override the <code>equals</code>
+    #  * method.
+    #  */
+    def __str__(self):
+      if (begin == end):
+        return str(begin)
+      else:
+        return str(begin) + "-" + str(end)
+    # }
+  # }
 
-  private Location yylloc(YYStack rhs, int n)
-  {
-    if (0 < n)
-      return new Location(rhs.locationAt(n-1).begin, rhs.locationAt(0).end);
+  def yylloc(rhs, n):
+    if (0 < n):
+      return Location(rhs.locationAt(n-1).begin, rhs.locationAt(0).end);
     else
-      return new Location(rhs.locationAt(0).end);
-  }
+      return Location(rhs.locationAt(0).end);
+  
 
   public enum SymbolKind
   {
@@ -335,11 +345,11 @@ class Calc
   };
 
 
-  /**
-   * Communication interface between the scanner and the Bison-generated
-   * parser <tt>Calc</tt>.
-   */
-  public interface Lexer {
+  # /**
+  #  * Communication interface between the scanner and the Bison-generated
+  #  * parser <tt>Calc</tt>.
+  #  */
+  class Lexer():
     /* Token kinds.  */
     /** Token "end of file", to be returned by the scanner.  */
     static final int YYEOF = 0;
@@ -372,8 +382,8 @@ class Calc
     /** Token NEG, to be returned by the scanner.  */
     static final int NEG = 269;
 
-    /** Deprecated, use YYEOF instead.  */
-    public static final int EOF = YYEOF;
+    # /** Deprecated, use YYEOF instead.  */
+    EOF = YYEOF
 
     /**
      * Emit an error referring to the given locationin a user-defined way.
@@ -830,7 +840,7 @@ class Calc
 
 
 
-#"Calc.py":834
+#"Calc.py":844
   #
   
 
@@ -1701,7 +1711,7 @@ private static final byte[] yycheck_ = yycheck_init();
     return s;
   
 
-#"Calc.py":1705
+#"Calc.py":1715
   #
   
 

@@ -103,130 +103,146 @@ b4_output_begin([b4_parser_file_name])[
 ]b4_user_post_prologue[
 # import java.text.MessageFormat;
 # import java.util.ArrayList;
+from abc import ABCMeta,abstractmethod
+import sys
 ]b4_percent_code_get([[imports]])[
 # 
 #  A Bison parser, automatically generated from <tt>]m4_bpatsubst(b4_file_name, [^"\(.*\)"$], [\1])[</tt>.
 # 
 #  @@author LALR (1) parser skeleton written by Paolo Bonzini.
 #  
-]b4_parser_class_declaration[
-{
+]b4_parser_class_declaration[():
+# {
 ]b4_identification[
 ][
 ]b4_parse_error_bmatch(
            [detailed\|verbose], [[
-  /**
-   * True if verbose error messages are enabled.
-   */
-  private boolean yyErrorVerbose = true;
+  # /**
+  #  * True if verbose error messages are enabled.
+  #  */
+  yyErrorVerbose = true
 
-  /**
-   * Whether verbose error messages are enabled.
-   */
-  public final boolean getErrorVerbose() { return yyErrorVerbose; }
+  # /**
+  #  * Whether verbose error messages are enabled.
+  #  */
+  def getErrorVerbose():
+    return yyErrorVerbose;
 
-  /**
-   * Set the verbosity of error messages.
-   * @@param verbose True to request verbose error messages.
-   */
-  public final void setErrorVerbose(boolean verbose)
-  { yyErrorVerbose = verbose; }
+  # /**
+  #  * Set the verbosity of error messages.
+  #  * @@param verbose True to request verbose error messages.
+  #  */
+  def setErrorVerbose(verbose):
+    yyErrorVerbose = verbose
+    return
 ]])[
 
 ]b4_locations_if([[
-  /**
-   * A class defining a pair of positions.  Positions, defined by the
-   * <code>]b4_position_type[</code> class, denote a point in the input.
-   * Locations represent a part of the input through the beginning
-   * and ending positions.
-   */
-  public static class ]b4_location_type[ {
-    /**
-     * The first, inclusive, position in the range.
-     */
-    public ]b4_position_type[ begin;
+  # /**
+  #  * A class defining a pair of positions.  Positions, defined by the
+  #  * <code>]b4_position_type[</code> class, denote a point in the input.
+  #  * Locations represent a part of the input through the beginning
+  #  * and ending positions.
+  #  */
+  class ]b4_location_type[():
+    # /**
+    #  * The first, inclusive, position in the range.
+    #  */
+    def __init__(self, *args):
+      count = len(args)
+      self.begin = None
+      self.begin = None
+      if(count > 0):
+        self.begin = args[0]
+      if(count > 1):
+        self.end = args[1]
+      return
+    # public ]b4_position_type[ begin;
 
-    /**
-     * The first position beyond the range.
-     */
-    public ]b4_position_type[ end;
+    # /**
+    #  * The first position beyond the range.
+    #  */
+    # public ]b4_position_type[ end;
 
-    /**
-     * Create a <code>]b4_location_type[</code> denoting an empty range located at
-     * a given point.
-     * @@param loc The position at which the range is anchored.
-     */
-    public ]b4_location_type[ (]b4_position_type[ loc) {
-      this.begin = this.end = loc;
-    }
+    # /**
+    #  * Create a <code>]b4_location_type[</code> denoting an empty range located at
+    #  * a given point.
+    #  * @@param loc The position at which the range is anchored.
+    #  */
+    # public ]b4_location_type[ (]b4_position_type[ loc) {
+      # this.begin = this.end = loc;
+    # }
 
-    /**
-     * Create a <code>]b4_location_type[</code> from the endpoints of the range.
-     * @@param begin The first position included in the range.
-     * @@param end   The first position beyond the range.
-     */
-    public ]b4_location_type[ (]b4_position_type[ begin, ]b4_position_type[ end) {
-      this.begin = begin;
-      this.end = end;
-    }
+    # /**
+    #  * Create a <code>]b4_location_type[</code> from the endpoints of the range.
+    #  * @@param begin The first position included in the range.
+    #  * @@param end   The first position beyond the range.
+    #  */
+    # public ]b4_location_type[ (]b4_position_type[ begin, ]b4_position_type[ end) {
+      # this.begin = begin;
+      # this.end = end;
+    # }
 
-    /**
-     * Print a representation of the location.  For this to be correct,
-     * <code>]b4_position_type[</code> should override the <code>equals</code>
-     * method.
-     */
-    public String toString() {
-      if (begin.equals (end))
-        return begin.toString();
-      else
-        return begin.toString() + "-" + end.toString();
-    }
-  }
+    # /**
+    #  * Print a representation of the location.  For this to be correct,
+    #  * <code>]b4_position_type[</code> should override the <code>equals</code>
+    #  * method.
+    #  */
+    def __str__(self):
+      if (begin == end):
+        return str(begin)
+      else:
+        return str(begin) + "-" + str(end)
+    # }
+  # }
 
-  private ]b4_location_type[ yylloc(YYStack rhs, int n)
-  {
-    if (0 < n)
-      return new ]b4_location_type[(rhs.locationAt(n-1).begin, rhs.locationAt(0).end);
-    else
-      return new ]b4_location_type[(rhs.locationAt(0).end);
-  }]])[
+  def yylloc(rhs, n):
+    if (0 < n):
+      return ]b4_location_type[(rhs.locationAt(n-1).begin, rhs.locationAt(0).end);
+    else:
+      return ]b4_location_type[(rhs.locationAt(0).end);
+  ]])[
 
 ]b4_declare_symbol_enum[
 
-  /**
-   * Communication interface between the scanner and the Bison-generated
-   * parser <tt>]b4_parser_class[</tt>.
-   */
-  public interface Lexer {
+  # /**
+  #  * Communication interface between the scanner and the Bison-generated
+  #  * parser <tt>]b4_parser_class[</tt>.
+  #  */
+  class Lexer():
 ]b4_token_enums[
-    /** Deprecated, use ]b4_symbol(eof, id)[ instead.  */
-    public static final int EOF = ]b4_symbol(eof, id)[;
+    # /** Deprecated, use ]b4_symbol(eof, id)[ instead.  */
+    EOF = ]b4_symbol(eof, id)[
 ]b4_pull_if([b4_locations_if([[
-    /**
-     * Method to retrieve the beginning position of the last scanned token.
-     * @@return the position at which the last scanned token starts.
-     */
-    ]b4_position_type[ getStartPos();
+    # /**
+    #  * Method to retrieve the beginning position of the last scanned token.
+    #  * @@return the position at which the last scanned token starts.
+    #  */
+    @abstractmethod
+    def getStartPos(): pass 
 
-    /**
-     * Method to retrieve the ending position of the last scanned token.
-     * @@return the first position beyond the last scanned token.
-     */
-    ]b4_position_type[ getEndPos();]])[
+    # /**
+    #  * Method to retrieve the ending position of the last scanned token.
+    #  * @@return the first position beyond the last scanned token.
+    #  */
+    @abstractmethod
+    def getEndPos(): pass]])[
 
-    /**
-     * Method to retrieve the semantic value of the last scanned token.
-     * @@return the semantic value of the last scanned token.
-     */
-    ]b4_yystype[ getLVal();
+    # /**
+    #  * Method to retrieve the semantic value of the last scanned token.
+    #  * @@return the semantic value of the last scanned token.
+    #  */
+    @abstractmethod
+    def getLVal(): pass
 
-    /**
-     * Entry point for the scanner.  Returns the token identifier corresponding
-     * to the next token and prepares to return the semantic value
-     * ]b4_locations_if([and beginning/ending positions ])[of the token.
-     * @@return the token identifier corresponding to the next token.
-     */
-    int yylex()]b4_maybe_throws([b4_lex_throws])[;
+    # /**
+    #  * Entry point for the scanner.  Returns the token identifier corresponding
+    #  * to the next token and prepares to return the semantic value
+    #  * ]b4_locations_if([and beginning/ending positions ])[of the token.
+    #  * @@return the token identifier corresponding to the next token.
+    #  */
+    @abstractmethod
+    def yylex(): pass]b4_maybe_throws([b4_lex_throws])[;
 ]])[
     /**
      * Emit an error]b4_locations_if([ referring to the given location])[in a user-defined way.
