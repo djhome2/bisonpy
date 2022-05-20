@@ -252,7 +252,7 @@ from enum import Enum
     #  *                error message is related.]])[
     #  * @@param msg The string for the error message.
     #  */
-    def yyerror(]b4_locations_if([b4_location_type[ loc, ]])[String msg);
+    def yyerror(]b4_locations_if([loc, ])[msg): pass
 
 ]b4_parse_error_bmatch(
            [custom], [[
@@ -263,7 +263,7 @@ from enum import Enum
     #  */
     def reportSyntaxError(ctx): pass
 ]])[
-  }
+  # }
 
 ]b4_lexer_if([[
   class YYLexer(Lexer):
@@ -274,15 +274,15 @@ from enum import Enum
   # /**
   #  * The object doing lexical analysis for us.
   #  */
-  private Lexer yylexer;
+  # yylexer = None
 
 ]b4_parse_param_vars[
 
 ]b4_lexer_if([[
-  /**
-   * Instantiates the Bison-generated parser.
-   */
-  public ]b4_parser_class[(]b4_parse_param_decl([b4_lex_param_decl])[)]b4_maybe_throws([b4_init_throws])[
+  # /**
+  #  * Instantiates the Bison-generated parser.
+  #  */
+  ]b4_parser_class[(]b4_parse_param_decl([b4_lex_param_decl])[)]b4_maybe_throws([b4_init_throws])[
   {
 ]b4_percent_code_get([[init]])[]b4_lac_if([[
     this.yylacStack = new ArrayList<Integer>();
@@ -292,71 +292,79 @@ from enum import Enum
   }
 ]])[
 
-  /**
-   * Instantiates the Bison-generated parser.
-   * @@param yylexer The scanner that will supply tokens to the parser.
-   */
-  ]b4_lexer_if([[protected]], [[public]]) b4_parser_class[(]b4_parse_param_decl([[Lexer yylexer]])[)]b4_maybe_throws([b4_init_throws])[
-  {
+  # /**
+  #  * Instantiates the Bison-generated parser.
+  #  * @@param yylexer The scanner that will supply tokens to the parser.
+  #  */
+  ]b4_lexer_if([[protected]], [[]])def __init__[(]b4_parse_param_decl([[self, yylexer]])[):]b4_maybe_throws([b4_init_throws])[
+  # {
 ]b4_percent_code_get([[init]])[]b4_lac_if([[
-    this.yylacStack = new ArrayList<Integer>();
-    this.yylacEstablished = false;]])[
-    this.yylexer = yylexer;
+    self.yylacStack = []
+    self.yylacEstablished = False]])[
+    self.yylexer = yylexer
+    return
 ]b4_parse_param_cons[
-  }
+  # }
 
 ]b4_parse_trace_if([[
-  private java.io.PrintStream yyDebugStream = System.err;
+  yyDebugStream = sys.stderr
 
-  /**
-   * The <tt>PrintStream</tt> on which the debugging output is printed.
-   */
-  public final java.io.PrintStream getDebugStream() { return yyDebugStream; }
+  # /**
+  #  * The <tt>PrintStream</tt> on which the debugging output is printed.
+  #  */
+  def getDebugStream(self):
+    return self.yyDebugStream
 
-  /**
-   * Set the <tt>PrintStream</tt> on which the debug output is printed.
-   * @@param s The stream that is used for debugging output.
-   */
-  public final void setDebugStream(java.io.PrintStream s) { yyDebugStream = s; }
+  # /**
+  #  * Set the <tt>PrintStream</tt> on which the debug output is printed.
+  #  * @@param s The stream that is used for debugging output.
+  #  */
+  def setDebugStream(self, s):
+    self.yyDebugStream = s
+    return
 
-  private int yydebug = 0;
+  yydebug = 0
 
-  /**
-   * Answer the verbosity of the debugging output; 0 means that all kinds of
-   * output from the parser are suppressed.
-   */
-  public final int getDebugLevel() { return yydebug; }
+  # /**
+  #  * Answer the verbosity of the debugging output; 0 means that all kinds of
+  #  * output from the parser are suppressed.
+  #  */
+  def getDebugLevel(self):
+    return self.yydebug
 
-  /**
-   * Set the verbosity of the debugging output; 0 means that all kinds of
-   * output from the parser are suppressed.
-   * @@param level The verbosity level for debugging output.
-   */
-  public final void setDebugLevel(int level) { yydebug = level; }
+  # /**
+  #  * Set the verbosity of the debugging output; 0 means that all kinds of
+  #  * output from the parser are suppressed.
+  #  * @@param level The verbosity level for debugging output.
+  #  */
+  def setDebugLevel(self, level):
+    self.yydebug = level
+    return
 ]])[
 
-  private int yynerrs = 0;
+  yynerrs = 0;
 
-  /**
-   * The number of syntax errors so far.
-   */
-  public final int getNumberOfErrors() { return yynerrs; }
+  # /**
+  #  * The number of syntax errors so far.
+  #  */
+  def getNumberOfErrors(self):
+    return self.yynerrs
 
-  /**
-   * Print an error message via the lexer.
-   *]b4_locations_if([[ Use a <code>null</code> location.]])[
-   * @@param msg The error message.
-   */
-  public final void yyerror(String msg) {
+  # /**
+  #  * Print an error message via the lexer.
+  #  *]b4_locations_if([[ Use a <code>null</code> location.]])[
+  #  * @@param msg The error message.
+  #  */
+  def yyerror(self, msg):
       yylexer.yyerror(]b4_locations_if([[(]b4_location_type[)null, ]])[msg);
-  }
+  
 ]b4_locations_if([[
-  /**
-   * Print an error message via the lexer.
-   * @@param loc The location associated with the message.
-   * @@param msg The error message.
-   */
-  public final void yyerror(]b4_location_type[ loc, String msg) {
+  # /**
+  #  * Print an error message via the lexer.
+  #  * @@param loc The location associated with the message.
+  #  * @@param msg The error message.
+  #  */
+  def yyerror(]b4_location_type[ loc, String msg) {
       yylexer.yyerror(loc, msg);
   }
 

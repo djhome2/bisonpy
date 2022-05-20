@@ -337,11 +337,11 @@ class Calc():
     )
   
 
-    /* The user-facing name of this symbol.  */
-    public final String getName() {
-      return yynames_[yycode_];
-    }
-  };
+    # /* The user-facing name of this symbol.  */
+    def getName():
+      return yynames_[yycode_]
+    
+  # };
 
 
   # /**
@@ -349,37 +349,37 @@ class Calc():
   #  * parser <tt>Calc</tt>.
   #  */
   class Lexer():
-    /* Token kinds.  */
-    /** Token "end of file", to be returned by the scanner.  */
-    static final int YYEOF = 0;
-    /** Token error, to be returned by the scanner.  */
-    static final int YYerror = 256;
-    /** Token "invalid token", to be returned by the scanner.  */
-    static final int YYUNDEF = 257;
-    /** Token "!", to be returned by the scanner.  */
-    static final int BANG = 258;
-    /** Token "+", to be returned by the scanner.  */
-    static final int PLUS = 259;
-    /** Token "-", to be returned by the scanner.  */
-    static final int MINUS = 260;
-    /** Token "*", to be returned by the scanner.  */
-    static final int STAR = 261;
-    /** Token "/", to be returned by the scanner.  */
-    static final int SLASH = 262;
-    /** Token "^", to be returned by the scanner.  */
-    static final int CARET = 263;
-    /** Token "(", to be returned by the scanner.  */
-    static final int LPAREN = 264;
-    /** Token ")", to be returned by the scanner.  */
-    static final int RPAREN = 265;
-    /** Token "=", to be returned by the scanner.  */
-    static final int EQUAL = 266;
-    /** Token "end of line", to be returned by the scanner.  */
-    static final int EOL = 267;
-    /** Token "number", to be returned by the scanner.  */
-    static final int NUM = 268;
-    /** Token NEG, to be returned by the scanner.  */
-    static final int NEG = 269;
+    #/* Token kinds.  */
+    #/** Token "end of file", to be returned by the scanner.  */
+    YYEOF = 0
+    #/** Token error, to be returned by the scanner.  */
+    YYerror = 256
+    #/** Token "invalid token", to be returned by the scanner.  */
+    YYUNDEF = 257
+    #/** Token "!", to be returned by the scanner.  */
+    BANG = 258
+    #/** Token "+", to be returned by the scanner.  */
+    PLUS = 259
+    #/** Token "-", to be returned by the scanner.  */
+    MINUS = 260
+    #/** Token "*", to be returned by the scanner.  */
+    STAR = 261
+    #/** Token "/", to be returned by the scanner.  */
+    SLASH = 262
+    #/** Token "^", to be returned by the scanner.  */
+    CARET = 263
+    #/** Token "(", to be returned by the scanner.  */
+    LPAREN = 264
+    #/** Token ")", to be returned by the scanner.  */
+    RPAREN = 265
+    #/** Token "=", to be returned by the scanner.  */
+    EQUAL = 266
+    #/** Token "end of line", to be returned by the scanner.  */
+    EOL = 267
+    #/** Token "number", to be returned by the scanner.  */
+    NUM = 268
+    #/** Token NEG, to be returned by the scanner.  */
+    NEG = 269
 
     # /** Deprecated, use YYEOF instead.  */
     EOF = YYEOF
@@ -391,7 +391,7 @@ class Calc():
     #  *                error message is related.
     #  * @param msg The string for the error message.
     #  */
-    def yyerror(Location loc, String msg);
+    def yyerror(loc, msg): pass
 
 
     # /**
@@ -401,83 +401,91 @@ class Calc():
     #  */
     def reportSyntaxError(ctx): pass
 
-  }
+  # }
 
 
   # /**
   #  * The object doing lexical analysis for us.
   #  */
-  private Lexer yylexer;
+  # yylexer = None
 
 
 
 
 
-  /**
-   * Instantiates the Bison-generated parser.
-   * @param yylexer The scanner that will supply tokens to the parser.
-   */
-  public Calc(Lexer yylexer)
-  {
+  # /**
+  #  * Instantiates the Bison-generated parser.
+  #  * @param yylexer The scanner that will supply tokens to the parser.
+  #  */
+  def __init__(self, yylexer):
+  # {
 
-    this.yylacStack = new ArrayList<Integer>();
-    this.yylacEstablished = false;
-    this.yylexer = yylexer;
+    self.yylacStack = []
+    self.yylacEstablished = False
+    self.yylexer = yylexer
+    return
 
-  }
-
-
-  private java.io.PrintStream yyDebugStream = System.err;
-
-  /**
-   * The <tt>PrintStream</tt> on which the debugging output is printed.
-   */
-  public final java.io.PrintStream getDebugStream() { return yyDebugStream; }
-
-  /**
-   * Set the <tt>PrintStream</tt> on which the debug output is printed.
-   * @param s The stream that is used for debugging output.
-   */
-  public final void setDebugStream(java.io.PrintStream s) { yyDebugStream = s; }
-
-  private int yydebug = 0;
-
-  /**
-   * Answer the verbosity of the debugging output; 0 means that all kinds of
-   * output from the parser are suppressed.
-   */
-  public final int getDebugLevel() { return yydebug; }
-
-  /**
-   * Set the verbosity of the debugging output; 0 means that all kinds of
-   * output from the parser are suppressed.
-   * @param level The verbosity level for debugging output.
-   */
-  public final void setDebugLevel(int level) { yydebug = level; }
+  # }
 
 
-  private int yynerrs = 0;
+  yyDebugStream = sys.stderr
 
-  /**
-   * The number of syntax errors so far.
-   */
-  public final int getNumberOfErrors() { return yynerrs; }
+  # /**
+  #  * The <tt>PrintStream</tt> on which the debugging output is printed.
+  #  */
+  def getDebugStream(self):
+    return self.yyDebugStream
 
-  /**
-   * Print an error message via the lexer.
-   * Use a <code>null</code> location.
-   * @param msg The error message.
-   */
-  public final void yyerror(String msg) {
+  # /**
+  #  * Set the <tt>PrintStream</tt> on which the debug output is printed.
+  #  * @param s The stream that is used for debugging output.
+  #  */
+  def setDebugStream(self, s):
+    self.yyDebugStream = s
+    return
+
+  yydebug = 0
+
+  # /**
+  #  * Answer the verbosity of the debugging output; 0 means that all kinds of
+  #  * output from the parser are suppressed.
+  #  */
+  def getDebugLevel(self):
+    return self.yydebug
+
+  # /**
+  #  * Set the verbosity of the debugging output; 0 means that all kinds of
+  #  * output from the parser are suppressed.
+  #  * @param level The verbosity level for debugging output.
+  #  */
+  def setDebugLevel(self, level):
+    self.yydebug = level
+    return
+
+
+  yynerrs = 0;
+
+  # /**
+  #  * The number of syntax errors so far.
+  #  */
+  def getNumberOfErrors(self):
+    return self.yynerrs
+
+  # /**
+  #  * Print an error message via the lexer.
+  #  * Use a <code>null</code> location.
+  #  * @param msg The error message.
+  #  */
+  def yyerror(self, msg):
       yylexer.yyerror((Location)null, msg);
-  }
+  
 
-  /**
-   * Print an error message via the lexer.
-   * @param loc The location associated with the message.
-   * @param msg The error message.
-   */
-  public final void yyerror(Location loc, String msg) {
+  # /**
+  #  * Print an error message via the lexer.
+  #  * @param loc The location associated with the message.
+  #  * @param msg The error message.
+  #  */
+  def yyerror(Location loc, String msg) {
       yylexer.yyerror(loc, msg);
   }
 
@@ -839,7 +847,7 @@ class Calc():
 
 
 
-#"Calc.py":843
+#"Calc.py":851
   #
   
 
@@ -1688,7 +1696,7 @@ yycheck_ = yycheck_init()
     return s;
   
 
-#"Calc.py":1692
+#"Calc.py":1700
   #
   
 
