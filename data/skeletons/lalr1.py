@@ -400,15 +400,15 @@ class Lexer():
   #     yylexer.yyerror(new ]b4_location_type[ (pos), msg);
   # }]])[
 ]b4_parse_trace_if([[
-  protected final void yycdebugNnl(String s) {
-    if (0 < yydebug)
-      yyDebugStream.print(s);
-  }
+  def yycdebugNnl(self, s):
+    if (0 < self.yydebug)
+      self.yyDebugStream.print(s)
+  
 
-  protected final void yycdebug(String s) {
-    if (0 < yydebug)
-      yyDebugStream.println(s);
-  }]])[
+  def yycdebug(s):
+    if (0 < self.yydebug)
+      self.yyDebugStream.println(s)
+  ]])[
 
   private final class YYStack {
     private int[] stateStack = new int[16];]b4_locations_if([[
