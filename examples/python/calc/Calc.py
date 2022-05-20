@@ -125,7 +125,65 @@ from enum import Enum
 def i18n(s):
   return s;
 
-#"Calc.py":129
+
+#/**
+# * A class defining a point in the input.
+# */
+class Position():
+  line = 1
+  column = 1
+
+  def __init__(self, *args):
+    count = len(args)
+    if(count == 0):
+      self.line = 1
+      self.column = 1
+      return
+    if(count == 2):
+      self.line = args[0]
+      self.column = args[1]
+      return
+    assert(count == 1)
+    p = args[0]
+    assert(isinstance(p, Position))
+    self.line = p.line;
+    self.column = p.column;
+    return
+  
+
+  #public Position(int l, int t) {
+  #  line = l;
+  #  column = t;
+  #}
+
+  #public Position(Position p) {
+  #  line = p.line;
+  #  column = p.column;
+  #}
+
+  def set(self, p):
+    self.line = p.line
+    self.column = p.column
+  
+
+  def __eq__(self, l):
+    return l.line == self.line and l.column == self.column;
+  
+
+  def __str__(self):
+    return str(self.line) + "." + str(self.column)
+  
+
+  def line(self):
+    return self.line
+  
+
+  def column(self):
+    return self.column
+  
+
+
+#"Calc.py":187
   #
   
 
@@ -701,7 +759,7 @@ class Calc():
   
 
   if (yyn == 5)
-    #"Calc.y":105
+    #"Calc.y":163
   #
   
 
@@ -714,7 +772,7 @@ class Calc():
   
 
   if (yyn == 7)
-    #"Calc.y":110
+    #"Calc.y":168
   #
   
 
@@ -727,7 +785,7 @@ class Calc():
   
 
   if (yyn == 8)
-    #"Calc.y":112
+    #"Calc.y":170
   #
   
 
@@ -743,7 +801,7 @@ class Calc():
   
 
   if (yyn == 9)
-    #"Calc.y":116
+    #"Calc.y":174
   #
   
 
@@ -756,7 +814,7 @@ class Calc():
   
 
   if (yyn == 10)
-    #"Calc.y":117
+    #"Calc.y":175
   #
   
 
@@ -769,7 +827,7 @@ class Calc():
   
 
   if (yyn == 11)
-    #"Calc.y":118
+    #"Calc.y":176
   #
   
 
@@ -782,7 +840,7 @@ class Calc():
   
 
   if (yyn == 12)
-    #"Calc.y":119
+    #"Calc.y":177
   #
   
 
@@ -795,7 +853,7 @@ class Calc():
   
 
   if (yyn == 13)
-    #"Calc.y":120
+    #"Calc.y":178
   #
   
 
@@ -808,7 +866,7 @@ class Calc():
   
 
   if (yyn == 14)
-    #"Calc.y":121
+    #"Calc.y":179
   #
   
 
@@ -821,7 +879,7 @@ class Calc():
   
 
   if (yyn == 15)
-    #"Calc.y":122
+    #"Calc.y":180
   #
   
 
@@ -834,7 +892,7 @@ class Calc():
   
 
   if (yyn == 16)
-    #"Calc.y":123
+    #"Calc.y":181
   #
   
 
@@ -847,7 +905,7 @@ class Calc():
   
 
   if (yyn == 17)
-    #"Calc.y":124
+    #"Calc.y":182
   #
   
 
@@ -860,7 +918,7 @@ class Calc():
   
 
   if (yyn == 18)
-    #"Calc.y":125
+    #"Calc.y":183
   #
   
 
@@ -869,7 +927,7 @@ class Calc():
 
 
 
-#"Calc.py":873
+#"Calc.py":931
   #
   
 
@@ -1617,8 +1675,8 @@ class Calc():
   
   def yyrline_init():  
       return (
-       0,    99,    99,   100,   104,   105,   106,   110,   111,   116,
-     117,   118,   119,   120,   121,   122,   123,   124,   125
+       0,   157,   157,   158,   162,   163,   164,   168,   169,   174,
+     175,   176,   177,   178,   179,   180,   181,   182,   183
     )
   yyrline_ = yyrline_init()
   
@@ -1701,7 +1759,7 @@ class Calc():
   #
   
 
-#"Calc.y":50
+#"Calc.y":108
   #
   
 
@@ -1728,13 +1786,13 @@ class Calc():
  
   
 
-#"Calc.py":1732
+#"Calc.py":1790
   #
   
 
 
 }
-#"Calc.y":128
+#"Calc.y":186
   #
   
 
@@ -1848,50 +1906,6 @@ class CalcLexer implements Calc.Lexer {
     default:
       throw new AssertionError("invalid character: " + ttype);
     }
-  }
-}
-
-/**
- * A class defining a point in the input.
- */
-class Position {
-  public int line = 1;
-  public int column = 1;
-
-  public Position() {
-    line = 1;
-    column = 1;
-  }
-
-  public Position(int l, int t) {
-    line = l;
-    column = t;
-  }
-
-  public Position(Position p) {
-    line = p.line;
-    column = p.column;
-  }
-
-  public void set(Position p) {
-    line = p.line;
-    column = p.column;
-  }
-
-  public boolean equals(Position l) {
-    return l.line == line && l.column == column;
-  }
-
-  public String toString() {
-    return Integer.toString(line) + "." + Integer.toString(column);
-  }
-
-  public int line() {
-    return line;
-  }
-
-  public int column() {
-    return column;
   }
 }
 

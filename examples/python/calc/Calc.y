@@ -45,6 +45,64 @@
 
 def i18n(s):
   return s;
+
+
+#/**
+# * A class defining a point in the input.
+# */
+class Position():
+  line = 1
+  column = 1
+
+  def __init__(self, *args):
+    count = len(args)
+    if(count == 0):
+      self.line = 1
+      self.column = 1
+      return
+    if(count == 2):
+      self.line = args[0]
+      self.column = args[1]
+      return
+    assert(count == 1)
+    p = args[0]
+    assert(isinstance(p, Position))
+    self.line = p.line;
+    self.column = p.column;
+    return
+  
+
+  #public Position(int l, int t) {
+  #  line = l;
+  #  column = t;
+  #}
+
+  #public Position(Position p) {
+  #  line = p.line;
+  #  column = p.column;
+  #}
+
+  def set(self, p):
+    self.line = p.line
+    self.column = p.column
+  
+
+  def __eq__(self, l):
+    return l.line == self.line and l.column == self.column;
+  
+
+  def __str__(self):
+    return str(self.line) + "." + str(self.column)
+  
+
+  def line(self):
+    return self.line
+  
+
+  def column(self):
+    return self.column
+  
+
 }
 
 %code {
@@ -235,50 +293,6 @@ class CalcLexer implements Calc.Lexer {
     default:
       throw new AssertionError("invalid character: " + ttype);
     }
-  }
-}
-
-/**
- * A class defining a point in the input.
- */
-class Position {
-  public int line = 1;
-  public int column = 1;
-
-  public Position() {
-    line = 1;
-    column = 1;
-  }
-
-  public Position(int l, int t) {
-    line = l;
-    column = t;
-  }
-
-  public Position(Position p) {
-    line = p.line;
-    column = p.column;
-  }
-
-  public void set(Position p) {
-    line = p.line;
-    column = p.column;
-  }
-
-  public boolean equals(Position l) {
-    return l.line == line && l.column == column;
-  }
-
-  public String toString() {
-    return Integer.toString(line) + "." + Integer.toString(column);
-  }
-
-  public int line() {
-    return line;
-  }
-
-  public int column() {
-    return column;
   }
 }
 
