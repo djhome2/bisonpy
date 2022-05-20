@@ -125,14 +125,12 @@ m4_define([b4_null], [null])
 m4_define([b4_typed_parser_table_define],
 [m4_ifval([$4], [b4_comment([$4])
   ])dnl
-[private static final ]$1[[] yy$2_ = yy$2_init();
-  private static final ]$1[[] yy$2_init()
-  {
-    return new ]$1[[]
-    {
+[yy$2_ = yy$2_init()
+  ][  def yy$2_init():  
+      return (][
   ]$3[
-    };
-  }]])
+    )
+  ]])
 
 
 # b4_integral_parser_table_define(NAME, DATA, COMMENT)
@@ -178,6 +176,8 @@ b4_symbol_foreach([b4_token_enum])])])
 m4_define([b4_symbol_kind],
 [SymbolKind.b4_symbol_kind_base($@)])
 
+m4_define([b4_symbol_kind_in],
+[b4_symbol_kind_base($@)])
 
 # b4_symbol_enum(SYMBOL-NUM)
 # --------------------------
@@ -205,18 +205,16 @@ m4_define([b4_declare_symbol_enum],
       return
     # }
 
-    private static final SymbolKind[] values_ = {
-      ]m4_map_args_sep([b4_symbol_kind(], [)], [,
+    values_ = (
+      ]m4_map_args_sep([b4_symbol_kind_in(], [)], [,
       ], b4_symbol_numbers)[
-    };
+    )
 
-    static final SymbolKind get(int code) {
-      return values_[code];
-    }
-
-    public final int getCode() {
-      return this.yycode_;
-    }
+    def get(self, code):
+      return self.values_[code]
+    
+    def getCode(self):
+      return self.yycode_
 
 ]b4_parse_error_bmatch(
 [simple\|verbose],
@@ -262,8 +260,9 @@ m4_define([b4_declare_symbol_enum],
     }
 ]],
 [custom\|detailed],
-[[    /* YYNAMES_[SYMBOL-NUM] -- String name of the symbol SYMBOL-NUM.
-       First, the terminals, then, starting at \a YYNTOKENS_, nonterminals.  */
+[[    
+  # /* YYNAMES_[SYMBOL-NUM] -- String name of the symbol SYMBOL-NUM.
+  #      First, the terminals, then, starting at \a YYNTOKENS_, nonterminals.  */
     ]b4_typed_parser_table_define([String], [names], [b4_symbol_names])[
 
     /* The user-facing name of this symbol.  */

@@ -199,9 +199,9 @@ from enum import Enum
 
   def yylloc(rhs, n):
     if (0 < n):
-      return ]b4_location_type[(rhs.locationAt(n-1).begin, rhs.locationAt(0).end);
+      return ]b4_location_type[(rhs.locationAt(n-1).begin, rhs.locationAt(0).end)
     else:
-      return ]b4_location_type[(rhs.locationAt(0).end);
+      return ]b4_location_type[(rhs.locationAt(0).end)
   ]])[
 
 ]b4_declare_symbol_enum[
@@ -245,35 +245,35 @@ from enum import Enum
     @abstractmethod
     def yylex(): pass]b4_maybe_throws([b4_lex_throws])[;
 ]])[
-    /**
-     * Emit an error]b4_locations_if([ referring to the given location])[in a user-defined way.
-     *
-     *]b4_locations_if([[ @@param loc The location of the element to which the
-     *                error message is related.]])[
-     * @@param msg The string for the error message.
-     */
-     void yyerror(]b4_locations_if([b4_location_type[ loc, ]])[String msg);
+    # /**
+    #  * Emit an error]b4_locations_if([ referring to the given location])[in a user-defined way.
+    #  *
+    #  *]b4_locations_if([[ @@param loc The location of the element to which the
+    #  *                error message is related.]])[
+    #  * @@param msg The string for the error message.
+    #  */
+    def yyerror(]b4_locations_if([b4_location_type[ loc, ]])[String msg);
 
 ]b4_parse_error_bmatch(
            [custom], [[
-    /**
-     * Build and emit a "syntax error" message in a user-defined way.
-     *
-     * @@param ctx  The context of the error.
-     */
-     void reportSyntaxError(Context ctx);
+    # /**
+    #  * Build and emit a "syntax error" message in a user-defined way.
+    #  *
+    #  * @@param ctx  The context of the error.
+    #  */
+    def reportSyntaxError(ctx): pass
 ]])[
   }
 
 ]b4_lexer_if([[
-  private class YYLexer implements Lexer {
+  class YYLexer(Lexer):
 ]b4_percent_code_get([[lexer]])[
-  }
+  # }
 
 ]])[
-  /**
-   * The object doing lexical analysis for us.
-   */
+  # /**
+  #  * The object doing lexical analysis for us.
+  #  */
   private Lexer yylexer;
 
 ]b4_parse_param_vars[

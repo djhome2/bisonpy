@@ -205,9 +205,9 @@ class Calc():
 
   def yylloc(rhs, n):
     if (0 < n):
-      return Location(rhs.locationAt(n-1).begin, rhs.locationAt(0).end);
+      return Location(rhs.locationAt(n-1).begin, rhs.locationAt(0).end)
     else:
-      return Location(rhs.locationAt(0).end);
+      return Location(rhs.locationAt(0).end)
   
 
   class SymbolKind(Enum):
@@ -297,48 +297,45 @@ class Calc():
       return
     # }
 
-    private static final SymbolKind[] values_ = {
-      SymbolKind.S_YYEOF,
-      SymbolKind.S_YYerror,
-      SymbolKind.S_YYUNDEF,
-      SymbolKind.S_BANG,
-      SymbolKind.S_PLUS,
-      SymbolKind.S_MINUS,
-      SymbolKind.S_STAR,
-      SymbolKind.S_SLASH,
-      SymbolKind.S_CARET,
-      SymbolKind.S_LPAREN,
-      SymbolKind.S_RPAREN,
-      SymbolKind.S_EQUAL,
-      SymbolKind.S_EOL,
-      SymbolKind.S_NUM,
-      SymbolKind.S_NEG,
-      SymbolKind.S_YYACCEPT,
-      SymbolKind.S_input,
-      SymbolKind.S_line,
-      SymbolKind.S_exp
-    };
+    values_ = (
+      S_YYEOF,
+      S_YYerror,
+      S_YYUNDEF,
+      S_BANG,
+      S_PLUS,
+      S_MINUS,
+      S_STAR,
+      S_SLASH,
+      S_CARET,
+      S_LPAREN,
+      S_RPAREN,
+      S_EQUAL,
+      S_EOL,
+      S_NUM,
+      S_NEG,
+      S_YYACCEPT,
+      S_input,
+      S_line,
+      S_exp
+    )
 
-    static final SymbolKind get(int code) {
-      return values_[code];
-    }
+    def get(self, code):
+      return self.values_[code]
+    
+    def getCode(self):
+      return self.yycode_
 
-    public final int getCode() {
-      return this.yycode_;
-    }
-
-    /* YYNAMES_[SYMBOL-NUM] -- String name of the symbol SYMBOL-NUM.
-       First, the terminals, then, starting at \a YYNTOKENS_, nonterminals.  */
-    private static final String[] yynames_ = yynames_init();
-  private static final String[] yynames_init()
-  {
-    return new String[]
-    {
+    
+  # /* YYNAMES_[SYMBOL-NUM] -- String name of the symbol SYMBOL-NUM.
+  #      First, the terminals, then, starting at \a YYNTOKENS_, nonterminals.  */
+    yynames_ = yynames_init()
+    def yynames_init():  
+      return (
   i18n("end of file"), i18n("error"), i18n("invalid token"), "!", "+", "-", "*",
   "/", "^", "(", ")", "=", i18n("end of line"), i18n("number"), "NEG",
   "$accept", "input", "line", "exp", null
-    };
-  }
+    )
+  
 
     /* The user-facing name of this symbol.  */
     public final String getName() {
@@ -387,29 +384,29 @@ class Calc():
     # /** Deprecated, use YYEOF instead.  */
     EOF = YYEOF
 
-    /**
-     * Emit an error referring to the given locationin a user-defined way.
-     *
-     * @param loc The location of the element to which the
-     *                error message is related.
-     * @param msg The string for the error message.
-     */
-     void yyerror(Location loc, String msg);
+    # /**
+    #  * Emit an error referring to the given locationin a user-defined way.
+    #  *
+    #  * @param loc The location of the element to which the
+    #  *                error message is related.
+    #  * @param msg The string for the error message.
+    #  */
+    def yyerror(Location loc, String msg);
 
 
-    /**
-     * Build and emit a "syntax error" message in a user-defined way.
-     *
-     * @param ctx  The context of the error.
-     */
-     void reportSyntaxError(Context ctx);
+    # /**
+    #  * Build and emit a "syntax error" message in a user-defined way.
+    #  *
+    #  * @param ctx  The context of the error.
+    #  */
+    def reportSyntaxError(ctx): pass
 
   }
 
 
-  /**
-   * The object doing lexical analysis for us.
-   */
+  # /**
+  #  * The object doing lexical analysis for us.
+  #  */
   private Lexer yylexer;
 
 
@@ -842,7 +839,7 @@ class Calc():
 
 
 
-#"Calc.py":846
+#"Calc.py":843
   #
   
 
@@ -1441,17 +1438,15 @@ class Calc():
   #
   
 
-  private static final byte[] yypact_ = yypact_init();
-  private static final byte[] yypact_init()
-  {
-    return new byte[]
-    {
+  yypact_ = yypact_init()
+    def yypact_init():  
+      return (
       25,    -9,   -10,    38,    39,   -10,   -10,    20,   -10,    49,
      -10,   -10,    -2,    -5,    58,   -10,   -10,    -1,    -1,    -1,
       -1,    -1,    -1,   -10,   -10,   -10,     3,     3,    -2,    -2,
       -2,    66
-    };
-  }
+    )
+  
 
 #YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
   #
@@ -1463,43 +1458,37 @@ class Calc():
   #
   
 
-  private static final byte[] yydefact_ = yydefact_init();
-  private static final byte[] yydefact_init()
-  {
-    return new byte[]
-    {
+  yydefact_ = yydefact_init()
+    def yydefact_init():  
+      return (
        0,     0,    17,     0,     0,     4,     7,     0,     2,     0,
        6,    18,    13,     0,     0,     1,     3,     0,     0,     0,
        0,     0,     0,     5,    16,    15,     9,    10,    11,    12,
       14,     8
-    };
-  }
+    )
+  
 
 #YYPGOTO[NTERM-NUM].
   #
   
 
-  private static final byte[] yypgoto_ = yypgoto_init();
-  private static final byte[] yypgoto_init()
-  {
-    return new byte[]
-    {
+  yypgoto_ = yypgoto_init()
+    def yypgoto_init():  
+      return (
      -10,   -10,     0,    -3
-    };
-  }
+    )
+  
 
 #YYDEFGOTO[NTERM-NUM].
   #
   
 
-  private static final byte[] yydefgoto_ = yydefgoto_init();
-  private static final byte[] yydefgoto_init()
-  {
-    return new byte[]
-    {
+  yydefgoto_ = yydefgoto_init()
+    def yydefgoto_init():  
+      return (
        0,     7,     8,     9
-    };
-  }
+    )
+  
 
 #YYTABLE[YYPACT[STATE-NUM]] -- What to do in state STATE-NUM.  If
   #
@@ -1511,11 +1500,9 @@ class Calc():
   #
   
 
-  private static final byte[] yytable_ = yytable_init();
-  private static final byte[] yytable_init()
-  {
-    return new byte[]
-    {
+  yytable_ = yytable_init()
+    def yytable_init():  
+      return (
       12,    14,     2,    10,     3,    24,    21,    16,     4,    19,
       20,    21,     6,     0,    26,    27,    28,    29,    30,    31,
       15,     1,     0,     2,     0,     3,     1,     0,     2,     4,
@@ -1524,14 +1511,12 @@ class Calc():
        0,     6,     6,    17,    18,    19,    20,    21,     0,     0,
       22,    23,    17,    18,    19,    20,    21,     0,    25,    22,
       17,    18,    19,    20,    21,     0,     0,    -1
-    };
-  }
+    )
+  
 
-private static final byte[] yycheck_ = yycheck_init();
-  private static final byte[] yycheck_init()
-  {
-    return new byte[]
-    {
+yycheck_ = yycheck_init()
+    def yycheck_init():  
+      return (
        3,     4,     3,    12,     5,    10,     8,     7,     9,     6,
        7,     8,    13,    -1,    17,    18,    19,    20,    21,    22,
        0,     1,    -1,     3,    -1,     5,     1,    -1,     3,     9,
@@ -1540,8 +1525,8 @@ private static final byte[] yycheck_ = yycheck_init();
       -1,    13,    13,     4,     5,     6,     7,     8,    -1,    -1,
       11,    12,     4,     5,     6,     7,     8,    -1,    10,    11,
        4,     5,     6,     7,     8,    -1,    -1,    11
-    };
-  }
+    )
+  
 
 #YYSTOS[STATE-NUM] -- The symbol kind of the accessing symbol of
   #
@@ -1550,45 +1535,39 @@ private static final byte[] yycheck_ = yycheck_init();
   #
   
 
-  private static final byte[] yystos_ = yystos_init();
-  private static final byte[] yystos_init()
-  {
-    return new byte[]
-    {
+  yystos_ = yystos_init()
+    def yystos_init():  
+      return (
        0,     1,     3,     5,     9,    12,    13,    16,    17,    18,
       12,     1,    18,     1,    18,     0,    17,     4,     5,     6,
        7,     8,    11,    12,    10,    10,    18,    18,    18,    18,
       18,    18
-    };
-  }
+    )
+  
 
 #YYR1[RULE-NUM] -- Symbol kind of the left-hand side of rule RULE-NUM.
   #
   
 
-  private static final byte[] yyr1_ = yyr1_init();
-  private static final byte[] yyr1_init()
-  {
-    return new byte[]
-    {
+  yyr1_ = yyr1_init()
+    def yyr1_init():  
+      return (
        0,    15,    16,    16,    17,    17,    17,    18,    18,    18,
       18,    18,    18,    18,    18,    18,    18,    18,    18
-    };
-  }
+    )
+  
 
 #YYR2[RULE-NUM] -- Number of symbols on the right-hand side of rule RULE-NUM.
   #
   
 
-  private static final byte[] yyr2_ = yyr2_init();
-  private static final byte[] yyr2_init()
-  {
-    return new byte[]
-    {
+  yyr2_ = yyr2_init()
+    def yyr2_init():  
+      return (
        0,     2,     1,     2,     1,     2,     2,     1,     3,     3,
        3,     3,     3,     2,     3,     3,     3,     1,     2
-    };
-  }
+    )
+  
 
 
 
@@ -1596,15 +1575,13 @@ private static final byte[] yycheck_ = yycheck_init();
   #
   
 
-  private static final byte[] yyrline_ = yyrline_init();
-  private static final byte[] yyrline_init()
-  {
-    return new byte[]
-    {
+  yyrline_ = yyrline_init()
+    def yyrline_init():  
+      return (
        0,    97,    97,    98,   102,   103,   104,   108,   109,   114,
      115,   116,   117,   118,   119,   120,   121,   122,   123
-    };
-  }
+    )
+  
 
 
   // Report on the debug stream that the rule yyrule is going to be reduced.
@@ -1640,11 +1617,9 @@ private static final byte[] yycheck_ = yycheck_init();
     else
       return SymbolKind.S_YYUNDEF;
   }
-  private static final byte[] yytranslate_table_ = yytranslate_table_init();
-  private static final byte[] yytranslate_table_init()
-  {
-    return new byte[]
-    {
+  yytranslate_table_ = yytranslate_table_init()
+    def yytranslate_table_init():  
+      return (
        0,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
@@ -1672,8 +1647,8 @@ private static final byte[] yycheck_ = yycheck_init();
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     1,     2,     3,     4,
        5,     6,     7,     8,     9,    10,    11,    12,    13,    14
-    };
-  }
+    )
+  
 
 
   private static final int YYLAST_ = 77;
@@ -1713,7 +1688,7 @@ private static final byte[] yycheck_ = yycheck_init();
     return s;
   
 
-#"Calc.py":1717
+#"Calc.py":1692
   #
   
 
