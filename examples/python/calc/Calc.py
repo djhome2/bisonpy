@@ -122,7 +122,10 @@ from enum import Enum
   #import java.io.StreamTokenizer;
   #import java.nio.CharBuffer;
 
-#"Calc.py":126
+def i18n(s):
+  return s;
+
+#"Calc.py":129
   #
   
 
@@ -132,6 +135,206 @@ from enum import Enum
 # 
 #  @author LALR (1) parser skeleton written by Paolo Bonzini.
 #  
+
+
+
+
+  # /**
+  #  * A class defining a pair of positions.  Positions, defined by the
+  #  * <code>Position</code> class, denote a point in the input.
+  #  * Locations represent a part of the input through the beginning
+  #  * and ending positions.
+  #  */
+class Location():
+  # /**
+  #  * The first, inclusive, position in the range.
+  #  */
+  def __init__(self, *args):
+    count = len(args)
+    self.begin = None
+    self.begin = None
+    if(count > 0):
+      self.begin = args[0]
+    if(count > 1):
+      self.end = args[1]
+    return
+  # public Position begin;
+
+  # /**
+  #  * The first position beyond the range.
+  #  */
+  # public Position end;
+
+  # /**
+  #  * Create a <code>Location</code> denoting an empty range located at
+  #  * a given point.
+  #  * @param loc The position at which the range is anchored.
+  #  */
+  # public Location (Position loc) {
+    # this.begin = this.end = loc;
+  # }
+
+  # /**
+  #  * Create a <code>Location</code> from the endpoints of the range.
+  #  * @param begin The first position included in the range.
+  #  * @param end   The first position beyond the range.
+  #  */
+  # public Location (Position begin, Position end) {
+    # this.begin = begin;
+    # this.end = end;
+  # }
+
+  # /**
+  #  * Print a representation of the location.  For this to be correct,
+  #  * <code>Position</code> should override the <code>equals</code>
+  #  * method.
+  #  */
+  def __str__(self):
+    if (self.begin == self.end):
+      return str(self.begin)
+    else:
+      return str(self.begin) + "-" + str(self.end)
+  # }
+# }
+
+
+
+class SymbolKind(Enum):
+  # {
+  S_YYEOF = 0                    #"end of file"
+  #
+  
+
+  S_YYerror = 1                  #error
+  #
+  
+
+  S_YYUNDEF = 2                  #"invalid token"
+  #
+  
+
+  S_BANG = 3                     #"!"
+  #
+  
+
+  S_PLUS = 4                     #"+"
+  #
+  
+
+  S_MINUS = 5                    #"-"
+  #
+  
+
+  S_STAR = 6                     #"*"
+  #
+  
+
+  S_SLASH = 7                    #"/"
+  #
+  
+
+  S_CARET = 8                    #"^"
+  #
+  
+
+  S_LPAREN = 9                   #"("
+  #
+  
+
+  S_RPAREN = 10                  #")"
+  #
+  
+
+  S_EQUAL = 11                   #"="
+  #
+  
+
+  S_EOL = 12                     #"end of line"
+  #
+  
+
+  S_NUM = 13                     #"number"
+  #
+  
+
+  S_NEG = 14                     #NEG
+  #
+  
+
+  S_YYACCEPT = 15                #$accept
+  #
+  
+
+  S_input = 16                   #input
+  #
+  
+
+  S_line = 17                    #line
+  #
+  
+
+  S_exp = 18                     #exp
+  #
+  
+
+
+
+  # private final int yycode_;
+
+  def __init__(self, n):
+    self.yycode_ = n
+    return
+  # }
+
+  values_ = (
+    S_YYEOF,
+    S_YYerror,
+    S_YYUNDEF,
+    S_BANG,
+    S_PLUS,
+    S_MINUS,
+    S_STAR,
+    S_SLASH,
+    S_CARET,
+    S_LPAREN,
+    S_RPAREN,
+    S_EQUAL,
+    S_EOL,
+    S_NUM,
+    S_NEG,
+    S_YYACCEPT,
+    S_input,
+    S_line,
+    S_exp
+  )
+
+  def get(self, code):
+    return self.values_[code]
+  
+  def getCode(self):
+    return self.yycode_
+
+    
+  # /* YYNAMES_[SYMBOL-NUM] -- String name of the symbol SYMBOL-NUM.
+  #      First, the terminals, then, starting at \a YYNTOKENS_, nonterminals.  */
+    
+  def yynames_init():  
+      return (
+  i18n("end of file"), i18n("error"), i18n("invalid token"), "!", "+", "-", "*",
+  "/", "^", "(", ")", "=", i18n("end of line"), i18n("number"), "NEG",
+  "$accept", "input", "line", "exp", None
+    )
+  yynames_ = yynames_init()
+  
+
+    # /* The user-facing name of this symbol.  */
+  def getName(self):
+    return self.yynames_[self.yycode_]
+    
+  # };
+
+
+
 class Calc():
 # {
   
@@ -145,204 +348,12 @@ class Calc():
 
 
 
-  # /**
-  #  * A class defining a pair of positions.  Positions, defined by the
-  #  * <code>Position</code> class, denote a point in the input.
-  #  * Locations represent a part of the input through the beginning
-  #  * and ending positions.
-  #  */
-  class Location():
-    # /**
-    #  * The first, inclusive, position in the range.
-    #  */
-    def __init__(self, *args):
-      count = len(args)
-      self.begin = None
-      self.begin = None
-      if(count > 0):
-        self.begin = args[0]
-      if(count > 1):
-        self.end = args[1]
-      return
-    # public Position begin;
-
-    # /**
-    #  * The first position beyond the range.
-    #  */
-    # public Position end;
-
-    # /**
-    #  * Create a <code>Location</code> denoting an empty range located at
-    #  * a given point.
-    #  * @param loc The position at which the range is anchored.
-    #  */
-    # public Location (Position loc) {
-      # this.begin = this.end = loc;
-    # }
-
-    # /**
-    #  * Create a <code>Location</code> from the endpoints of the range.
-    #  * @param begin The first position included in the range.
-    #  * @param end   The first position beyond the range.
-    #  */
-    # public Location (Position begin, Position end) {
-      # this.begin = begin;
-      # this.end = end;
-    # }
-
-    # /**
-    #  * Print a representation of the location.  For this to be correct,
-    #  * <code>Position</code> should override the <code>equals</code>
-    #  * method.
-    #  */
-    def __str__(self):
-      if (begin == end):
-        return str(begin)
-      else:
-        return str(begin) + "-" + str(end)
-    # }
-  # }
-
   def yylloc(rhs, n):
     if (0 < n):
       return Location(rhs.locationAt(n-1).begin, rhs.locationAt(0).end)
     else:
       return Location(rhs.locationAt(0).end)
   
-
-  class SymbolKind(Enum):
-  # {
-    S_YYEOF = 0                    #"end of file"
-  #
-  
-
-    S_YYerror = 1                  #error
-  #
-  
-
-    S_YYUNDEF = 2                  #"invalid token"
-  #
-  
-
-    S_BANG = 3                     #"!"
-  #
-  
-
-    S_PLUS = 4                     #"+"
-  #
-  
-
-    S_MINUS = 5                    #"-"
-  #
-  
-
-    S_STAR = 6                     #"*"
-  #
-  
-
-    S_SLASH = 7                    #"/"
-  #
-  
-
-    S_CARET = 8                    #"^"
-  #
-  
-
-    S_LPAREN = 9                   #"("
-  #
-  
-
-    S_RPAREN = 10                  #")"
-  #
-  
-
-    S_EQUAL = 11                   #"="
-  #
-  
-
-    S_EOL = 12                     #"end of line"
-  #
-  
-
-    S_NUM = 13                     #"number"
-  #
-  
-
-    S_NEG = 14                     #NEG
-  #
-  
-
-    S_YYACCEPT = 15                #$accept
-  #
-  
-
-    S_input = 16                   #input
-  #
-  
-
-    S_line = 17                    #line
-  #
-  
-
-    S_exp = 18                     #exp
-  #
-  
-
-
-
-    # private final int yycode_;
-
-    def __init__(self, n):
-      self.yycode_ = n
-      return
-    # }
-
-    values_ = (
-      S_YYEOF,
-      S_YYerror,
-      S_YYUNDEF,
-      S_BANG,
-      S_PLUS,
-      S_MINUS,
-      S_STAR,
-      S_SLASH,
-      S_CARET,
-      S_LPAREN,
-      S_RPAREN,
-      S_EQUAL,
-      S_EOL,
-      S_NUM,
-      S_NEG,
-      S_YYACCEPT,
-      S_input,
-      S_line,
-      S_exp
-    )
-
-    def get(self, code):
-      return self.values_[code]
-    
-    def getCode(self):
-      return self.yycode_
-
-    
-  # /* YYNAMES_[SYMBOL-NUM] -- String name of the symbol SYMBOL-NUM.
-  #      First, the terminals, then, starting at \a YYNTOKENS_, nonterminals.  */
-    yynames_ = yynames_init()
-    def yynames_init():  
-      return (
-  i18n("end of file"), i18n("error"), i18n("invalid token"), "!", "+", "-", "*",
-  "/", "^", "(", ")", "=", i18n("end of line"), i18n("number"), "NEG",
-  "$accept", "input", "line", "exp", null
-    )
-  
-
-    # /* The user-facing name of this symbol.  */
-    def getName():
-      return yynames_[yycode_]
-    
-  # };
-
 
   # /**
   #  * Communication interface between the scanner and the Bison-generated
@@ -476,8 +487,19 @@ class Calc():
   #  * Use a <code>null</code> location.
   #  * @param msg The error message.
   #  */
-  def yyerror(self, msg):
-      yylexer.yyerror((Location)null, msg);
+  def yyerror(self, *args):
+    if(len(args) == 1):
+      loc = None
+      msg = args[0]
+    else:
+      loc = args[0]
+      msg = args[1]
+      if(isinstance(loc, Position)):
+        loc = Location (loc)
+      else:
+        assert(isinstance(loc, Location))
+    self.yylexer.yyerror(loc, msg)
+    return
   
 
   # /**
@@ -485,18 +507,18 @@ class Calc():
   #  * @param loc The location associated with the message.
   #  * @param msg The error message.
   #  */
-  def yyerror(Location loc, String msg) {
-      yylexer.yyerror(loc, msg);
-  }
+  # def yyerror(Location loc, String msg) {
+  #     yylexer.yyerror(loc, msg);
+  # }
 
-  /**
-   * Print an error message via the lexer.
-   * @param pos The position associated with the message.
-   * @param msg The error message.
-   */
-  public final void yyerror(Position pos, String msg) {
-      yylexer.yyerror(new Location (pos), msg);
-  }
+  # /**
+  #  * Print an error message via the lexer.
+  #  * @param pos The position associated with the message.
+  #  * @param msg The error message.
+  #  */
+  # public final void yyerror(Position pos, String msg) {
+  #     yylexer.yyerror(new Location (pos), msg);
+  # }
 
   protected final void yycdebugNnl(String s) {
     if (0 < yydebug)
@@ -679,7 +701,7 @@ class Calc():
   
 
   if (yyn == 5)
-    #"Calc.y":103
+    #"Calc.y":105
   #
   
 
@@ -692,7 +714,7 @@ class Calc():
   
 
   if (yyn == 7)
-    #"Calc.y":108
+    #"Calc.y":110
   #
   
 
@@ -705,7 +727,7 @@ class Calc():
   
 
   if (yyn == 8)
-    #"Calc.y":110
+    #"Calc.y":112
   #
   
 
@@ -721,7 +743,7 @@ class Calc():
   
 
   if (yyn == 9)
-    #"Calc.y":114
+    #"Calc.y":116
   #
   
 
@@ -734,7 +756,7 @@ class Calc():
   
 
   if (yyn == 10)
-    #"Calc.y":115
+    #"Calc.y":117
   #
   
 
@@ -747,7 +769,7 @@ class Calc():
   
 
   if (yyn == 11)
-    #"Calc.y":116
+    #"Calc.y":118
   #
   
 
@@ -760,7 +782,7 @@ class Calc():
   
 
   if (yyn == 12)
-    #"Calc.y":117
+    #"Calc.y":119
   #
   
 
@@ -773,7 +795,7 @@ class Calc():
   
 
   if (yyn == 13)
-    #"Calc.y":118
+    #"Calc.y":120
   #
   
 
@@ -786,7 +808,7 @@ class Calc():
   
 
   if (yyn == 14)
-    #"Calc.y":119
+    #"Calc.y":121
   #
   
 
@@ -799,7 +821,7 @@ class Calc():
   
 
   if (yyn == 15)
-    #"Calc.y":120
+    #"Calc.y":122
   #
   
 
@@ -812,7 +834,7 @@ class Calc():
   
 
   if (yyn == 16)
-    #"Calc.y":121
+    #"Calc.y":123
   #
   
 
@@ -825,7 +847,7 @@ class Calc():
   
 
   if (yyn == 17)
-    #"Calc.y":122
+    #"Calc.y":124
   #
   
 
@@ -838,7 +860,7 @@ class Calc():
   
 
   if (yyn == 18)
-    #"Calc.y":123
+    #"Calc.y":125
   #
   
 
@@ -847,7 +869,7 @@ class Calc():
 
 
 
-#"Calc.py":851
+#"Calc.py":873
   #
   
 
@@ -1446,14 +1468,15 @@ class Calc():
   #
   
 
-  yypact_ = yypact_init()
-    def yypact_init():  
+  
+  def yypact_init():  
       return (
       25,    -9,   -10,    38,    39,   -10,   -10,    20,   -10,    49,
      -10,   -10,    -2,    -5,    58,   -10,   -10,    -1,    -1,    -1,
       -1,    -1,    -1,   -10,   -10,   -10,     3,     3,    -2,    -2,
       -2,    66
     )
+  yypact_ = yypact_init()
   
 
 #YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
@@ -1466,36 +1489,39 @@ class Calc():
   #
   
 
-  yydefact_ = yydefact_init()
-    def yydefact_init():  
+  
+  def yydefact_init():  
       return (
        0,     0,    17,     0,     0,     4,     7,     0,     2,     0,
        6,    18,    13,     0,     0,     1,     3,     0,     0,     0,
        0,     0,     0,     5,    16,    15,     9,    10,    11,    12,
       14,     8
     )
+  yydefact_ = yydefact_init()
   
 
 #YYPGOTO[NTERM-NUM].
   #
   
 
-  yypgoto_ = yypgoto_init()
-    def yypgoto_init():  
+  
+  def yypgoto_init():  
       return (
      -10,   -10,     0,    -3
     )
+  yypgoto_ = yypgoto_init()
   
 
 #YYDEFGOTO[NTERM-NUM].
   #
   
 
-  yydefgoto_ = yydefgoto_init()
-    def yydefgoto_init():  
+  
+  def yydefgoto_init():  
       return (
        0,     7,     8,     9
     )
+  yydefgoto_ = yydefgoto_init()
   
 
 #YYTABLE[YYPACT[STATE-NUM]] -- What to do in state STATE-NUM.  If
@@ -1508,8 +1534,8 @@ class Calc():
   #
   
 
-  yytable_ = yytable_init()
-    def yytable_init():  
+  
+  def yytable_init():  
       return (
       12,    14,     2,    10,     3,    24,    21,    16,     4,    19,
       20,    21,     6,     0,    26,    27,    28,    29,    30,    31,
@@ -1520,10 +1546,11 @@ class Calc():
       22,    23,    17,    18,    19,    20,    21,     0,    25,    22,
       17,    18,    19,    20,    21,     0,     0,    -1
     )
+  yytable_ = yytable_init()
   
 
-yycheck_ = yycheck_init()
-    def yycheck_init():  
+
+  def yycheck_init():  
       return (
        3,     4,     3,    12,     5,    10,     8,     7,     9,     6,
        7,     8,    13,    -1,    17,    18,    19,    20,    21,    22,
@@ -1534,6 +1561,7 @@ yycheck_ = yycheck_init()
       11,    12,     4,     5,     6,     7,     8,    -1,    10,    11,
        4,     5,     6,     7,     8,    -1,    -1,    11
     )
+  yycheck_ = yycheck_init()
   
 
 #YYSTOS[STATE-NUM] -- The symbol kind of the accessing symbol of
@@ -1543,38 +1571,41 @@ yycheck_ = yycheck_init()
   #
   
 
-  yystos_ = yystos_init()
-    def yystos_init():  
+  
+  def yystos_init():  
       return (
        0,     1,     3,     5,     9,    12,    13,    16,    17,    18,
       12,     1,    18,     1,    18,     0,    17,     4,     5,     6,
        7,     8,    11,    12,    10,    10,    18,    18,    18,    18,
       18,    18
     )
+  yystos_ = yystos_init()
   
 
 #YYR1[RULE-NUM] -- Symbol kind of the left-hand side of rule RULE-NUM.
   #
   
 
-  yyr1_ = yyr1_init()
-    def yyr1_init():  
+  
+  def yyr1_init():  
       return (
        0,    15,    16,    16,    17,    17,    17,    18,    18,    18,
       18,    18,    18,    18,    18,    18,    18,    18,    18
     )
+  yyr1_ = yyr1_init()
   
 
 #YYR2[RULE-NUM] -- Number of symbols on the right-hand side of rule RULE-NUM.
   #
   
 
-  yyr2_ = yyr2_init()
-    def yyr2_init():  
+  
+  def yyr2_init():  
       return (
        0,     2,     1,     2,     1,     2,     2,     1,     3,     3,
        3,     3,     3,     2,     3,     3,     3,     1,     2
     )
+  yyr2_ = yyr2_init()
   
 
 
@@ -1583,12 +1614,13 @@ yycheck_ = yycheck_init()
   #
   
 
-  yyrline_ = yyrline_init()
-    def yyrline_init():  
+  
+  def yyrline_init():  
       return (
-       0,    97,    97,    98,   102,   103,   104,   108,   109,   114,
-     115,   116,   117,   118,   119,   120,   121,   122,   123
+       0,    99,    99,   100,   104,   105,   106,   110,   111,   116,
+     117,   118,   119,   120,   121,   122,   123,   124,   125
     )
+  yyrline_ = yyrline_init()
   
 
 
@@ -1625,8 +1657,8 @@ yycheck_ = yycheck_init()
     else
       return SymbolKind.S_YYUNDEF;
   }
-  yytranslate_table_ = yytranslate_table_init()
-    def yytranslate_table_init():  
+  
+  def yytranslate_table_init():  
       return (
        0,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
@@ -1656,6 +1688,7 @@ yycheck_ = yycheck_init()
        2,     2,     2,     2,     2,     2,     1,     2,     3,     4,
        5,     6,     7,     8,     9,    10,    11,    12,    13,    14
     )
+  yytranslate_table_ = yytranslate_table_init()
   
 
 
@@ -1668,7 +1701,7 @@ yycheck_ = yycheck_init()
   #
   
 
-#"Calc.y":47
+#"Calc.y":50
   #
   
 
@@ -1692,17 +1725,16 @@ yycheck_ = yycheck_init()
       sys.exit(1);
     return
 
-  def i18n(s):
-    return s;
+ 
   
 
-#"Calc.py":1700
+#"Calc.py":1732
   #
   
 
 
 }
-#"Calc.y":126
+#"Calc.y":128
   #
   
 

@@ -42,6 +42,9 @@
   #import java.io.Reader;
   #import java.io.StreamTokenizer;
   #import java.nio.CharBuffer;
+
+def i18n(s):
+  return s;
 }
 
 %code {
@@ -64,8 +67,7 @@
       sys.exit(1);
     return
 
-  def i18n(s):
-    return s;
+ 
   
 }
 

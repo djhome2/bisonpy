@@ -114,7 +114,7 @@ m4_define([b4_int_type_for],
 
 # b4_null
 # -------
-m4_define([b4_null], [null])
+m4_define([b4_null], [None])
 
 
 # b4_typed_parser_table_define(TYPE, NAME, DATA, COMMENT)
@@ -125,11 +125,12 @@ m4_define([b4_null], [null])
 m4_define([b4_typed_parser_table_define],
 [m4_ifval([$4], [b4_comment([$4])
   ])dnl
-[yy$2_ = yy$2_init()
-  ][  def yy$2_init():  
+[
+  ][def yy$2_init():  
       return (][
   ]$3[
     )
+  yy$2_ = yy$2_init()
   ]])
 
 
@@ -183,7 +184,7 @@ m4_define([b4_symbol_kind_in],
 # --------------------------
 # Output the definition of this symbol as an enum.
 m4_define([b4_symbol_enum],
-[m4_format([    %-30s %s],
+[m4_format([  %-30s %s],
            m4_format([[%s = %s]],
                      b4_symbol([$1], [kind_base]),
                      [$1]),
@@ -194,27 +195,27 @@ m4_define([b4_symbol_enum],
 # ----------------------
 # The definition of the symbol internal numbers as an enum.
 m4_define([b4_declare_symbol_enum],
-[[  class SymbolKind(Enum):
+[[class SymbolKind(Enum):
   # {
 ]b4_symbol_foreach([b4_symbol_enum])[
 
-    # private final int yycode_;
+  # private final int yycode_;
 
-    def __init__(self, n):
-      self.yycode_ = n
-      return
-    # }
+  def __init__(self, n):
+    self.yycode_ = n
+    return
+  # }
 
-    values_ = (
-      ]m4_map_args_sep([b4_symbol_kind_in(], [)], [,
-      ], b4_symbol_numbers)[
-    )
+  values_ = (
+    ]m4_map_args_sep([b4_symbol_kind_in(], [)], [,
+    ], b4_symbol_numbers)[
+  )
 
-    def get(self, code):
-      return self.values_[code]
-    
-    def getCode(self):
-      return self.yycode_
+  def get(self, code):
+    return self.values_[code]
+  
+  def getCode(self):
+    return self.yycode_
 
 ]b4_parse_error_bmatch(
 [simple\|verbose],
@@ -266,8 +267,8 @@ m4_define([b4_declare_symbol_enum],
     ]b4_typed_parser_table_define([String], [names], [b4_symbol_names])[
 
     # /* The user-facing name of this symbol.  */
-    def getName():
-      return yynames_[yycode_]
+  def getName(self):
+    return self.yynames_[self.yycode_]
     ]])[
   # };
 ]])])

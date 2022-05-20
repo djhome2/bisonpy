@@ -112,6 +112,73 @@ from enum import Enum
 # 
 #  @@author LALR (1) parser skeleton written by Paolo Bonzini.
 #  
+
+
+
+]b4_locations_if([[
+  # /**
+  #  * A class defining a pair of positions.  Positions, defined by the
+  #  * <code>]b4_position_type[</code> class, denote a point in the input.
+  #  * Locations represent a part of the input through the beginning
+  #  * and ending positions.
+  #  */
+class ]b4_location_type[():
+  # /**
+  #  * The first, inclusive, position in the range.
+  #  */
+  def __init__(self, *args):
+    count = len(args)
+    self.begin = None
+    self.begin = None
+    if(count > 0):
+      self.begin = args[0]
+    if(count > 1):
+      self.end = args[1]
+    return
+  # public ]b4_position_type[ begin;
+
+  # /**
+  #  * The first position beyond the range.
+  #  */
+  # public ]b4_position_type[ end;
+
+  # /**
+  #  * Create a <code>]b4_location_type[</code> denoting an empty range located at
+  #  * a given point.
+  #  * @@param loc The position at which the range is anchored.
+  #  */
+  # public ]b4_location_type[ (]b4_position_type[ loc) {
+    # this.begin = this.end = loc;
+  # }
+
+  # /**
+  #  * Create a <code>]b4_location_type[</code> from the endpoints of the range.
+  #  * @@param begin The first position included in the range.
+  #  * @@param end   The first position beyond the range.
+  #  */
+  # public ]b4_location_type[ (]b4_position_type[ begin, ]b4_position_type[ end) {
+    # this.begin = begin;
+    # this.end = end;
+  # }
+
+  # /**
+  #  * Print a representation of the location.  For this to be correct,
+  #  * <code>]b4_position_type[</code> should override the <code>equals</code>
+  #  * method.
+  #  */
+  def __str__(self):
+    if (self.begin == self.end):
+      return str(self.begin)
+    else:
+      return str(self.begin) + "-" + str(self.end)
+  # }
+# }
+
+
+
+]b4_declare_symbol_enum[
+
+
 ]b4_parser_class_declaration[():
 # {
 ]b4_identification[
@@ -138,64 +205,6 @@ from enum import Enum
     return
 ]])[
 
-]b4_locations_if([[
-  # /**
-  #  * A class defining a pair of positions.  Positions, defined by the
-  #  * <code>]b4_position_type[</code> class, denote a point in the input.
-  #  * Locations represent a part of the input through the beginning
-  #  * and ending positions.
-  #  */
-  class ]b4_location_type[():
-    # /**
-    #  * The first, inclusive, position in the range.
-    #  */
-    def __init__(self, *args):
-      count = len(args)
-      self.begin = None
-      self.begin = None
-      if(count > 0):
-        self.begin = args[0]
-      if(count > 1):
-        self.end = args[1]
-      return
-    # public ]b4_position_type[ begin;
-
-    # /**
-    #  * The first position beyond the range.
-    #  */
-    # public ]b4_position_type[ end;
-
-    # /**
-    #  * Create a <code>]b4_location_type[</code> denoting an empty range located at
-    #  * a given point.
-    #  * @@param loc The position at which the range is anchored.
-    #  */
-    # public ]b4_location_type[ (]b4_position_type[ loc) {
-      # this.begin = this.end = loc;
-    # }
-
-    # /**
-    #  * Create a <code>]b4_location_type[</code> from the endpoints of the range.
-    #  * @@param begin The first position included in the range.
-    #  * @@param end   The first position beyond the range.
-    #  */
-    # public ]b4_location_type[ (]b4_position_type[ begin, ]b4_position_type[ end) {
-      # this.begin = begin;
-      # this.end = end;
-    # }
-
-    # /**
-    #  * Print a representation of the location.  For this to be correct,
-    #  * <code>]b4_position_type[</code> should override the <code>equals</code>
-    #  * method.
-    #  */
-    def __str__(self):
-      if (begin == end):
-        return str(begin)
-      else:
-        return str(begin) + "-" + str(end)
-    # }
-  # }
 
   def yylloc(rhs, n):
     if (0 < n):
@@ -203,8 +212,6 @@ from enum import Enum
     else:
       return ]b4_location_type[(rhs.locationAt(0).end)
   ]])[
-
-]b4_declare_symbol_enum[
 
   # /**
   #  * Communication interface between the scanner and the Bison-generated
@@ -355,8 +362,19 @@ from enum import Enum
   #  *]b4_locations_if([[ Use a <code>null</code> location.]])[
   #  * @@param msg The error message.
   #  */
-  def yyerror(self, msg):
-      yylexer.yyerror(]b4_locations_if([[(]b4_location_type[)null, ]])[msg);
+  def yyerror(self, *args):
+    if(len(args) == 1):
+      loc = None
+      msg = args[0]
+    else:
+      loc = args[0]
+      msg = args[1]
+      if(isinstance(loc, ]b4_position_type[)):
+        loc = ]b4_location_type[ (loc)
+      else:
+        assert(isinstance(loc, ]b4_location_type[))
+    self.yylexer.yyerror(loc, msg)
+    return
   
 ]b4_locations_if([[
   # /**
@@ -364,18 +382,18 @@ from enum import Enum
   #  * @@param loc The location associated with the message.
   #  * @@param msg The error message.
   #  */
-  def yyerror(]b4_location_type[ loc, String msg) {
-      yylexer.yyerror(loc, msg);
-  }
+  # def yyerror(]b4_location_type[ loc, String msg) {
+  #     yylexer.yyerror(loc, msg);
+  # }
 
-  /**
-   * Print an error message via the lexer.
-   * @@param pos The position associated with the message.
-   * @@param msg The error message.
-   */
-  public final void yyerror(]b4_position_type[ pos, String msg) {
-      yylexer.yyerror(new ]b4_location_type[ (pos), msg);
-  }]])[
+  # /**
+  #  * Print an error message via the lexer.
+  #  * @@param pos The position associated with the message.
+  #  * @@param msg The error message.
+  #  */
+  # public final void yyerror(]b4_position_type[ pos, String msg) {
+  #     yylexer.yyerror(new ]b4_location_type[ (pos), msg);
+  # }]])[
 ]b4_parse_trace_if([[
   protected final void yycdebugNnl(String s) {
     if (0 < yydebug)
