@@ -179,6 +179,69 @@ class ]b4_location_type[():
 ]b4_declare_symbol_enum[
 
 
+
+
+# /**
+#  * Communication interface between the scanner and the Bison-generated
+#  * parser <tt>]b4_parser_class[</tt>.
+#  */
+class Lexer():
+]b4_token_enums[
+  # /** Deprecated, use ]b4_symbol(eof, id)[ instead.  */
+  EOF = ]b4_symbol(eof, id)[
+]b4_pull_if([b4_locations_if([[
+  # /**
+  #  * Method to retrieve the beginning position of the last scanned token.
+  #  * @@return the position at which the last scanned token starts.
+  #  */
+  @abstractmethod
+  def getStartPos(): pass 
+
+  # /**
+  #  * Method to retrieve the ending position of the last scanned token.
+  #  * @@return the first position beyond the last scanned token.
+  #  */
+  @abstractmethod
+  def getEndPos(): pass]])[
+
+  # /**
+  #  * Method to retrieve the semantic value of the last scanned token.
+  #  * @@return the semantic value of the last scanned token.
+  #  */
+  @abstractmethod
+  def getLVal(): pass
+
+  # /**
+  #  * Entry point for the scanner.  Returns the token identifier corresponding
+  #  * to the next token and prepares to return the semantic value
+  #  * ]b4_locations_if([and beginning/ending positions ])[of the token.
+  #  * @@return the token identifier corresponding to the next token.
+  #  */
+  @abstractmethod
+  def yylex(): pass]b4_maybe_throws([b4_lex_throws])[;
+]])[
+  # /**
+  #  * Emit an error]b4_locations_if([ referring to the given location])[in a user-defined way.
+  #  *
+  #  *]b4_locations_if([[ @@param loc The location of the element to which the
+  #  *                error message is related.]])[
+  #  * @@param msg The string for the error message.
+  #  */
+  def yyerror(]b4_locations_if([loc, ])[msg): pass
+
+]b4_parse_error_bmatch(
+           [custom], [[
+  # /**
+  #  * Build and emit a "syntax error" message in a user-defined way.
+  #  *
+  #  * @@param ctx  The context of the error.
+  #  */
+  def reportSyntaxError(ctx): pass
+]])[
+  # }
+
+
+
 ]b4_parser_class_declaration[():
 # {
 ]b4_identification[
@@ -213,64 +276,6 @@ class ]b4_location_type[():
       return ]b4_location_type[(rhs.locationAt(0).end)
   ]])[
 
-  # /**
-  #  * Communication interface between the scanner and the Bison-generated
-  #  * parser <tt>]b4_parser_class[</tt>.
-  #  */
-  class Lexer():
-]b4_token_enums[
-    # /** Deprecated, use ]b4_symbol(eof, id)[ instead.  */
-    EOF = ]b4_symbol(eof, id)[
-]b4_pull_if([b4_locations_if([[
-    # /**
-    #  * Method to retrieve the beginning position of the last scanned token.
-    #  * @@return the position at which the last scanned token starts.
-    #  */
-    @abstractmethod
-    def getStartPos(): pass 
-
-    # /**
-    #  * Method to retrieve the ending position of the last scanned token.
-    #  * @@return the first position beyond the last scanned token.
-    #  */
-    @abstractmethod
-    def getEndPos(): pass]])[
-
-    # /**
-    #  * Method to retrieve the semantic value of the last scanned token.
-    #  * @@return the semantic value of the last scanned token.
-    #  */
-    @abstractmethod
-    def getLVal(): pass
-
-    # /**
-    #  * Entry point for the scanner.  Returns the token identifier corresponding
-    #  * to the next token and prepares to return the semantic value
-    #  * ]b4_locations_if([and beginning/ending positions ])[of the token.
-    #  * @@return the token identifier corresponding to the next token.
-    #  */
-    @abstractmethod
-    def yylex(): pass]b4_maybe_throws([b4_lex_throws])[;
-]])[
-    # /**
-    #  * Emit an error]b4_locations_if([ referring to the given location])[in a user-defined way.
-    #  *
-    #  *]b4_locations_if([[ @@param loc The location of the element to which the
-    #  *                error message is related.]])[
-    #  * @@param msg The string for the error message.
-    #  */
-    def yyerror(]b4_locations_if([loc, ])[msg): pass
-
-]b4_parse_error_bmatch(
-           [custom], [[
-    # /**
-    #  * Build and emit a "syntax error" message in a user-defined way.
-    #  *
-    #  * @@param ctx  The context of the error.
-    #  */
-    def reportSyntaxError(ctx): pass
-]])[
-  # }
 
 ]b4_lexer_if([[
   class YYLexer(Lexer):

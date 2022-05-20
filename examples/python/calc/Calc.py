@@ -393,6 +393,69 @@ class SymbolKind(Enum):
 
 
 
+
+
+# /**
+#  * Communication interface between the scanner and the Bison-generated
+#  * parser <tt>Calc</tt>.
+#  */
+class Lexer():
+    #/* Token kinds.  */
+  #/** Token "end of file", to be returned by the scanner.  */
+  YYEOF = 0
+  #/** Token error, to be returned by the scanner.  */
+  YYerror = 256
+  #/** Token "invalid token", to be returned by the scanner.  */
+  YYUNDEF = 257
+  #/** Token "!", to be returned by the scanner.  */
+  BANG = 258
+  #/** Token "+", to be returned by the scanner.  */
+  PLUS = 259
+  #/** Token "-", to be returned by the scanner.  */
+  MINUS = 260
+  #/** Token "*", to be returned by the scanner.  */
+  STAR = 261
+  #/** Token "/", to be returned by the scanner.  */
+  SLASH = 262
+  #/** Token "^", to be returned by the scanner.  */
+  CARET = 263
+  #/** Token "(", to be returned by the scanner.  */
+  LPAREN = 264
+  #/** Token ")", to be returned by the scanner.  */
+  RPAREN = 265
+  #/** Token "=", to be returned by the scanner.  */
+  EQUAL = 266
+  #/** Token "end of line", to be returned by the scanner.  */
+  EOL = 267
+  #/** Token "number", to be returned by the scanner.  */
+  NUM = 268
+  #/** Token NEG, to be returned by the scanner.  */
+  NEG = 269
+
+  # /** Deprecated, use YYEOF instead.  */
+  EOF = YYEOF
+
+  # /**
+  #  * Emit an error referring to the given locationin a user-defined way.
+  #  *
+  #  * @param loc The location of the element to which the
+  #  *                error message is related.
+  #  * @param msg The string for the error message.
+  #  */
+  def yyerror(loc, msg): pass
+
+
+  # /**
+  #  * Build and emit a "syntax error" message in a user-defined way.
+  #  *
+  #  * @param ctx  The context of the error.
+  #  */
+  def reportSyntaxError(ctx): pass
+
+  # }
+
+
+
 class Calc():
 # {
   
@@ -413,64 +476,6 @@ class Calc():
       return Location(rhs.locationAt(0).end)
   
 
-  # /**
-  #  * Communication interface between the scanner and the Bison-generated
-  #  * parser <tt>Calc</tt>.
-  #  */
-  class Lexer():
-    #/* Token kinds.  */
-    #/** Token "end of file", to be returned by the scanner.  */
-    YYEOF = 0
-    #/** Token error, to be returned by the scanner.  */
-    YYerror = 256
-    #/** Token "invalid token", to be returned by the scanner.  */
-    YYUNDEF = 257
-    #/** Token "!", to be returned by the scanner.  */
-    BANG = 258
-    #/** Token "+", to be returned by the scanner.  */
-    PLUS = 259
-    #/** Token "-", to be returned by the scanner.  */
-    MINUS = 260
-    #/** Token "*", to be returned by the scanner.  */
-    STAR = 261
-    #/** Token "/", to be returned by the scanner.  */
-    SLASH = 262
-    #/** Token "^", to be returned by the scanner.  */
-    CARET = 263
-    #/** Token "(", to be returned by the scanner.  */
-    LPAREN = 264
-    #/** Token ")", to be returned by the scanner.  */
-    RPAREN = 265
-    #/** Token "=", to be returned by the scanner.  */
-    EQUAL = 266
-    #/** Token "end of line", to be returned by the scanner.  */
-    EOL = 267
-    #/** Token "number", to be returned by the scanner.  */
-    NUM = 268
-    #/** Token NEG, to be returned by the scanner.  */
-    NEG = 269
-
-    # /** Deprecated, use YYEOF instead.  */
-    EOF = YYEOF
-
-    # /**
-    #  * Emit an error referring to the given locationin a user-defined way.
-    #  *
-    #  * @param loc The location of the element to which the
-    #  *                error message is related.
-    #  * @param msg The string for the error message.
-    #  */
-    def yyerror(loc, msg): pass
-
-
-    # /**
-    #  * Build and emit a "syntax error" message in a user-defined way.
-    #  *
-    #  * @param ctx  The context of the error.
-    #  */
-    def reportSyntaxError(ctx): pass
-
-  # }
 
 
   # /**
@@ -927,7 +932,7 @@ class Calc():
 
 
 
-#"Calc.py":931
+#"Calc.py":936
   #
   
 
@@ -1786,7 +1791,7 @@ class Calc():
  
   
 
-#"Calc.py":1790
+#"Calc.py":1795
   #
   
 
