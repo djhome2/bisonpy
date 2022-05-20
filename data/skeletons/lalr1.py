@@ -401,16 +401,16 @@ class Lexer():
   # }]])[
 ]b4_parse_trace_if([[
   def yycdebugNnl(self, s):
-    if (0 < self.yydebug)
-      self.yyDebugStream.print(s)
+    if (0 < self.yydebug):
+      print(s, file = self.yyDebugStream)
   
 
-  def yycdebug(s):
-    if (0 < self.yydebug)
-      self.yyDebugStream.println(s)
+  def yycdebug(self, s):
+    if (0 < self.yydebug):
+      print(s, file = self.yyDebugStream)
   ]])[
 
-  private final class YYStack {
+  class YYStack():
     private int[] stateStack = new int[16];]b4_locations_if([[
     private ]b4_location_type[[] locStack = new ]b4_location_type[[16];]])[
     private ]b4_yystype[[] valueStack = new ]b4_yystype[[16];
@@ -476,7 +476,7 @@ class Lexer():
       }
       out.println();
     }
-  }
+  # }
 
   /**
    * Returned by a Bison action in order to stop the parsing process and

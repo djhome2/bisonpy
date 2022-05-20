@@ -583,17 +583,17 @@ class Calc():
   #     yylexer.yyerror(new Location (pos), msg);
   # }
 
-  protected final void yycdebugNnl(String s) {
-    if (0 < yydebug)
-      yyDebugStream.print(s);
-  }
+  def yycdebugNnl(self, s):
+    if (0 < self.yydebug):
+      print(s, file = self.yyDebugStream)
+  
 
-  protected final void yycdebug(String s) {
-    if (0 < yydebug)
-      yyDebugStream.println(s);
-  }
+  def yycdebug(self, s):
+    if (0 < self.yydebug):
+      print(s, file = self.yyDebugStream)
+  
 
-  private final class YYStack {
+  class YYStack():
     private int[] stateStack = new int[16];
     private Location[] locStack = new Location[16];
     private Object[] valueStack = new Object[16];
@@ -659,7 +659,7 @@ class Calc():
       }
       out.println();
     }
-  }
+  # }
 
   /**
    * Returned by a Bison action in order to stop the parsing process and
