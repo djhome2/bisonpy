@@ -104,6 +104,7 @@
 # import java.util.ArrayList;
 from abc import ABCMeta,abstractmethod
 import sys
+from enum import Enum
 #"%code imports" blocks.
   #
   
@@ -121,7 +122,7 @@ import sys
   #import java.io.StreamTokenizer;
   #import java.nio.CharBuffer;
 
-#"Calc.py":125
+#"Calc.py":126
   #
   
 
@@ -205,95 +206,96 @@ class Calc():
   def yylloc(rhs, n):
     if (0 < n):
       return Location(rhs.locationAt(n-1).begin, rhs.locationAt(0).end);
-    else
+    else:
       return Location(rhs.locationAt(0).end);
   
 
-  public enum SymbolKind
-  {
-    S_YYEOF(0),                    #"end of file"
+  class SymbolKind(Enum):
+  # {
+    S_YYEOF = 0                    #"end of file"
   #
   
 
-    S_YYerror(1),                  #error
+    S_YYerror = 1                  #error
   #
   
 
-    S_YYUNDEF(2),                  #"invalid token"
+    S_YYUNDEF = 2                  #"invalid token"
   #
   
 
-    S_BANG(3),                     #"!"
+    S_BANG = 3                     #"!"
   #
   
 
-    S_PLUS(4),                     #"+"
+    S_PLUS = 4                     #"+"
   #
   
 
-    S_MINUS(5),                    #"-"
+    S_MINUS = 5                    #"-"
   #
   
 
-    S_STAR(6),                     #"*"
+    S_STAR = 6                     #"*"
   #
   
 
-    S_SLASH(7),                    #"/"
+    S_SLASH = 7                    #"/"
   #
   
 
-    S_CARET(8),                    #"^"
+    S_CARET = 8                    #"^"
   #
   
 
-    S_LPAREN(9),                   #"("
+    S_LPAREN = 9                   #"("
   #
   
 
-    S_RPAREN(10),                  #")"
+    S_RPAREN = 10                  #")"
   #
   
 
-    S_EQUAL(11),                   #"="
+    S_EQUAL = 11                   #"="
   #
   
 
-    S_EOL(12),                     #"end of line"
+    S_EOL = 12                     #"end of line"
   #
   
 
-    S_NUM(13),                     #"number"
+    S_NUM = 13                     #"number"
   #
   
 
-    S_NEG(14),                     #NEG
+    S_NEG = 14                     #NEG
   #
   
 
-    S_YYACCEPT(15),                #$accept
+    S_YYACCEPT = 15                #$accept
   #
   
 
-    S_input(16),                   #input
+    S_input = 16                   #input
   #
   
 
-    S_line(17),                    #line
+    S_line = 17                    #line
   #
   
 
-    S_exp(18);                     #exp
+    S_exp = 18                     #exp
   #
   
 
 
 
-    private final int yycode_;
+    # private final int yycode_;
 
-    SymbolKind (int n) {
-      this.yycode_ = n;
-    }
+    def __init__(self, n):
+      self.yycode_ = n
+      return
+    # }
 
     private static final SymbolKind[] values_ = {
       SymbolKind.S_YYEOF,
@@ -840,7 +842,7 @@ class Calc():
 
 
 
-#"Calc.py":844
+#"Calc.py":846
   #
   
 
@@ -1711,7 +1713,7 @@ private static final byte[] yycheck_ = yycheck_init();
     return s;
   
 
-#"Calc.py":1715
+#"Calc.py":1717
   #
   
 

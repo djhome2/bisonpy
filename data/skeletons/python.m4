@@ -184,10 +184,9 @@ m4_define([b4_symbol_kind],
 # Output the definition of this symbol as an enum.
 m4_define([b4_symbol_enum],
 [m4_format([    %-30s %s],
-           m4_format([[%s(%s)%s]],
+           m4_format([[%s = %s]],
                      b4_symbol([$1], [kind_base]),
-                     [$1],
-                     m4_if([$1], b4_last_symbol, [[;]], [[,]])),
+                     [$1]),
            [b4_symbol_tag_comment([$1])])])
 
 
@@ -195,15 +194,16 @@ m4_define([b4_symbol_enum],
 # ----------------------
 # The definition of the symbol internal numbers as an enum.
 m4_define([b4_declare_symbol_enum],
-[[  public enum SymbolKind
-  {
+[[  class SymbolKind(Enum):
+  # {
 ]b4_symbol_foreach([b4_symbol_enum])[
 
-    private final int yycode_;
+    # private final int yycode_;
 
-    SymbolKind (int n) {
-      this.yycode_ = n;
-    }
+    def __init__(self, n):
+      self.yycode_ = n
+      return
+    # }
 
     private static final SymbolKind[] values_ = {
       ]m4_map_args_sep([b4_symbol_kind(], [)], [,

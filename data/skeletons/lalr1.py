@@ -105,6 +105,7 @@ b4_output_begin([b4_parser_file_name])[
 # import java.util.ArrayList;
 from abc import ABCMeta,abstractmethod
 import sys
+from enum import Enum
 ]b4_percent_code_get([[imports]])[
 # 
 #  A Bison parser, automatically generated from <tt>]m4_bpatsubst(b4_file_name, [^"\(.*\)"$], [\1])[</tt>.
