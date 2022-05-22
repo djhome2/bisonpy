@@ -57,27 +57,27 @@ b4_use_push_for_pull_if([
 # or as class instance variable when doing push parsing.
 m4_define([b4_define_state],
 [[
-    /* Lookahead token kind.  */
-    int yychar = YYEMPTY_;
-    /* Lookahead symbol kind.  */
-    SymbolKind yytoken = null;
+  # /* Lookahead token kind.  */
+  yychar = YYEMPTY_
+  # /* Lookahead symbol kind.  */
+  yytoken = None
 
-    /* State.  */
-    int yyn = 0;
-    int yylen = 0;
-    int yystate = 0;
-    YYStack yystack = new YYStack ();
-    int label = YYNEWSTATE;
+  # /* State.  */
+  yyn = 0
+  yylen = 0
+  yystate = 0
+  yystack = YYStack ()
+  label = YYNEWSTATE
 
 ]b4_locations_if([[
-    /* The location where the error started.  */
-    ]b4_location_type[ yyerrloc = null;
+  # /* The location where the error started.  */
+  yyerrloc = None
 
-    /* Location. */
-    ]b4_location_type[ yylloc = new ]b4_location_type[ (null, null);]])[
+  # /* Location. */
+  yylloc = ]b4_location_type[ (None, None)]])[
 
-    /* Semantic value of the lookahead.  */
-    ]b4_yystype[ yylval = null;
+  # /* Semantic value of the lookahead.  */
+  yylval = None
 ]])
 
 # parse.lac
@@ -240,7 +240,10 @@ class Lexer():
 ]])[
   # }
 
-
+YYLAST_ = ]b4_last[
+YYEMPTY_ = -2
+YYFINAL_ = ]b4_final_state_number[
+YYNTOKENS_ = ]b4_tokens_number[
 
 ]b4_parser_class_declaration[():
 # {
@@ -495,71 +498,71 @@ class Lexer():
   #  * Returned by a Bison action in order to stop the parsing process and
   #  * return success (<tt>true</tt>).
   #  */
-  public static final int YYACCEPT = 0;
+  YYACCEPT = 0
 
-  /**
-   * Returned by a Bison action in order to stop the parsing process and
-   * return failure (<tt>false</tt>).
-   */
-  public static final int YYABORT = 1;
+  # /**
+  #  * Returned by a Bison action in order to stop the parsing process and
+  #  * return failure (<tt>false</tt>).
+  #  */
+  YYABORT = 1
 
 ]b4_push_if([
-  /**
-   * Returned by a Bison action in order to request a new token.
-   */
-  public static final int YYPUSH_MORE = 4;])[
+  # /**
+  #  * Returned by a Bison action in order to request a new token.
+  #  */
+  YYPUSH_MORE = 4])[
 
-  /**
-   * Returned by a Bison action in order to start error recovery without
-   * printing an error message.
-   */
-  public static final int YYERROR = 2;
+  # /**
+  #  * Returned by a Bison action in order to start error recovery without
+  #  * printing an error message.
+  #  */
+  YYERROR = 2
 
-  /**
-   * Internal return codes that are not supported for user semantic
-   * actions.
-   */
-  private static final int YYERRLAB = 3;
-  private static final int YYNEWSTATE = 4;
-  private static final int YYDEFAULT = 5;
-  private static final int YYREDUCE = 6;
-  private static final int YYERRLAB1 = 7;
-  private static final int YYRETURN = 8;
-]b4_push_if([[  private static final int YYGETTOKEN = 9; /* Signify that a new token is expected when doing push-parsing.  */]])[
+  # /**
+  #  * Internal return codes that are not supported for user semantic
+  #  * actions.
+  #  */
+  YYERRLAB = 3
+  YYNEWSTATE = 4
+  YYDEFAULT = 5
+  YYREDUCE = 6
+  YYERRLAB1 = 7
+  YYRETURN = 8
+]b4_push_if([[  YYGETTOKEN = 9# /* Signify that a new token is expected when doing push-parsing.  */]])[
 
-  private int yyerrstatus_ = 0;
+  yyerrstatus_ = 0
 
 ]b4_push_if([b4_define_state])[
-  /**
-   * Whether error recovery is being done.  In this state, the parser
-   * reads token until it reaches a known state, and then restarts normal
-   * operation.
-   */
-  public final boolean recovering ()
-  {
-    return yyerrstatus_ == 0;
-  }
+  # /**
+  #  * Whether error recovery is being done.  In this state, the parser
+  #  * reads token until it reaches a known state, and then restarts normal
+  #  * operation.
+  #  */
+  def recovering (self):
+  
+    return self.yyerrstatus_ == 0
+  
 
-  /** Compute post-reduction state.
-   * @@param yystate   the current state
-   * @@param yysym     the nonterminal to push on the stack
-   */
-  private int yyLRGotoState(int yystate, int yysym) {
-    int yyr = yypgoto_[yysym - YYNTOKENS_] + yystate;
-    if (0 <= yyr && yyr <= YYLAST_ && yycheck_[yyr] == yystate)
-      return yytable_[yyr];
+  # /** Compute post-reduction state.
+  #  * @@param yystate   the current state
+  #  * @@param yysym     the nonterminal to push on the stack
+  #  */
+  def yyLRGotoState(self, yystate, yysym):
+    yyr = yypgoto_[yysym - YYNTOKENS_] + yystate
+    if (0 <= yyr and yyr <= YYLAST_ and yycheck_[yyr] == yystate):
+      return yytable_[yyr]
     else
-      return yydefgoto_[yysym - YYNTOKENS_];
-  }
+      return yydefgoto_[yysym - YYNTOKENS_]
+  
 
-  private int yyaction(int yyn, YYStack yystack, int yylen)]b4_maybe_throws([b4_throws])[
-  {
-    /* If YYLEN is nonzero, implement the default value of the action:
-       '$$ = $1'.  Otherwise, use the top of the stack.
+  def yyaction(yyn, yystack, yylen)]b4_maybe_throws([b4_throws])[:
+  
+    # /* If YYLEN is nonzero, implement the default value of the action:
+    #    '$$ = $1'.  Otherwise, use the top of the stack.
 
-       Otherwise, the following line sets YYVAL to garbage.
-       This behavior is undocumented and Bison
-       users should not rely upon it.  */
+    #    Otherwise, the following line sets YYVAL to garbage.
+    #    This behavior is undocumented and Bison
+    #    users should not rely upon it.  */
     ]b4_yystype[ yyval = (0 < yylen) ? yystack.valueAt(yylen - 1) : yystack.valueAt(0);]b4_locations_if([[
     ]b4_location_type[ yyloc = yylloc(yystack, yylen);]])[]b4_parse_trace_if([[
 
@@ -579,7 +582,7 @@ class Lexer():
     int yystate = yyLRGotoState(yystack.stateAt(0), yyr1_[yyn]);
     yystack.push(yystate, yyval]b4_locations_if([, yyloc])[);
     return YYNEWSTATE;
-  }
+  
 
 ]b4_parse_trace_if([[
   /*--------------------------------.
@@ -1352,10 +1355,7 @@ b4_dollar_popdef[]dnl
   ]b4_integral_parser_table_define([translate_table], [b4_translate])[
 ]])[
 
-  private static final int YYLAST_ = ]b4_last[;
-  private static final int YYEMPTY_ = -2;
-  private static final int YYFINAL_ = ]b4_final_state_number[;
-  private static final int YYNTOKENS_ = ]b4_tokens_number[;
+
 
 ]b4_percent_code_get[
 }

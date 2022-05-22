@@ -454,7 +454,10 @@ class Lexer():
 
   # }
 
-
+YYLAST_ = 77
+YYEMPTY_ = -2
+YYFINAL_ = 15
+YYNTOKENS_ = 15
 
 class Calc():
 # {
@@ -678,93 +681,93 @@ class Calc():
   #  * Returned by a Bison action in order to stop the parsing process and
   #  * return success (<tt>true</tt>).
   #  */
-  public static final int YYACCEPT = 0;
+  YYACCEPT = 0
 
-  /**
-   * Returned by a Bison action in order to stop the parsing process and
-   * return failure (<tt>false</tt>).
-   */
-  public static final int YYABORT = 1;
-
-
-  /**
-   * Returned by a Bison action in order to request a new token.
-   */
-  public static final int YYPUSH_MORE = 4;
-
-  /**
-   * Returned by a Bison action in order to start error recovery without
-   * printing an error message.
-   */
-  public static final int YYERROR = 2;
-
-  /**
-   * Internal return codes that are not supported for user semantic
-   * actions.
-   */
-  private static final int YYERRLAB = 3;
-  private static final int YYNEWSTATE = 4;
-  private static final int YYDEFAULT = 5;
-  private static final int YYREDUCE = 6;
-  private static final int YYERRLAB1 = 7;
-  private static final int YYRETURN = 8;
-  private static final int YYGETTOKEN = 9; /* Signify that a new token is expected when doing push-parsing.  */
-
-  private int yyerrstatus_ = 0;
+  # /**
+  #  * Returned by a Bison action in order to stop the parsing process and
+  #  * return failure (<tt>false</tt>).
+  #  */
+  YYABORT = 1
 
 
-    /* Lookahead token kind.  */
-    int yychar = YYEMPTY_;
-    /* Lookahead symbol kind.  */
-    SymbolKind yytoken = null;
+  # /**
+  #  * Returned by a Bison action in order to request a new token.
+  #  */
+  YYPUSH_MORE = 4
 
-    /* State.  */
-    int yyn = 0;
-    int yylen = 0;
-    int yystate = 0;
-    YYStack yystack = new YYStack ();
-    int label = YYNEWSTATE;
+  # /**
+  #  * Returned by a Bison action in order to start error recovery without
+  #  * printing an error message.
+  #  */
+  YYERROR = 2
+
+  # /**
+  #  * Internal return codes that are not supported for user semantic
+  #  * actions.
+  #  */
+  YYERRLAB = 3
+  YYNEWSTATE = 4
+  YYDEFAULT = 5
+  YYREDUCE = 6
+  YYERRLAB1 = 7
+  YYRETURN = 8
+  YYGETTOKEN = 9# /* Signify that a new token is expected when doing push-parsing.  */
+
+  yyerrstatus_ = 0
 
 
-    /* The location where the error started.  */
-    Location yyerrloc = null;
+  # /* Lookahead token kind.  */
+  yychar = YYEMPTY_
+  # /* Lookahead symbol kind.  */
+  yytoken = None
 
-    /* Location. */
-    Location yylloc = new Location (null, null);
+  # /* State.  */
+  yyn = 0
+  yylen = 0
+  yystate = 0
+  yystack = YYStack ()
+  label = YYNEWSTATE
 
-    /* Semantic value of the lookahead.  */
-    Object yylval = null;
 
-  /**
-   * Whether error recovery is being done.  In this state, the parser
-   * reads token until it reaches a known state, and then restarts normal
-   * operation.
-   */
-  public final boolean recovering ()
-  {
-    return yyerrstatus_ == 0;
-  }
+  # /* The location where the error started.  */
+  yyerrloc = None
 
-  /** Compute post-reduction state.
-   * @param yystate   the current state
-   * @param yysym     the nonterminal to push on the stack
-   */
-  private int yyLRGotoState(int yystate, int yysym) {
-    int yyr = yypgoto_[yysym - YYNTOKENS_] + yystate;
-    if (0 <= yyr && yyr <= YYLAST_ && yycheck_[yyr] == yystate)
-      return yytable_[yyr];
+  # /* Location. */
+  yylloc = Location (None, None)
+
+  # /* Semantic value of the lookahead.  */
+  yylval = None
+
+  # /**
+  #  * Whether error recovery is being done.  In this state, the parser
+  #  * reads token until it reaches a known state, and then restarts normal
+  #  * operation.
+  #  */
+  def recovering (self):
+  
+    return self.yyerrstatus_ == 0
+  
+
+  # /** Compute post-reduction state.
+  #  * @param yystate   the current state
+  #  * @param yysym     the nonterminal to push on the stack
+  #  */
+  def yyLRGotoState(self, yystate, yysym):
+    yyr = yypgoto_[yysym - YYNTOKENS_] + yystate
+    if (0 <= yyr and yyr <= YYLAST_ and yycheck_[yyr] == yystate):
+      return yytable_[yyr]
     else
-      return yydefgoto_[yysym - YYNTOKENS_];
-  }
+      return yydefgoto_[yysym - YYNTOKENS_]
+  
 
-  private int yyaction(int yyn, YYStack yystack, int yylen)
-  {
-    /* If YYLEN is nonzero, implement the default value of the action:
-       '$$ = $1'.  Otherwise, use the top of the stack.
+  def yyaction(yyn, yystack, yylen):
+  
+    # /* If YYLEN is nonzero, implement the default value of the action:
+    #    '$$ = $1'.  Otherwise, use the top of the stack.
 
-       Otherwise, the following line sets YYVAL to garbage.
-       This behavior is undocumented and Bison
-       users should not rely upon it.  */
+    #    Otherwise, the following line sets YYVAL to garbage.
+    #    This behavior is undocumented and Bison
+    #    users should not rely upon it.  */
     Object yyval = (0 < yylen) ? yystack.valueAt(yylen - 1) : yystack.valueAt(0);
     Location yyloc = yylloc(yystack, yylen);
 
@@ -945,7 +948,7 @@ class Calc():
 
 
 
-#"Calc.py":949
+#"Calc.py":952
   #
   
 
@@ -961,7 +964,7 @@ class Calc():
     int yystate = yyLRGotoState(yystack.stateAt(0), yyr1_[yyn]);
     yystack.push(yystate, yyval, yyloc);
     return YYNEWSTATE;
-  }
+  
 
 
   /*--------------------------------.
@@ -1768,10 +1771,7 @@ class Calc():
   
 
 
-  private static final int YYLAST_ = 77;
-  private static final int YYEMPTY_ = -2;
-  private static final int YYFINAL_ = 15;
-  private static final int YYNTOKENS_ = 15;
+
 
 #Unqualified %code blocks.
   #
