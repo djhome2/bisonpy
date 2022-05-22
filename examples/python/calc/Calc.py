@@ -594,77 +594,90 @@ class Calc():
   
 
   class YYStack():
-    private int[] stateStack = new int[16];
-    private Location[] locStack = new Location[16];
-    private Object[] valueStack = new Object[16];
+    # private int[] stateStack = new int[16];
+    stateStack = []
+    # private Location[] locStack = new Location[16];
+    locStack = []
+    # private Object[] valueStack = new Object[16];
+    valueStack = []
 
-    public int size = 16;
-    public int height = -1;
+    # size = 16
+    height = -1
 
-    public final void push(int state, Object value, Location loc) {
-      height++;
-      if (size == height) {
-        int[] newStateStack = new int[size * 2];
-        System.arraycopy(stateStack, 0, newStateStack, 0, height);
-        stateStack = newStateStack;
-        Location[] newLocStack = new Location[size * 2];
-        System.arraycopy(locStack, 0, newLocStack, 0, height);
-        locStack = newLocStack;
+    def setAt(self, list2, index, value):
+      if(index < len(list2)):
+        list2[index] = value
+      else:
+        list2.insert(index, value)
 
-        Object[] newValueStack = new Object[size * 2];
-        System.arraycopy(valueStack, 0, newValueStack, 0, height);
-        valueStack = newValueStack;
+    def push(self, state, value, loc):
+      self.height += 1
+      # if (self.size == self.height):
+      #   newStateStack = [0] * (size * 2)
+      #   System.arraycopy(stateStack, 0, newStateStack, 0, height);
+      #   stateStack = newStateStack;
+      #   Location[] newLocStack = new Location[size * 2];
+      #   System.arraycopy(locStack, 0, newLocStack, 0, height);
+      #   locStack = newLocStack;
 
-        size *= 2;
-      }
+      #   Object[] newValueStack = new Object[size * 2];
+      #   System.arraycopy(valueStack, 0, newValueStack, 0, height);
+      #   valueStack = newValueStack;
 
-      stateStack[height] = state;
-      locStack[height] = loc;
-      valueStack[height] = value;
-    }
+      #   size *= 2;
+      # }
 
-    public final void pop() {
-      pop(1);
-    }
+      # stateStack[height] = state;
+      # locStack[height] = loc;
+      # valueStack[height] = value;
+      self.setAt(self.stateStack, self.height, state)
+      self.setAt(self.locStack, self.height, loc)
+      self.setAt(self.valueStack, self.height, value)
+      return
+    # }
 
-    public final void pop(int num) {
-      // Avoid memory leaks... garbage collection is a white lie!
-      if (0 < num) {
-        java.util.Arrays.fill(valueStack, height - num + 1, height + 1, null);
-        java.util.Arrays.fill(locStack, height - num + 1, height + 1, null);
-      }
-      height -= num;
-    }
+    # def pop() {
+    #   pop(1);
+    # }
 
-    public final int stateAt(int i) {
-      return stateStack[height - i];
-    }
+    def pop(self, num=1):
+      # // Avoid memory leaks... garbage collection is a white lie!
+      # if (0 < num) {
+      #   java.util.Arrays.fill(valueStack, height - num + 1, height + 1, null);
+      #   java.util.Arrays.fill(locStack, height - num + 1, height + 1, null);
+      # }
+      self.height -= num
+    
+
+    def stateAt(self, i):
+      return self.stateStack[self.height - i]
+    
 
 
-    public final Location locationAt(int i) {
-      return locStack[height - i];
-    }
+    def locationAt(self, i):
+      return self.locStack[self.height - i]
+    
 
-    public final Object valueAt(int i) {
-      return valueStack[height - i];
-    }
+    def valueAt(self, i):
+      return self.valueStack[self.height - i]
+    
 
-    // Print the state stack on the debug stream.
-    public void print(java.io.PrintStream out) {
-      out.print ("Stack now");
+    # // Print the state stack on the debug stream.
+    def printf(self, out):
+      print("Stack now", file = out)
 
-      for (int i = 0; i <= height; i++) {
-        out.print(' ');
-        out.print(stateStack[i]);
-      }
-      out.println();
-    }
+      for i in range(self.height + 1):
+        print(' ', file = out)
+        print(self.stateStack[i], file = out)
+      
+      print('', file = out)
+    
   # }
 
-  /**
-   * Returned by a Bison action in order to stop the parsing process and
-   * return success (<tt>true</tt>).
-   */
+  # /**
+  #  * Returned by a Bison action in order to stop the parsing process and
+  #  * return success (<tt>true</tt>).
+  #  */
   public static final int YYACCEPT = 0;
 
   /**
@@ -932,7 +945,7 @@ class Calc():
 
 
 
-#"Calc.py":936
+#"Calc.py":949
   #
   
 
@@ -1791,7 +1804,7 @@ class Calc():
  
   
 
-#"Calc.py":1795
+#"Calc.py":1808
   #
   
 
