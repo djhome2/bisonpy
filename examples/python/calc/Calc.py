@@ -753,14 +753,14 @@ class Calc():
   #  * @param yysym     the nonterminal to push on the stack
   #  */
   def yyLRGotoState(self, yystate, yysym):
-    yyr = yypgoto_[yysym - YYNTOKENS_] + yystate
-    if (0 <= yyr and yyr <= YYLAST_ and yycheck_[yyr] == yystate):
-      return yytable_[yyr]
-    else
-      return yydefgoto_[yysym - YYNTOKENS_]
+    yyr = self.yypgoto_[yysym - YYNTOKENS_] + yystate
+    if (0 <= yyr and yyr <= YYLAST_ and self.yycheck_[yyr] == yystate):
+      return self.yytable_[yyr]
+    else:
+      return self.yydefgoto_[yysym - YYNTOKENS_]
   
 
-  def yyaction(yyn, yystack, yylen):
+  def yyaction(self, yyn, yystack, yylen):
   
     # /* If YYLEN is nonzero, implement the default value of the action:
     #    '$$ = $1'.  Otherwise, use the top of the stack.
