@@ -245,6 +245,16 @@ YYEMPTY_ = -2
 YYFINAL_ = ]b4_final_state_number[
 YYNTOKENS_ = ]b4_tokens_number[
 
+
+
+def yylloc(rhs, n):
+  if (0 < n):
+    return ]b4_location_type[(rhs.locationAt(n-1).begin, rhs.locationAt(0).end)
+  else:
+    return ]b4_location_type[(rhs.locationAt(0).end)
+]])[
+
+
 ]b4_parser_class_declaration[():
 # {
 ]b4_identification[
@@ -272,12 +282,6 @@ YYNTOKENS_ = ]b4_tokens_number[
 ]])[
 
 
-  def yylloc(rhs, n):
-    if (0 < n):
-      return ]b4_location_type[(rhs.locationAt(n-1).begin, rhs.locationAt(0).end)
-    else:
-      return ]b4_location_type[(rhs.locationAt(0).end)
-  ]])[
 
 
 ]b4_lexer_if([[
@@ -555,18 +559,22 @@ YYNTOKENS_ = ]b4_tokens_number[
       return self.yydefgoto_[yysym - YYNTOKENS_]
   
 
-  def yyaction(self, yyn, yystack, yylen)]b4_maybe_throws([b4_throws])[:
+  def yyaction(self, yyn, yystack, yylen):
   
     # /* If YYLEN is nonzero, implement the default value of the action:
     #    '$$ = $1'.  Otherwise, use the top of the stack.
 
     #    Otherwise, the following line sets YYVAL to garbage.
     #    This behavior is undocumented and Bison
-    #    users should not rely upon it.  */
-    ]b4_yystype[ yyval = (0 < yylen) ? yystack.valueAt(yylen - 1) : yystack.valueAt(0);]b4_locations_if([[
-    ]b4_location_type[ yyloc = yylloc(yystack, yylen);]])[]b4_parse_trace_if([[
+    #    users should not rely upon it.  */     
+    if(0 < yylen):
+      yyval = yystack.valueAt(yylen - 1)
+    else:
+      yyval = yystack.valueAt(0)
+    yyloc = yylloc(yystack, yylen)
+    ]b4_parse_trace_if([[
 
-    yyReducePrint(yyn, yystack);]])[
+    self.yyReducePrint(yyn, yystack)]])[
 
     switch (yyn)
       {
