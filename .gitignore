@@ -3,5 +3,4 @@
 .dirstamp
 *.class
 *.log
-src/bison
 *.a

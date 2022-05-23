@@ -53,11 +53,9 @@
 extern int gram_debug;
 #endif
 /* "%code requires" blocks.  */
-#line 21 "src/parse-gram.y"
 
   #include "symlist.h"
   #include "symtab.h"
-#line 268 "src/parse-gram.y"
 
   typedef enum
   {
@@ -66,7 +64,6 @@ extern int gram_debug;
     param_parse  = 1 << 1,
     param_both   = param_lex | param_parse
   } param_type;
-#line 737 "src/parse-gram.y"
 
   #include "muscle-tab.h"
   typedef struct
@@ -75,7 +72,6 @@ extern int gram_debug;
     muscle_kind kind;
   } value_type;
 
-#line 79 "src/parse-gram.h"
 
 /* Token kinds.  */
 #ifndef GRAM_TOKENTYPE
@@ -196,7 +192,6 @@ union GRAM_STYPE
   unsigned char CHAR_LITERAL;              /* "character literal"  */
   value_type value;                        /* value  */
 
-#line 200 "src/parse-gram.h"
 
 };
 typedef union GRAM_STYPE GRAM_STYPE;
@@ -224,13 +219,11 @@ struct GRAM_LTYPE
 int gram_parse (void);
 
 /* "%code provides" blocks.  */
-#line 27 "src/parse-gram.y"
 
   /* Initialize unquote.  */
   void parser_init (void);
   /* Deallocate storage for unquote.  */
   void parser_free (void);
 
-#line 235 "src/parse-gram.h"
 
 #endif /* !YY_GRAM_SRC_PARSE_GRAM_H_INCLUDED  */

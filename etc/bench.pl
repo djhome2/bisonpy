@@ -171,7 +171,7 @@ Verbosity level.
 =cut
 
 my $bench;
-my $bison = $ENV{'BISON'} || '/home/dj/source/bisonpy/tests/bison';
+my $bison = $ENV{'BISON'} || '/home/dj/bisonpy/tests/bison';
 my $cc = $ENV{'CC'} || 'gcc';
 my $cxx = $ENV{'CXX'} || 'g++ -std=c++11';
 my $cflags = '-O2';

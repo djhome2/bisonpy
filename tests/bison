@@ -17,8 +17,8 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-abs_top_srcdir='/home/dj/source/bisonpy'
-abs_top_builddir='/home/dj/source/bisonpy'
+abs_top_srcdir='/home/dj/bisonpy'
+abs_top_builddir='/home/dj/bisonpy'
 : ${PERL='/usr/bin/perl'}
 
 # Use the shipped files, not those installed.
