@@ -43,6 +43,8 @@
   #import java.io.StreamTokenizer;
   #import java.nio.CharBuffer;
 
+import math
+
 def i18n(s):
   return s;
 
@@ -185,15 +187,15 @@ exp:
 | "-" exp  %prec NEG { 
       $$ = -$2; }
 | exp "^" exp        { 
-      $$ = (int) Math.pow($1, $3); }
+      $$ = math.pow($1, $3); }
 | "(" exp ")"        { 
       $$ = $2; }
 | "(" error ")"      { 
       $$ = 1111; }
 | "!"                { 
-      $$ = 0; return YYERROR; }
+      $$ = 0; return self.YYERROR; }
 | "-" error          { 
-      $$ = 0; return YYERROR; }
+      $$ = 0; return self.YYERROR; }
 ;
 
 %%

@@ -122,6 +122,8 @@ from enum import Enum
   #import java.io.StreamTokenizer;
   #import java.nio.CharBuffer;
 
+import math
+
 def i18n(s):
   return s;
 
@@ -183,7 +185,7 @@ class Position():
   
 
 
-#"Calc.py":187
+#"Calc.py":189
   #
   
 
@@ -788,7 +790,7 @@ class Calc():
   
 
     if (yyn == 5):     
-      #"Calc.y":163
+      #"Calc.y":165
   #
   
 
@@ -803,7 +805,7 @@ class Calc():
   
 
     if (yyn == 7):     
-      #"Calc.y":170
+      #"Calc.y":172
   #
   
 
@@ -817,7 +819,7 @@ class Calc():
   
 
     if (yyn == 8):     
-      #"Calc.y":173
+      #"Calc.y":175
   #
   
 
@@ -833,7 +835,7 @@ class Calc():
   
 
     if (yyn == 9):     
-      #"Calc.y":177
+      #"Calc.y":179
   #
   
 
@@ -847,7 +849,7 @@ class Calc():
   
 
     if (yyn == 10):     
-      #"Calc.y":179
+      #"Calc.y":181
   #
   
 
@@ -861,7 +863,7 @@ class Calc():
   
 
     if (yyn == 11):     
-      #"Calc.y":181
+      #"Calc.y":183
   #
   
 
@@ -875,7 +877,7 @@ class Calc():
   
 
     if (yyn == 12):     
-      #"Calc.y":183
+      #"Calc.y":185
   #
   
 
@@ -889,7 +891,7 @@ class Calc():
   
 
     if (yyn == 13):     
-      #"Calc.y":185
+      #"Calc.y":187
   #
   
 
@@ -903,12 +905,12 @@ class Calc():
   
 
     if (yyn == 14):     
-      #"Calc.y":187
+      #"Calc.y":189
   #
   
 
                       
-      yyval = (int) Math.pow(yystack.valueAt (2), yystack.valueAt (0)); 
+      yyval = math.pow(yystack.valueAt (2), yystack.valueAt (0)); 
   # break;
 
 
@@ -917,7 +919,7 @@ class Calc():
   
 
     if (yyn == 15):     
-      #"Calc.y":189
+      #"Calc.y":191
   #
   
 
@@ -931,7 +933,7 @@ class Calc():
   
 
     if (yyn == 16):     
-      #"Calc.y":191
+      #"Calc.y":193
   #
   
 
@@ -945,12 +947,12 @@ class Calc():
   
 
     if (yyn == 17):     
-      #"Calc.y":193
+      #"Calc.y":195
   #
   
 
                       
-      yyval = 0; return YYERROR; 
+      yyval = 0; return self.YYERROR; 
   # break;
 
 
@@ -959,17 +961,17 @@ class Calc():
   
 
     if (yyn == 18):     
-      #"Calc.y":195
+      #"Calc.y":197
   #
   
 
                       
-      yyval = 0; return YYERROR; 
+      yyval = 0; return self.YYERROR; 
   # break;
 
 
 
-#"Calc.py":973
+#"Calc.py":975
   #
   
 
@@ -1717,8 +1719,8 @@ class Calc():
   
   def yyrline_init():  
       return (
-       0,   157,   157,   158,   162,   163,   166,   170,   172,   177,
-     179,   181,   183,   185,   187,   189,   191,   193,   195
+       0,   159,   159,   160,   164,   165,   168,   172,   174,   179,
+     181,   183,   185,   187,   189,   191,   193,   195,   197
     )
   yyrline_ = yyrline_init()
   
@@ -1798,7 +1800,7 @@ class Calc():
   #
   
 
-#"Calc.y":108
+#"Calc.y":110
   #
   
 
@@ -1825,13 +1827,13 @@ class Calc():
  
   
 
-#"Calc.py":1829
+#"Calc.py":1831
   #
   
 
 
 }
-#"Calc.y":199
+#"Calc.y":201
   #
   
 
