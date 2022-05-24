@@ -990,35 +990,42 @@ class Calc():
   
 
 
-  /*--------------------------------.
-  | Print this symbol on YYOUTPUT.  |
-  `--------------------------------*/
+  # /*--------------------------------.
+  # | Print this symbol on YYOUTPUT.  |
+  # `--------------------------------*/
 
-  private void yySymbolPrint(String s, SymbolKind yykind,
-                             Object yyvalue, Location yylocation) {
-      if (0 < yydebug) {
-          yycdebug(s
-                   + (yykind.getCode() < YYNTOKENS_ ? " token " : " nterm ")
+  def yySymbolPrint(self, s, yykind, yyvalue, yylocation):
+      if (0 < self.yydebug):
+        if(yykind.getCode() < YYNTOKENS_):
+          sToken = " token "
+        else:
+          sToken = " nterm "
+        if(yyvalue == None):
+          s_yyvalue = "(null)"
+        else:
+          s_yyvalue = str(yyvalue)
+        self.yycdebug(s
+                   + sToken
                    + yykind.getName() + " ("
                    + yylocation + ": "
-                   + (yyvalue == null ? "(null)" : yyvalue.toString()) + ")");
-      }
-  }
+                   + s_yyvalue + ")")
+      
+  
 
 
 
-  /**
-   * Push Parse input from external lexer
-   *
-   * @param yylextoken current token
-   * @param yylexval current lval
-   * @param yylexloc current position
-   *
-   * @return <tt>YYACCEPT, YYABORT, YYPUSH_MORE</tt>
-   */
-  public int push_parse(int yylextoken, Object yylexval, Location yylexloc) throws java.io.IOException
-  {
-    /* @$.  */
+  # /**
+  #  * Push Parse input from external lexer
+  #  *
+  #  * @param yylextoken current token
+  #  * @param yylexval current lval
+  #  * @param yylexloc current position
+  #  *
+  #  * @return <tt>YYACCEPT, YYABORT, YYPUSH_MORE</tt>
+  #  */
+  def push_parse(yylextoken, yylexval, yylexloc):
+  
+    # /* @$.  */
     Location yyloc;
 
 
@@ -1827,7 +1834,7 @@ class Calc():
  
   
 
-#"Calc.py":1831
+#"Calc.py":1838
   #
   
 

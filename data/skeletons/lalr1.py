@@ -593,43 +593,50 @@ def yylloc(rhs, n):
   
 
 ]b4_parse_trace_if([[
-  /*--------------------------------.
-  | Print this symbol on YYOUTPUT.  |
-  `--------------------------------*/
+  # /*--------------------------------.
+  # | Print this symbol on YYOUTPUT.  |
+  # `--------------------------------*/
 
-  private void yySymbolPrint(String s, SymbolKind yykind,
-                             ]b4_yystype[ yyvalue]b4_locations_if([, ]b4_location_type[ yylocation])[) {
-      if (0 < yydebug) {
-          yycdebug(s
-                   + (yykind.getCode() < YYNTOKENS_ ? " token " : " nterm ")
+  def yySymbolPrint(self, s, yykind, yyvalue, yylocation):
+      if (0 < self.yydebug):
+        if(yykind.getCode() < YYNTOKENS_):
+          sToken = " token "
+        else:
+          sToken = " nterm "
+        if(yyvalue == None):
+          s_yyvalue = "(null)"
+        else:
+          s_yyvalue = str(yyvalue)
+        self.yycdebug(s
+                   + sToken
                    + yykind.getName() + " ("]b4_locations_if([
                    + yylocation + ": "])[
-                   + (yyvalue == null ? "(null)" : yyvalue.toString()) + ")");
-      }
-  }]])[
+                   + s_yyvalue + ")")
+      
+  ]])[
 
 ]b4_push_if([],[[
-  /**
-   * Parse input from the scanner that was specified at object construction
-   * time.  Return whether the end of the input was reached successfully.
-   *
-   * @@return <tt>true</tt> if the parsing succeeds.  Note that this does not
-   *          imply that there were no syntax errors.
-   */
-  public boolean parse()]b4_maybe_throws([b4_list2([b4_lex_throws], [b4_throws])])[]])[
+  # /**
+  #  * Parse input from the scanner that was specified at object construction
+  #  * time.  Return whether the end of the input was reached successfully.
+  #  *
+  #  * @@return <tt>true</tt> if the parsing succeeds.  Note that this does not
+  #  *          imply that there were no syntax errors.
+  #  */
+  def parse()]b4_maybe_throws([b4_list2([b4_lex_throws], [b4_throws])])[]])[
 ]b4_push_if([
-  /**
-   * Push Parse input from external lexer
-   *
-   * @@param yylextoken current token
-   * @@param yylexval current lval]b4_locations_if([[
-   * @@param yylexloc current position]])[
-   *
-   * @@return <tt>YYACCEPT, YYABORT, YYPUSH_MORE</tt>
-   */
-  public int push_parse(int yylextoken, b4_yystype yylexval[]b4_locations_if([, b4_location_type yylexloc]))b4_maybe_throws([b4_list2([b4_lex_throws], [b4_throws])])])[
-  {]b4_locations_if([[
-    /* @@$.  */
+  # /**
+  #  * Push Parse input from external lexer
+  #  *
+  #  * @@param yylextoken current token
+  #  * @@param yylexval current lval]b4_locations_if([[
+  #  * @@param yylexloc current position]])[
+  #  *
+  #  * @@return <tt>YYACCEPT, YYABORT, YYPUSH_MORE</tt>
+  #  */
+  def push_parse(yylextoken, yylexval[]b4_locations_if([, yylexloc]))])[:
+  ]b4_locations_if([[
+    # /* @@$.  */
     ]b4_location_type[ yyloc;]])[
 ]b4_push_if([],[[
 ]b4_define_state[
