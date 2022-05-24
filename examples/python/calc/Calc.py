@@ -793,7 +793,7 @@ class Calc():
   
 
                       
-      print(((Integer)(yystack.valueAt (1)))); 
+      print(yystack.valueAt (1)); 
   
   # break;
 
@@ -808,7 +808,7 @@ class Calc():
   
 
                       
-      yyval = ((Integer)(yystack.valueAt (0))); 
+      yyval = yystack.valueAt (0); 
   # break;
 
 
@@ -822,8 +822,8 @@ class Calc():
   
 
   
-      if (((Integer)(yystack.valueAt (2))).intValue() != ((Integer)(yystack.valueAt (0))).intValue())
-        yyerror((yyloc), "calc: error: " + ((Integer)(yystack.valueAt (2))) + " != " + ((Integer)(yystack.valueAt (0))));
+      if (yystack.valueAt (2).intValue() != yystack.valueAt (0).intValue())
+        self.yyerror((yyloc), "calc: error: " + yystack.valueAt (2) + " != " + yystack.valueAt (0));
   
   # break;
 
@@ -838,7 +838,7 @@ class Calc():
   
 
                       
-      yyval = ((Integer)(yystack.valueAt (2))) + ((Integer)(yystack.valueAt (0)));  
+      yyval = yystack.valueAt (2) + yystack.valueAt (0);  
   # break;
 
 
@@ -852,7 +852,7 @@ class Calc():
   
 
                       
-      yyval = ((Integer)(yystack.valueAt (2))) - ((Integer)(yystack.valueAt (0)));  
+      yyval = yystack.valueAt (2) - yystack.valueAt (0);  
   # break;
 
 
@@ -866,7 +866,7 @@ class Calc():
   
 
                       
-      yyval = ((Integer)(yystack.valueAt (2))) * ((Integer)(yystack.valueAt (0)));  
+      yyval = yystack.valueAt (2) * yystack.valueAt (0);  
   # break;
 
 
@@ -880,7 +880,7 @@ class Calc():
   
 
                       
-      yyval = ((Integer)(yystack.valueAt (2))) / ((Integer)(yystack.valueAt (0)));  
+      yyval = yystack.valueAt (2) / yystack.valueAt (0);  
   # break;
 
 
@@ -894,7 +894,7 @@ class Calc():
   
 
                       
-      yyval = -((Integer)(yystack.valueAt (0))); 
+      yyval = -yystack.valueAt (0); 
   # break;
 
 
@@ -908,7 +908,7 @@ class Calc():
   
 
                       
-      yyval = (int) Math.pow(((Integer)(yystack.valueAt (2))), ((Integer)(yystack.valueAt (0)))); 
+      yyval = (int) Math.pow(yystack.valueAt (2), yystack.valueAt (0)); 
   # break;
 
 
@@ -922,7 +922,7 @@ class Calc():
   
 
                       
-      yyval = ((Integer)(yystack.valueAt (1))); 
+      yyval = yystack.valueAt (1); 
   # break;
 
 

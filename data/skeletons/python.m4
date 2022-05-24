@@ -378,10 +378,10 @@ m4_define([b4_trans],
 # See README.
 m4_define([b4_symbol_value],
 [m4_ifval([$3],
-          [(($3)($1))],
+          [$1],
           [m4_ifval([$2],
                     [b4_symbol_if([$2], [has_type],
-                                  [((b4_symbol([$2], [type]))($1))],
+                                  [$1],
                                   [$1])],
                     [$1])])])
 
