@@ -634,15 +634,15 @@ def yylloc(rhs, n):
   #  *
   #  * @@return <tt>YYACCEPT, YYABORT, YYPUSH_MORE</tt>
   #  */
-  def push_parse(yylextoken, yylexval[]b4_locations_if([, yylexloc]))])[:
+  def push_parse(self, yylextoken, yylexval[]b4_locations_if([, yylexloc]))])[:
   ]b4_locations_if([[
     # /* @@$.  */
-    ]b4_location_type[ yyloc;]])[
+    yyloc = None]])[
 ]b4_push_if([],[[
 ]b4_define_state[
 ]b4_lac_if([[
-    // Discard the LAC context in case there still is one left from a
-    // previous invocation.
+    # // Discard the LAC context in case there still is one left from a
+    # // previous invocation.
     yylacDiscard("init");]])[
 ]b4_parse_trace_if([[
     yycdebug ("Starting parse");]])[
@@ -658,28 +658,28 @@ b4_dollar_popdef[]dnl
 ])[
 ]])[
 ]b4_push_if([[
-    if (!this.push_parse_initialized)
-      {
-        push_parse_initialize ();
+    if (not self.push_parse_initialized):
+      # {
+        self.push_parse_initialize ();
 ]m4_ifdef([b4_initial_action], [
 b4_dollar_pushdef([yylval], [], [], [yylloc])dnl
     b4_user_initial_action
 b4_dollar_popdef[]dnl
 ])[]b4_parse_trace_if([[
-        yycdebug ("Starting parse");]])[
-        yyerrstatus_ = 0;
-      } else
-        label = YYGETTOKEN;
+        self.yycdebug ("Starting parse");]])[
+        self.yyerrstatus_ = 0;
+    else:
+        label = self.YYGETTOKEN;
 
-    boolean push_token_consumed = true;
+    push_token_consumed = True
 ]])[
-    for (;;)
-      switch (label)
-      {
-        /* New state.  Unlike in the C/C++ skeletons, the state is already
-           pushed when we come here.  */
-      case YYNEWSTATE:]b4_parse_trace_if([[
-        yycdebug ("Entering state " + yystate);
+    while (True):
+      # switch (label)
+      # {
+        # /* New state.  Unlike in the C/C++ skeletons, the state is already
+        #    pushed when we come here.  */
+      if(label == YYNEWSTATE):]b4_parse_trace_if([[
+        self.yycdebug ("Entering state " + self.yystate);
         if (0 < yydebug)
           yystack.print (yyDebugStream);]])[
 

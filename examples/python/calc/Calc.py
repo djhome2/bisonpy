@@ -1023,30 +1023,30 @@ class Calc():
   #  *
   #  * @return <tt>YYACCEPT, YYABORT, YYPUSH_MORE</tt>
   #  */
-  def push_parse(yylextoken, yylexval, yylexloc):
+  def push_parse(self, yylextoken, yylexval, yylexloc):
   
     # /* @$.  */
-    Location yyloc;
+    yyloc = None
 
 
-    if (!this.push_parse_initialized)
-      {
-        push_parse_initialize ();
+    if (not self.push_parse_initialized):
+      # {
+        self.push_parse_initialize ();
 
-        yycdebug ("Starting parse");
-        yyerrstatus_ = 0;
-      } else
-        label = YYGETTOKEN;
+        self.yycdebug ("Starting parse");
+        self.yyerrstatus_ = 0;
+    else:
+        label = self.YYGETTOKEN;
 
-    boolean push_token_consumed = true;
+    push_token_consumed = true
 
-    for (;;)
-      switch (label)
-      {
-        /* New state.  Unlike in the C/C++ skeletons, the state is already
-           pushed when we come here.  */
-      case YYNEWSTATE:
-        yycdebug ("Entering state " + yystate);
+    while (True):
+      # switch (label)
+      # {
+        # /* New state.  Unlike in the C/C++ skeletons, the state is already
+        #    pushed when we come here.  */
+      if(label == YYNEWSTATE):
+        self.yycdebug ("Entering state " + yystate);
         if (0 < yydebug)
           yystack.print (yyDebugStream);
 
