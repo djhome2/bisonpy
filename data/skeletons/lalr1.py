@@ -582,14 +582,14 @@ def yylloc(rhs, n):
         # default: break;
     ]b4_parse_trace_if([[
 
-    yySymbolPrint("-> $$ =", SymbolKind.get(yyr1_[yyn]), yyval]b4_locations_if([, yyloc])[);]])[
+    self.yySymbolPrint("-> $$ =", SymbolKind.get(self.yyr1_[yyn]), yyval]b4_locations_if([, yyloc])[);]])[
 
     yystack.pop(yylen);
     yylen = 0;
-    /* Shift the result of the reduction.  */
-    int yystate = yyLRGotoState(yystack.stateAt(0), yyr1_[yyn]);
+    # /* Shift the result of the reduction.  */
+    yystate = self.yyLRGotoState(yystack.stateAt(0), self.yyr1_[yyn]);
     yystack.push(yystate, yyval]b4_locations_if([, yyloc])[);
-    return YYNEWSTATE;
+    return self.YYNEWSTATE;
   
 
 ]b4_parse_trace_if([[

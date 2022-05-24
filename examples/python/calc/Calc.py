@@ -979,14 +979,14 @@ class Calc():
         # default: break;
     
 
-    yySymbolPrint("-> $$ =", SymbolKind.get(yyr1_[yyn]), yyval, yyloc);
+    self.yySymbolPrint("-> $$ =", SymbolKind.get(self.yyr1_[yyn]), yyval, yyloc);
 
     yystack.pop(yylen);
     yylen = 0;
-    /* Shift the result of the reduction.  */
-    int yystate = yyLRGotoState(yystack.stateAt(0), yyr1_[yyn]);
+    # /* Shift the result of the reduction.  */
+    yystate = self.yyLRGotoState(yystack.stateAt(0), self.yyr1_[yyn]);
     yystack.push(yystate, yyval, yyloc);
-    return YYNEWSTATE;
+    return self.YYNEWSTATE;
   
 
 
