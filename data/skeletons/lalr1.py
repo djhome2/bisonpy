@@ -678,49 +678,52 @@ b4_dollar_popdef[]dnl
       # {
         # /* New state.  Unlike in the C/C++ skeletons, the state is already
         #    pushed when we come here.  */
-      if(label == YYNEWSTATE):]b4_parse_trace_if([[
+      if(label == self.YYNEWSTATE):]b4_parse_trace_if([[
         self.yycdebug ("Entering state " + self.yystate);
-        if (0 < yydebug)
-          yystack.print (yyDebugStream);]])[
+        if (0 < self.yydebug):
+          self.yystack.print (self.yyDebugStream);]])[
 
-        /* Accept?  */
-        if (yystate == YYFINAL_)
-          ]b4_push_if([{label = YYACCEPT; break;}],
-                      [return true;])[
+        # /* Accept?  */
+        if (self.yystate == self.YYFINAL_):
+          ]b4_push_if([
+          label = self.YYACCEPT
+          continue],
+                      [return True;])[
 
-        /* Take a decision.  First try without lookahead.  */
-        yyn = yypact_[yystate];
-        if (yyPactValueIsDefault (yyn))
-          {
-            label = YYDEFAULT;
-            break;
-          }
-]b4_push_if([        /* Fall Through */
+        # /* Take a decision.  First try without lookahead.  */
+        yyn = self.yypact_[self.yystate]
+        if (self.yyPactValueIsDefault (yyn)):
+          # {
+          label = self.YYDEFAULT
+          continue
+          # }
+]b4_push_if([        
+  # /* Fall Through */
 
-      case YYGETTOKEN:])[
-        /* Read a lookahead token.  */
-        if (yychar == YYEMPTY_)
-          {
+      if(label == self.YYGETTOKEN):])[
+        # /* Read a lookahead token.  */
+        if (self.yychar == YYEMPTY_):
+          # {
 ]b4_push_if([[
-            if (!push_token_consumed)
-              return YYPUSH_MORE;]b4_parse_trace_if([[
-            yycdebug ("Reading a token");]])[
-            yychar = yylextoken;
-            yylval = yylexval;]b4_locations_if([
-            yylloc = yylexloc;])[
-            push_token_consumed = false;]], [b4_parse_trace_if([[
-            yycdebug ("Reading a token");]])[
-            yychar = yylexer.yylex ();
-            yylval = yylexer.getLVal();]b4_locations_if([[
-            yylloc = new ]b4_location_type[(yylexer.getStartPos(),
+            if (not push_token_consumed):
+              return self.YYPUSH_MORE]b4_parse_trace_if([[
+            self.yycdebug ("Reading a token");]])[
+            self.yychar = yylextoken
+            self.yylval = yylexval]b4_locations_if([
+            self.yylloc = yylexloc])[
+            push_token_consumed = False]], [b4_parse_trace_if([[
+            self.yycdebug ("Reading a token");]])[
+            self.yychar = yylexer.yylex ();
+            self.yylval = yylexer.getLVal();]b4_locations_if([[
+            self.yylloc = new ]b4_location_type[(yylexer.getStartPos(),
                                           yylexer.getEndPos());]])[
 ]])[
-          }
+          # }
 
-        /* Convert token to internal form.  */
-        yytoken = yytranslate_ (yychar);]b4_parse_trace_if([[
-        yySymbolPrint("Next token is", yytoken,
-                      yylval]b4_locations_if([, yylloc])[);]])[
+        # /* Convert token to internal form.  */
+        self.yytoken = self.yytranslate_ (self.yychar)]b4_parse_trace_if([[
+        self.yySymbolPrint("Next token is", self.yytoken,
+                      self.yylval]b4_locations_if([, self.yylloc])[);]])[
 
         if (yytoken == ]b4_symbol(error, kind)[)
           {

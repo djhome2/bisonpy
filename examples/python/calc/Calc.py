@@ -1045,42 +1045,45 @@ class Calc():
       # {
         # /* New state.  Unlike in the C/C++ skeletons, the state is already
         #    pushed when we come here.  */
-      if(label == YYNEWSTATE):
+      if(label == self.YYNEWSTATE):
         self.yycdebug ("Entering state " + self.yystate);
-        if (0 < yydebug)
-          yystack.print (yyDebugStream);
+        if (0 < self.yydebug):
+          self.yystack.print (self.yyDebugStream);
 
-        /* Accept?  */
-        if (yystate == YYFINAL_)
-          {label = YYACCEPT; break;}
+        # /* Accept?  */
+        if (self.yystate == self.YYFINAL_):
+          
+          label = self.YYACCEPT
+          continue
 
-        /* Take a decision.  First try without lookahead.  */
-        yyn = yypact_[yystate];
-        if (yyPactValueIsDefault (yyn))
-          {
-            label = YYDEFAULT;
-            break;
-          }
-        /* Fall Through */
+        # /* Take a decision.  First try without lookahead.  */
+        yyn = self.yypact_[self.yystate]
+        if (self.yyPactValueIsDefault (yyn)):
+          # {
+          label = self.YYDEFAULT
+          continue
+          # }
+        
+  # /* Fall Through */
 
-      case YYGETTOKEN:
-        /* Read a lookahead token.  */
-        if (yychar == YYEMPTY_)
-          {
+      if(label == self.YYGETTOKEN):
+        # /* Read a lookahead token.  */
+        if (self.yychar == YYEMPTY_):
+          # {
 
-            if (!push_token_consumed)
-              return YYPUSH_MORE;
-            yycdebug ("Reading a token");
-            yychar = yylextoken;
-            yylval = yylexval;
-            yylloc = yylexloc;
-            push_token_consumed = false;
-          }
+            if (not push_token_consumed):
+              return self.YYPUSH_MORE
+            self.yycdebug ("Reading a token");
+            self.yychar = yylextoken
+            self.yylval = yylexval
+            self.yylloc = yylexloc
+            push_token_consumed = False
+          # }
 
-        /* Convert token to internal form.  */
-        yytoken = yytranslate_ (yychar);
-        yySymbolPrint("Next token is", yytoken,
-                      yylval, yylloc);
+        # /* Convert token to internal form.  */
+        self.yytoken = self.yytranslate_ (self.yychar)
+        self.yySymbolPrint("Next token is", self.yytoken,
+                      self.yylval, self.yylloc);
 
         if (yytoken == SymbolKind.S_YYerror)
           {
@@ -1834,7 +1837,7 @@ class Calc():
  
   
 
-#"Calc.py":1838
+#"Calc.py":1841
   #
   
 
