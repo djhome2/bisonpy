@@ -781,188 +781,201 @@ class Calc():
 
     self.yyReducePrint(yyn, yystack)
 
-    switch (yyn)
-      {
-          case 5: #line: exp "end of line"
+    # switch (yyn)
+      # {
+      #case 5: #line: exp "end of line"
   #
   
 
-  if (yyn == 5)
-    #"Calc.y":163
+    if (yyn == 5):     
+      #"Calc.y":163
   #
   
 
-                     { System.out.println(((Integer)(yystack.valueAt (1)))); };
-  break;
+                      
+      print(((Integer)(yystack.valueAt (1)))); 
+  
+  # break;
 
 
-  case 7: #exp: "number"
+  #case 7: #exp: "number"
   #
   
 
-  if (yyn == 7)
-    #"Calc.y":168
+    if (yyn == 7):     
+      #"Calc.y":170
   #
   
 
-                     { yyval = ((Integer)(yystack.valueAt (0))); };
-  break;
+                      
+      yyval = ((Integer)(yystack.valueAt (0))); 
+  # break;
 
 
-  case 8: #exp: exp "=" exp
+  #case 8: #exp: exp "=" exp
   #
   
 
-  if (yyn == 8)
-    #"Calc.y":170
+    if (yyn == 8):     
+      #"Calc.y":173
   #
   
 
-  {
-    if (((Integer)(yystack.valueAt (2))).intValue() != ((Integer)(yystack.valueAt (0))).intValue())
-      yyerror((yyloc), "calc: error: " + ((Integer)(yystack.valueAt (2))) + " != " + ((Integer)(yystack.valueAt (0))));
-  };
-  break;
+  
+      if (((Integer)(yystack.valueAt (2))).intValue() != ((Integer)(yystack.valueAt (0))).intValue())
+        yyerror((yyloc), "calc: error: " + ((Integer)(yystack.valueAt (2))) + " != " + ((Integer)(yystack.valueAt (0))));
+  
+  # break;
 
 
-  case 9: #exp: exp "+" exp
+  #case 9: #exp: exp "+" exp
   #
   
 
-  if (yyn == 9)
-    #"Calc.y":174
+    if (yyn == 9):     
+      #"Calc.y":177
   #
   
 
-                     { yyval = ((Integer)(yystack.valueAt (2))) + ((Integer)(yystack.valueAt (0)));  };
-  break;
+                      
+      yyval = ((Integer)(yystack.valueAt (2))) + ((Integer)(yystack.valueAt (0)));  
+  # break;
 
 
-  case 10: #exp: exp "-" exp
+  #case 10: #exp: exp "-" exp
   #
   
 
-  if (yyn == 10)
-    #"Calc.y":175
+    if (yyn == 10):     
+      #"Calc.y":179
   #
   
 
-                     { yyval = ((Integer)(yystack.valueAt (2))) - ((Integer)(yystack.valueAt (0)));  };
-  break;
+                      
+      yyval = ((Integer)(yystack.valueAt (2))) - ((Integer)(yystack.valueAt (0)));  
+  # break;
 
 
-  case 11: #exp: exp "*" exp
+  #case 11: #exp: exp "*" exp
   #
   
 
-  if (yyn == 11)
-    #"Calc.y":176
+    if (yyn == 11):     
+      #"Calc.y":181
   #
   
 
-                     { yyval = ((Integer)(yystack.valueAt (2))) * ((Integer)(yystack.valueAt (0)));  };
-  break;
+                      
+      yyval = ((Integer)(yystack.valueAt (2))) * ((Integer)(yystack.valueAt (0)));  
+  # break;
 
 
-  case 12: #exp: exp "/" exp
+  #case 12: #exp: exp "/" exp
   #
   
 
-  if (yyn == 12)
-    #"Calc.y":177
+    if (yyn == 12):     
+      #"Calc.y":183
   #
   
 
-                     { yyval = ((Integer)(yystack.valueAt (2))) / ((Integer)(yystack.valueAt (0)));  };
-  break;
+                      
+      yyval = ((Integer)(yystack.valueAt (2))) / ((Integer)(yystack.valueAt (0)));  
+  # break;
 
 
-  case 13: #exp: "-" exp
+  #case 13: #exp: "-" exp
   #
   
 
-  if (yyn == 13)
-    #"Calc.y":178
+    if (yyn == 13):     
+      #"Calc.y":185
   #
   
 
-                     { yyval = -((Integer)(yystack.valueAt (0))); };
-  break;
+                      
+      yyval = -((Integer)(yystack.valueAt (0))); 
+  # break;
 
 
-  case 14: #exp: exp "^" exp
+  #case 14: #exp: exp "^" exp
   #
   
 
-  if (yyn == 14)
-    #"Calc.y":179
+    if (yyn == 14):     
+      #"Calc.y":187
   #
   
 
-                     { yyval = (int) Math.pow(((Integer)(yystack.valueAt (2))), ((Integer)(yystack.valueAt (0)))); };
-  break;
+                      
+      yyval = (int) Math.pow(((Integer)(yystack.valueAt (2))), ((Integer)(yystack.valueAt (0)))); 
+  # break;
 
 
-  case 15: #exp: "(" exp ")"
+  #case 15: #exp: "(" exp ")"
   #
   
 
-  if (yyn == 15)
-    #"Calc.y":180
+    if (yyn == 15):     
+      #"Calc.y":189
   #
   
 
-                     { yyval = ((Integer)(yystack.valueAt (1))); };
-  break;
+                      
+      yyval = ((Integer)(yystack.valueAt (1))); 
+  # break;
 
 
-  case 16: #exp: "(" error ")"
+  #case 16: #exp: "(" error ")"
   #
   
 
-  if (yyn == 16)
-    #"Calc.y":181
+    if (yyn == 16):     
+      #"Calc.y":191
   #
   
 
-                     { yyval = 1111; };
-  break;
+                      
+      yyval = 1111; 
+  # break;
 
 
-  case 17: #exp: "!"
+  #case 17: #exp: "!"
   #
   
 
-  if (yyn == 17)
-    #"Calc.y":182
+    if (yyn == 17):     
+      #"Calc.y":193
   #
   
 
-                     { yyval = 0; return YYERROR; };
-  break;
+                      
+      yyval = 0; return YYERROR; 
+  # break;
 
 
-  case 18: #exp: "-" error
+  #case 18: #exp: "-" error
   #
   
 
-  if (yyn == 18)
-    #"Calc.y":183
+    if (yyn == 18):     
+      #"Calc.y":195
   #
   
 
-                     { yyval = 0; return YYERROR; };
-  break;
+                      
+      yyval = 0; return YYERROR; 
+  # break;
 
 
 
-#"Calc.py":960
+#"Calc.py":973
   #
   
 
 
-        default: break;
-      }
+        # default: break;
+    
 
     yySymbolPrint("-> $$ =", SymbolKind.get(yyr1_[yyn]), yyval, yyloc);
 
@@ -1704,8 +1717,8 @@ class Calc():
   
   def yyrline_init():  
       return (
-       0,   157,   157,   158,   162,   163,   164,   168,   169,   174,
-     175,   176,   177,   178,   179,   180,   181,   182,   183
+       0,   157,   157,   158,   162,   163,   166,   170,   172,   177,
+     179,   181,   183,   185,   187,   189,   191,   193,   195
     )
   yyrline_ = yyrline_init()
   
@@ -1812,13 +1825,13 @@ class Calc():
  
   
 
-#"Calc.py":1816
+#"Calc.py":1829
   #
   
 
 
 }
-#"Calc.y":186
+#"Calc.y":199
   #
   
 

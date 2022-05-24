@@ -576,11 +576,11 @@ def yylloc(rhs, n):
 
     self.yyReducePrint(yyn, yystack)]])[
 
-    switch (yyn)
-      {
-        ]b4_user_actions[
-        default: break;
-      }]b4_parse_trace_if([[
+    # switch (yyn)
+      # {
+    ]b4_user_actions[
+        # default: break;
+    ]b4_parse_trace_if([[
 
     yySymbolPrint("-> $$ =", SymbolKind.get(yyr1_[yyn]), yyval]b4_locations_if([, yyloc])[);]])[
 

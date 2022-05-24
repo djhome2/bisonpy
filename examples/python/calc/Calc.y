@@ -160,27 +160,40 @@ input:
 
 line:
   EOL
-| exp EOL            { System.out.println($exp); }
+| exp EOL            { 
+      print($exp); 
+  }
 | error EOL
 ;
 
 exp:
-  NUM                { $$ = $1; }
+  NUM                { 
+      $$ = $1; }
 | exp "=" exp
   {
-    if ($1.intValue() != $3.intValue())
-      yyerror(@$, "calc: error: " + $1 + " != " + $3);
+      if ($1.intValue() != $3.intValue())
+        yyerror(@$, "calc: error: " + $1 + " != " + $3);
   }
-| exp "+" exp        { $$ = $1 + $3;  }
-| exp "-" exp        { $$ = $1 - $3;  }
-| exp "*" exp        { $$ = $1 * $3;  }
-| exp "/" exp        { $$ = $1 / $3;  }
-| "-" exp  %prec NEG { $$ = -$2; }
-| exp "^" exp        { $$ = (int) Math.pow($1, $3); }
-| "(" exp ")"        { $$ = $2; }
-| "(" error ")"      { $$ = 1111; }
-| "!"                { $$ = 0; return YYERROR; }
-| "-" error          { $$ = 0; return YYERROR; }
+| exp "+" exp        { 
+      $$ = $1 + $3;  }
+| exp "-" exp        { 
+      $$ = $1 - $3;  }
+| exp "*" exp        { 
+      $$ = $1 * $3;  }
+| exp "/" exp        { 
+      $$ = $1 / $3;  }
+| "-" exp  %prec NEG { 
+      $$ = -$2; }
+| exp "^" exp        { 
+      $$ = (int) Math.pow($1, $3); }
+| "(" exp ")"        { 
+      $$ = $2; }
+| "(" error ")"      { 
+      $$ = 1111; }
+| "!"                { 
+      $$ = 0; return YYERROR; }
+| "-" error          { 
+      $$ = 0; return YYERROR; }
 ;
 
 %%
