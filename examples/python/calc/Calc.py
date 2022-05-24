@@ -1038,7 +1038,7 @@ class Calc():
     else:
         label = self.YYGETTOKEN;
 
-    push_token_consumed = true
+    push_token_consumed = True
 
     while (True):
       # switch (label)
@@ -1046,7 +1046,7 @@ class Calc():
         # /* New state.  Unlike in the C/C++ skeletons, the state is already
         #    pushed when we come here.  */
       if(label == YYNEWSTATE):
-        self.yycdebug ("Entering state " + yystate);
+        self.yycdebug ("Entering state " + self.yystate);
         if (0 < yydebug)
           yystack.print (yyDebugStream);
 
