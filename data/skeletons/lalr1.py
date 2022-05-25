@@ -866,56 +866,56 @@ b4_dollar_popdef[]dnl
               # {
                 yyn += ]b4_symbol(error, kind)[.getCode();
                 if (0 <= yyn and yyn <= YYLAST_
-                    and yycheck_[yyn] == ]b4_symbol(error, kind)[.getCode()):
+                    and self.yycheck_[yyn] == ]b4_symbol(error, kind)[.getCode()):
                   # {
-                    yyn = yytable_[yyn];
-                    if (0 < yyn)
+                    yyn = self.yytable_[yyn];
+                    if (0 < yyn):
                       break;
                   # }
               # }
 
             # /* Pop the current state because it cannot handle the
             #  * error token.  */
-            if (yystack.height == 0):
-              ]b4_push_if([{label = YYABORT; break;}],[return false;])[
+            if (self.yystack.height == 0):
+              ]b4_push_if([label = self.YYABORT; break;],[return false;])[
 
 ]b4_locations_if([[
-            yyerrloc = yystack.locationAt (0);]])[
-            yystack.pop ();
-            yystate = yystack.stateAt(0);]b4_parse_trace_if([[
-            if (0 < yydebug):
-              yystack.print (yyDebugStream);]])[
+            yyerrloc = self.yystack.locationAt (0);]])[
+            self.yystack.pop ();
+            yystate = self.yystack.stateAt(0);]b4_parse_trace_if([[
+            if (0 < self.yydebug):
+              self.yystack.print (self.yyDebugStream);]])[
           # }
 
-        if (label == YYABORT):
+        if (label == self.YYABORT):
           # /* Leave the switch.  */
           continue;
 
 ]b4_locations_if([[
         # /* Muck with the stack to setup for yylloc.  */
-        self.yystack.push (0, null, yylloc);
-        self.yystack.push (0, null, yyerrloc);
-        yyloc = yylloc (yystack, 2);
-        yystack.pop (2);]])[
+        self.yystack.push (0, None, yylloc);
+        self.yystack.push (0, None, yyerrloc);
+        yyloc = yylloc (self.yystack, 2);
+        self.yystack.pop (2);]])[
 
-        /* Shift the error token.  */]b4_lac_if([[
-        yylacDiscard("error recovery");]])[]b4_parse_trace_if([[
-        yySymbolPrint("Shifting", SymbolKind.get(yystos_[yyn]),
-                      yylval]b4_locations_if([, yyloc])[);]])[
+        # /* Shift the error token.  */]b4_lac_if([[
+        self.yylacDiscard("error recovery");]])[]b4_parse_trace_if([[
+        self.yySymbolPrint("Shifting", SymbolKind.get(self.yystos_[yyn]),
+                      self.yylval]b4_locations_if([, yyloc])[);]])[
 
-        yystate = yyn;
-        yystack.push (yyn, yylval]b4_locations_if([, yyloc])[);
-        label = YYNEWSTATE;
+        self.yystate = yyn;
+        self.yystack.push (yyn, self.yylval]b4_locations_if([, yyloc])[);
+        label = self.YYNEWSTATE;
         continue;
 
         # /* Accept.  */
-      if(label == YYACCEPT):
-        ]b4_push_if([this.push_parse_initialized = false; return YYACCEPT;],
+      if(label == self.YYACCEPT):
+        ]b4_push_if([self.push_parse_initialized = False; return self.YYACCEPT;],
                     [return true;])[
 
         # /* Abort.  */
-      if(label == YYABORT):
-        ]b4_push_if([this.push_parse_initialized = false; return YYABORT;],
+      if(label == self.YYABORT):
+        ]b4_push_if([self.push_parse_initialized = False; return self.YYABORT;],
                     [return false;])[
       # }
 # }
@@ -935,7 +935,7 @@ b4_dollar_popdef[]dnl
     self.yyn = 0
     self.yylen = 0
     self.yystate = 0
-    self.yystack = YYStack()]b4_lac_if([[
+    self.yystack = self.YYStack()]b4_lac_if([[
     self.yylacStack = []
     self.yylacEstablished = False;]])[
     self.label = self.YYNEWSTATE

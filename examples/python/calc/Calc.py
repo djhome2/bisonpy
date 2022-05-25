@@ -1226,55 +1226,55 @@ class Calc():
               # {
                 yyn += SymbolKind.S_YYerror.getCode();
                 if (0 <= yyn and yyn <= YYLAST_
-                    and yycheck_[yyn] == SymbolKind.S_YYerror.getCode()):
+                    and self.yycheck_[yyn] == SymbolKind.S_YYerror.getCode()):
                   # {
-                    yyn = yytable_[yyn];
-                    if (0 < yyn)
+                    yyn = self.yytable_[yyn];
+                    if (0 < yyn):
                       break;
                   # }
               # }
 
             # /* Pop the current state because it cannot handle the
             #  * error token.  */
-            if (yystack.height == 0):
-              {label = YYABORT; break;}
+            if (self.yystack.height == 0):
+              label = self.YYABORT; break;
 
 
-            yyerrloc = yystack.locationAt (0);
-            yystack.pop ();
-            yystate = yystack.stateAt(0);
-            if (0 < yydebug):
-              yystack.print (yyDebugStream);
+            yyerrloc = self.yystack.locationAt (0);
+            self.yystack.pop ();
+            yystate = self.yystack.stateAt(0);
+            if (0 < self.yydebug):
+              self.yystack.print (self.yyDebugStream);
           # }
 
-        if (label == YYABORT):
+        if (label == self.YYABORT):
           # /* Leave the switch.  */
           continue;
 
 
         # /* Muck with the stack to setup for yylloc.  */
-        self.yystack.push (0, null, yylloc);
-        self.yystack.push (0, null, yyerrloc);
-        yyloc = yylloc (yystack, 2);
-        yystack.pop (2);
+        self.yystack.push (0, None, yylloc);
+        self.yystack.push (0, None, yyerrloc);
+        yyloc = yylloc (self.yystack, 2);
+        self.yystack.pop (2);
 
-        /* Shift the error token.  */
-        yylacDiscard("error recovery");
-        yySymbolPrint("Shifting", SymbolKind.get(yystos_[yyn]),
-                      yylval, yyloc);
+        # /* Shift the error token.  */
+        self.yylacDiscard("error recovery");
+        self.yySymbolPrint("Shifting", SymbolKind.get(self.yystos_[yyn]),
+                      self.yylval, yyloc);
 
-        yystate = yyn;
-        yystack.push (yyn, yylval, yyloc);
-        label = YYNEWSTATE;
+        self.yystate = yyn;
+        self.yystack.push (yyn, self.yylval, yyloc);
+        label = self.YYNEWSTATE;
         continue;
 
         # /* Accept.  */
-      if(label == YYACCEPT):
-        this.push_parse_initialized = false; return YYACCEPT;
+      if(label == self.YYACCEPT):
+        self.push_parse_initialized = False; return self.YYACCEPT;
 
         # /* Abort.  */
-      if(label == YYABORT):
-        this.push_parse_initialized = false; return YYABORT;
+      if(label == self.YYABORT):
+        self.push_parse_initialized = False; return self.YYABORT;
       # }
 # }
 
@@ -1293,7 +1293,7 @@ class Calc():
     self.yyn = 0
     self.yylen = 0
     self.yystate = 0
-    self.yystack = YYStack()
+    self.yystack = self.YYStack()
     self.yylacStack = []
     self.yylacEstablished = False;
     self.label = self.YYNEWSTATE
