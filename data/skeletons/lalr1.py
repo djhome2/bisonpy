@@ -725,44 +725,46 @@ b4_dollar_popdef[]dnl
         self.yySymbolPrint("Next token is", self.yytoken,
                       self.yylval]b4_locations_if([, self.yylloc])[);]])[
 
-        if (yytoken == ]b4_symbol(error, kind)[)
-          {
-            // The scanner already issued an error message, process directly
-            // to error recovery.  But do not keep the error token as
-            // lookahead, it is too special and may lead us to an endless
-            // loop in error recovery. */
-            yychar = Lexer.]b4_symbol(undef, id)[;
-            yytoken = ]b4_symbol(undef, kind)[;]b4_locations_if([[
-            yyerrloc = yylloc;]])[
-            label = YYERRLAB1;
-          }
-        else
-          {
-            /* If the proper action on seeing token YYTOKEN is to reduce or to
-               detect an error, take that action.  */
-            yyn += yytoken.getCode();
-            if (yyn < 0 || YYLAST_ < yyn || yycheck_[yyn] != yytoken.getCode()) {]b4_lac_if([[
-              if (!yylacEstablish(yystack, yytoken)) {
-                label = YYERRLAB;
-              } else]])[
-              label = YYDEFAULT;
-            }
+        if (self.yytoken == ]b4_symbol(error, kind)[):
+          # {
+            # // The scanner already issued an error message, process directly
+            # // to error recovery.  But do not keep the error token as
+            # // lookahead, it is too special and may lead us to an endless
+            # // loop in error recovery. */
+            self.yychar = Lexer.]b4_symbol(undef, id)[;
+            self.yytoken = ]b4_symbol(undef, kind)[;]b4_locations_if([[
+            self.yyerrloc = yylloc;]])[
+            label = self.YYERRLAB1;
+          # }
+        else:
+          # {
+            # /* If the proper action on seeing token YYTOKEN is to reduce or to
+            #    detect an error, take that action.  */
+            yyn += self.yytoken.getCode();
+            if (yyn < 0 or YYLAST_ < yyn or self.yycheck_[yyn] != self.yytoken.getCode()) ]b4_lac_if([[:
+              if (not self.yylacEstablish(self.yystack, self.yytoken)) :
+                label = self.YYERRLAB
+              else]])[:
+                label = self.YYDEFAULT
+              continue
+            # }
 
-            /* <= 0 means reduce or error.  */
-            else if ((yyn = yytable_[yyn]) <= 0)
-              {
-                if (yyTableValueIsError(yyn)) {
-                  label = YYERRLAB;
-                }]b4_lac_if([[ else if (!yylacEstablish(yystack, yytoken)) {
-                  label = YYERRLAB;
-                }]])[ else {
+            # /* <= 0 means reduce or error.  */
+            yyn = self.yytable_[yyn]
+            if(yyn <= 0):
+              # {
+                if (self.yyTableValueIsError(yyn)) :
+                  label = self.YYERRLAB;
+                ]b4_lac_if([[elif (not self.yylacEstablish(self.yystack, self.yytoken)) :
+                  label = self.YYERRLAB;
+                ]])[else:
                   yyn = -yyn;
-                  label = YYREDUCE;
-                }
-              }
+                  label = self.YYREDUCE;
+                # }
+              # }
 
-            else
-              {
+            else:
+              # {
                 /* Shift the lookahead token.  */]b4_parse_trace_if([[
                 yySymbolPrint("Shifting", yytoken,
                               yylval]b4_locations_if([, yylloc])[);
@@ -779,9 +781,9 @@ b4_dollar_popdef[]dnl
                 yystack.push(yystate, yylval]b4_locations_if([, yylloc])[);]b4_lac_if([[
                 yylacDiscard("shift");]])[
                 label = YYNEWSTATE;
-              }
-          }
-        break;
+              # }
+          # }
+        continue
 
       /*-----------------------------------------------------------.
       | yydefault -- do the default action for the current state.  |
