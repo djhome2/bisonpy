@@ -770,7 +770,7 @@ b4_dollar_popdef[]dnl
                               self.yylval]b4_locations_if([, self.yylloc])[);
 ]])[
                 # /* Discard the token being shifted.  */
-                self.yychar = self.YYEMPTY_;
+                self.yychar = YYEMPTY_;
 
                 # /* Count tokens shifted since error; after three, turn off error
                 #    status.  */
@@ -813,88 +813,88 @@ b4_dollar_popdef[]dnl
         if (self.yyerrstatus_ == 0):
           # {
             yynerrs += 1
-            if (self.yychar == self.YYEMPTY_):
+            if (self.yychar == YYEMPTY_):
               self.yytoken = None
-            self.yyreportSyntaxError(new Context(this, yystack, yytoken]b4_locations_if([[, yylloc]])[));
+            self.yyreportSyntaxError(self.Context(self, self.yystack, self.yytoken]b4_locations_if([[, self.yylloc]])[));
           # }
 ]b4_locations_if([[
         yyerrloc = yylloc;]])[
-        if (yyerrstatus_ == 3)
-          {
-            /* If just tried and failed to reuse lookahead token after an
-               error, discard it.  */
+        if (yyerrstatus_ == 3):
+          # {
+            # /* If just tried and failed to reuse lookahead token after an
+            #    error, discard it.  */
 
-            if (yychar <= Lexer.]b4_symbol(eof, id)[)
-              {
-                /* Return failure if at end of input.  */
-                if (yychar == Lexer.]b4_symbol(eof, id)[)
-                  ]b4_push_if([{label = YYABORT; break;}], [return false;])[
-              }
-            else
+            if (yychar <= Lexer.]b4_symbol(eof, id)[):
+              # {
+                # /* Return failure if at end of input.  */
+                if (yychar == Lexer.]b4_symbol(eof, id)[):
+                  ]b4_push_if([label = self.YYABORT; continue;], [return false;])[
+              # }
+            else:
               yychar = YYEMPTY_;
-          }
+          # }
 
-        /* Else will try to reuse lookahead token after shifting the error
-           token.  */
-        label = YYERRLAB1;
-        break;
+        # /* Else will try to reuse lookahead token after shifting the error
+        #    token.  */
+        label = self.YYERRLAB1;
+        continue;
 
-      /*-------------------------------------------------.
-      | errorlab -- error raised explicitly by YYERROR.  |
-      `-------------------------------------------------*/
-      case YYERROR:]b4_locations_if([[
-        yyerrloc = yystack.locationAt (yylen - 1);]])[
-        /* Do not reclaim the symbols of the rule which action triggered
-           this YYERROR.  */
-        yystack.pop (yylen);
+      # /*-------------------------------------------------.
+      # | errorlab -- error raised explicitly by YYERROR.  |
+      # `-------------------------------------------------*/
+      if(label == self.YYERROR):]b4_locations_if([[
+        yyerrloc = self.yystack.locationAt (yylen - 1);]])[
+        # /* Do not reclaim the symbols of the rule which action triggered
+        #    this YYERROR.  */
+        self.yystack.pop (yylen);
         yylen = 0;
-        yystate = yystack.stateAt(0);
-        label = YYERRLAB1;
-        break;
+        yystate = self.yystack.stateAt(0);
+        label = self.YYERRLAB1;
+        continue;
 
-      /*-------------------------------------------------------------.
-      | yyerrlab1 -- common code for both syntax error and YYERROR.  |
-      `-------------------------------------------------------------*/
-      case YYERRLAB1:
-        yyerrstatus_ = 3;       /* Each real token shifted decrements this.  */
+      # /*-------------------------------------------------------------.
+      # | yyerrlab1 -- common code for both syntax error and YYERROR.  |
+      # `-------------------------------------------------------------*/
+      if(label == self.YYERRLAB1):
+        yyerrstatus_ = 3;      # /* Each real token shifted decrements this.  */
 
-        // Pop stack until we find a state that shifts the error token.
-        for (;;)
-          {
-            yyn = yypact_[yystate];
-            if (!yyPactValueIsDefault (yyn))
-              {
+        # // Pop stack until we find a state that shifts the error token.
+        while (True):
+          # {
+            yyn = self.yypact_[yystate];
+            if (not self.yyPactValueIsDefault (yyn)):
+              # {
                 yyn += ]b4_symbol(error, kind)[.getCode();
-                if (0 <= yyn && yyn <= YYLAST_
-                    && yycheck_[yyn] == ]b4_symbol(error, kind)[.getCode())
-                  {
+                if (0 <= yyn and yyn <= YYLAST_
+                    and yycheck_[yyn] == ]b4_symbol(error, kind)[.getCode()):
+                  # {
                     yyn = yytable_[yyn];
                     if (0 < yyn)
                       break;
-                  }
-              }
+                  # }
+              # }
 
-            /* Pop the current state because it cannot handle the
-             * error token.  */
-            if (yystack.height == 0)
+            # /* Pop the current state because it cannot handle the
+            #  * error token.  */
+            if (yystack.height == 0):
               ]b4_push_if([{label = YYABORT; break;}],[return false;])[
 
 ]b4_locations_if([[
             yyerrloc = yystack.locationAt (0);]])[
             yystack.pop ();
             yystate = yystack.stateAt(0);]b4_parse_trace_if([[
-            if (0 < yydebug)
+            if (0 < yydebug):
               yystack.print (yyDebugStream);]])[
-          }
+          # }
 
-        if (label == YYABORT)
-          /* Leave the switch.  */
-          break;
+        if (label == YYABORT):
+          # /* Leave the switch.  */
+          continue;
 
 ]b4_locations_if([[
-        /* Muck with the stack to setup for yylloc.  */
-        yystack.push (0, null, yylloc);
-        yystack.push (0, null, yyerrloc);
+        # /* Muck with the stack to setup for yylloc.  */
+        self.yystack.push (0, null, yylloc);
+        self.yystack.push (0, null, yyerrloc);
         yyloc = yylloc (yystack, 2);
         yystack.pop (2);]])[
 
@@ -906,79 +906,79 @@ b4_dollar_popdef[]dnl
         yystate = yyn;
         yystack.push (yyn, yylval]b4_locations_if([, yyloc])[);
         label = YYNEWSTATE;
-        break;
+        continue;
 
-        /* Accept.  */
-      case YYACCEPT:
+        # /* Accept.  */
+      if(label == YYACCEPT):
         ]b4_push_if([this.push_parse_initialized = false; return YYACCEPT;],
                     [return true;])[
 
-        /* Abort.  */
-      case YYABORT:
+        # /* Abort.  */
+      if(label == YYABORT):
         ]b4_push_if([this.push_parse_initialized = false; return YYABORT;],
                     [return false;])[
-      }
-}
+      # }
+# }
 ]b4_push_if([[
-  boolean push_parse_initialized = false;
+  push_parse_initialized = False;
 
-    /**
-     * (Re-)Initialize the state of the push parser.
-     */
-  public void push_parse_initialize ()
-  {
-    /* Lookahead and lookahead in internal form.  */
-    this.yychar = YYEMPTY_;
-    this.yytoken = null;
+    # /**
+    #  * (Re-)Initialize the state of the push parser.
+    #  */
+  def push_parse_initialize (self):
+  # {
+  #   /* Lookahead and lookahead in internal form.  */
+    self.yychar = YYEMPTY_;
+    self.yytoken = None;
 
-    /* State.  */
-    this.yyn = 0;
-    this.yylen = 0;
-    this.yystate = 0;
-    this.yystack = new YYStack();]b4_lac_if([[
-    this.yylacStack = new ArrayList<Integer>();
-    this.yylacEstablished = false;]])[
-    this.label = YYNEWSTATE;
+    # /* State.  */
+    self.yyn = 0
+    self.yylen = 0
+    self.yystate = 0
+    self.yystack = YYStack()]b4_lac_if([[
+    self.yylacStack = []
+    self.yylacEstablished = False;]])[
+    self.label = self.YYNEWSTATE
 
-    /* Error handling.  */
-    this.yynerrs = 0;]b4_locations_if([[
-    /* The location where the error started.  */
-    this.yyerrloc = null;
-    this.yylloc = new ]b4_location_type[ (null, null);]])[
+    # /* Error handling.  */
+    self.yynerrs = 0]b4_locations_if([[
+    # /* The location where the error started.  */
+    self.yyerrloc = None
+    self.yylloc = ]b4_location_type[ (None, None)]])[
 
-    /* Semantic value of the lookahead.  */
-    this.yylval = null;
+    # /* Semantic value of the lookahead.  */
+    self.yylval = None;
 
-    yystack.push (this.yystate, this.yylval]b4_locations_if([, this.yylloc])[);
+    self.yystack.push (self.yystate, self.yylval]b4_locations_if([, self.yylloc])[)
 
-    this.push_parse_initialized = true;
+    self.push_parse_initialized = True
 
-  }
+  # }
 ]b4_locations_if([[
-  /**
-   * Push parse given input from an external lexer.
-   *
-   * @@param yylextoken current token
-   * @@param yylexval current lval
-   * @@param yyylexpos current position
-   *
-   * @@return <tt>YYACCEPT, YYABORT, YYPUSH_MORE</tt>
-   */
-  public int push_parse(int yylextoken, ]b4_yystype[ yylexval, ]b4_position_type[ yylexpos)]b4_maybe_throws([b4_list2([b4_lex_throws], [b4_throws])])[ {
+  # /**
+  #  * Push parse given input from an external lexer.
+  #  *
+  #  * @@param yylextoken current token
+  #  * @@param yylexval current lval
+  #  * @@param yyylexpos current position
+  #  *
+  #  * @@return <tt>YYACCEPT, YYABORT, YYPUSH_MORE</tt>
+  #  */
+  def push_parse(int yylextoken, ]b4_yystype[ yylexval, ]b4_position_type[ yylexpos)]b4_maybe_throws([b4_list2([b4_lex_throws], [b4_throws])])[ :
       return push_parse(yylextoken, yylexval, new ]b4_location_type[(yylexpos));
-  }
+  # }
 ]])])[
 
 ]b4_both_if([[
-  /**
-   * Parse input from the scanner that was specified at object construction
-   * time.  Return whether the end of the input was reached successfully.
-   * This version of parse() is defined only when api.push-push=both.
-   *
-   * @@return <tt>true</tt> if the parsing succeeds.  Note that this does not
-   *          imply that there were no syntax errors.
-   */
-  public boolean parse()]b4_maybe_throws([b4_list2([b4_lex_throws], [b4_throws])])[ {
+  # /**
+  #  * Parse input from the scanner that was specified at object construction
+  #  * time.  Return whether the end of the input was reached successfully.
+  #  * This version of parse() is defined only when api.push-push=both.
+  #  *
+  #  * @@return <tt>true</tt> if the parsing succeeds.  Note that this does not
+  #  *          imply that there were no syntax errors.
+  #  */
+  def parse()]b4_maybe_throws([b4_list2([b4_lex_throws], [b4_throws])])[ :
       if (yylexer == null)
           throw new NullPointerException("Null Lexer");
       int status;
@@ -990,20 +990,20 @@ b4_dollar_popdef[]dnl
           status = push_parse(token, lval);]])[
       } while (status == YYPUSH_MORE);
       return status == YYACCEPT;
-  }
+  # }
 ]])[
 
-  /**
-   * Information needed to get the list of expected tokens and to forge
-   * a syntax error diagnostic.
-   */
-  public static final class Context {
-    Context(]b4_parser_class[ parser, YYStack stack, SymbolKind token]b4_locations_if([[, ]b4_location_type[ loc]])[) {
+  # /**
+  #  * Information needed to get the list of expected tokens and to forge
+  #  * a syntax error diagnostic.
+  #  */
+  class Context():
+    def __init__(self, ]b4_parser_class[ parser, YYStack stack, SymbolKind token]b4_locations_if([[, ]b4_location_type[ loc]])[):
       yyparser = parser;
       yystack = stack;
       yytoken = token;]b4_locations_if([[
       yylocation = loc;]])[
-    }
+    # }
 
     private ]b4_parser_class[ yyparser;
     private YYStack yystack;
@@ -1087,7 +1087,7 @@ b4_dollar_popdef[]dnl
         yyarg[yycount] = null;
       return yycount - yyoffset;
     }
-  }
+  # }
 
 ]b4_lac_if([[
     /** Check the lookahead yytoken.

@@ -1130,7 +1130,7 @@ class Calc():
                               self.yylval, self.yylloc);
 
                 # /* Discard the token being shifted.  */
-                self.yychar = self.YYEMPTY_;
+                self.yychar = YYEMPTY_;
 
                 # /* Count tokens shifted since error; after three, turn off error
                 #    status.  */
@@ -1173,88 +1173,88 @@ class Calc():
         if (self.yyerrstatus_ == 0):
           # {
             yynerrs += 1
-            if (self.yychar == self.YYEMPTY_):
+            if (self.yychar == YYEMPTY_):
               self.yytoken = None
-            self.yyreportSyntaxError(new Context(this, yystack, yytoken, yylloc));
+            self.yyreportSyntaxError(self.Context(self, self.yystack, self.yytoken, self.yylloc));
           # }
 
         yyerrloc = yylloc;
-        if (yyerrstatus_ == 3)
-          {
-            /* If just tried and failed to reuse lookahead token after an
-               error, discard it.  */
+        if (yyerrstatus_ == 3):
+          # {
+            # /* If just tried and failed to reuse lookahead token after an
+            #    error, discard it.  */
 
-            if (yychar <= Lexer.YYEOF)
-              {
-                /* Return failure if at end of input.  */
-                if (yychar == Lexer.YYEOF)
-                  {label = YYABORT; break;}
-              }
-            else
+            if (yychar <= Lexer.YYEOF):
+              # {
+                # /* Return failure if at end of input.  */
+                if (yychar == Lexer.YYEOF):
+                  label = self.YYABORT; continue;
+              # }
+            else:
               yychar = YYEMPTY_;
-          }
+          # }
 
-        /* Else will try to reuse lookahead token after shifting the error
-           token.  */
-        label = YYERRLAB1;
-        break;
+        # /* Else will try to reuse lookahead token after shifting the error
+        #    token.  */
+        label = self.YYERRLAB1;
+        continue;
 
-      /*-------------------------------------------------.
-      | errorlab -- error raised explicitly by YYERROR.  |
-      `-------------------------------------------------*/
-      case YYERROR:
-        yyerrloc = yystack.locationAt (yylen - 1);
-        /* Do not reclaim the symbols of the rule which action triggered
-           this YYERROR.  */
-        yystack.pop (yylen);
+      # /*-------------------------------------------------.
+      # | errorlab -- error raised explicitly by YYERROR.  |
+      # `-------------------------------------------------*/
+      if(label == self.YYERROR):
+        yyerrloc = self.yystack.locationAt (yylen - 1);
+        # /* Do not reclaim the symbols of the rule which action triggered
+        #    this YYERROR.  */
+        self.yystack.pop (yylen);
         yylen = 0;
-        yystate = yystack.stateAt(0);
-        label = YYERRLAB1;
-        break;
+        yystate = self.yystack.stateAt(0);
+        label = self.YYERRLAB1;
+        continue;
 
-      /*-------------------------------------------------------------.
-      | yyerrlab1 -- common code for both syntax error and YYERROR.  |
-      `-------------------------------------------------------------*/
-      case YYERRLAB1:
-        yyerrstatus_ = 3;       /* Each real token shifted decrements this.  */
+      # /*-------------------------------------------------------------.
+      # | yyerrlab1 -- common code for both syntax error and YYERROR.  |
+      # `-------------------------------------------------------------*/
+      if(label == self.YYERRLAB1):
+        yyerrstatus_ = 3;      # /* Each real token shifted decrements this.  */
 
-        // Pop stack until we find a state that shifts the error token.
-        for (;;)
-          {
-            yyn = yypact_[yystate];
-            if (!yyPactValueIsDefault (yyn))
-              {
+        # // Pop stack until we find a state that shifts the error token.
+        while (True):
+          # {
+            yyn = self.yypact_[yystate];
+            if (not self.yyPactValueIsDefault (yyn)):
+              # {
                 yyn += SymbolKind.S_YYerror.getCode();
-                if (0 <= yyn && yyn <= YYLAST_
-                    && yycheck_[yyn] == SymbolKind.S_YYerror.getCode())
-                  {
+                if (0 <= yyn and yyn <= YYLAST_
+                    and yycheck_[yyn] == SymbolKind.S_YYerror.getCode()):
+                  # {
                     yyn = yytable_[yyn];
                     if (0 < yyn)
                       break;
-                  }
-              }
+                  # }
+              # }
 
-            /* Pop the current state because it cannot handle the
-             * error token.  */
-            if (yystack.height == 0)
+            # /* Pop the current state because it cannot handle the
+            #  * error token.  */
+            if (yystack.height == 0):
               {label = YYABORT; break;}
 
 
             yyerrloc = yystack.locationAt (0);
             yystack.pop ();
             yystate = yystack.stateAt(0);
-            if (0 < yydebug)
+            if (0 < yydebug):
               yystack.print (yyDebugStream);
-          }
+          # }
 
-        if (label == YYABORT)
-          /* Leave the switch.  */
-          break;
+        if (label == YYABORT):
+          # /* Leave the switch.  */
+          continue;
 
 
-        /* Muck with the stack to setup for yylloc.  */
-        yystack.push (0, null, yylloc);
-        yystack.push (0, null, yyerrloc);
+        # /* Muck with the stack to setup for yylloc.  */
+        self.yystack.push (0, null, yylloc);
+        self.yystack.push (0, null, yyerrloc);
         yyloc = yylloc (yystack, 2);
         yystack.pop (2);
 
@@ -1266,80 +1266,80 @@ class Calc():
         yystate = yyn;
         yystack.push (yyn, yylval, yyloc);
         label = YYNEWSTATE;
-        break;
+        continue;
 
-        /* Accept.  */
-      case YYACCEPT:
+        # /* Accept.  */
+      if(label == YYACCEPT):
         this.push_parse_initialized = false; return YYACCEPT;
 
-        /* Abort.  */
-      case YYABORT:
+        # /* Abort.  */
+      if(label == YYABORT):
         this.push_parse_initialized = false; return YYABORT;
-      }
-}
+      # }
+# }
 
-  boolean push_parse_initialized = false;
+  push_parse_initialized = False;
 
-    /**
-     * (Re-)Initialize the state of the push parser.
-     */
-  public void push_parse_initialize ()
-  {
-    /* Lookahead and lookahead in internal form.  */
-    this.yychar = YYEMPTY_;
-    this.yytoken = null;
+    # /**
+    #  * (Re-)Initialize the state of the push parser.
+    #  */
+  def push_parse_initialize (self):
+  # {
+  #   /* Lookahead and lookahead in internal form.  */
+    self.yychar = YYEMPTY_;
+    self.yytoken = None;
 
-    /* State.  */
-    this.yyn = 0;
-    this.yylen = 0;
-    this.yystate = 0;
-    this.yystack = new YYStack();
-    this.yylacStack = new ArrayList<Integer>();
-    this.yylacEstablished = false;
-    this.label = YYNEWSTATE;
+    # /* State.  */
+    self.yyn = 0
+    self.yylen = 0
+    self.yystate = 0
+    self.yystack = YYStack()
+    self.yylacStack = []
+    self.yylacEstablished = False;
+    self.label = self.YYNEWSTATE
 
-    /* Error handling.  */
-    this.yynerrs = 0;
-    /* The location where the error started.  */
-    this.yyerrloc = null;
-    this.yylloc = new Location (null, null);
+    # /* Error handling.  */
+    self.yynerrs = 0
+    # /* The location where the error started.  */
+    self.yyerrloc = None
+    self.yylloc = Location (None, None)
 
-    /* Semantic value of the lookahead.  */
-    this.yylval = null;
+    # /* Semantic value of the lookahead.  */
+    self.yylval = None;
 
-    yystack.push (this.yystate, this.yylval, this.yylloc);
+    self.yystack.push (self.yystate, self.yylval, self.yylloc)
 
-    this.push_parse_initialized = true;
+    self.push_parse_initialized = True
 
-  }
+  # }
 
-  /**
-   * Push parse given input from an external lexer.
-   *
-   * @param yylextoken current token
-   * @param yylexval current lval
-   * @param yyylexpos current position
-   *
-   * @return <tt>YYACCEPT, YYABORT, YYPUSH_MORE</tt>
-   */
-  public int push_parse(int yylextoken, Object yylexval, Position yylexpos) throws java.io.IOException {
+  # /**
+  #  * Push parse given input from an external lexer.
+  #  *
+  #  * @param yylextoken current token
+  #  * @param yylexval current lval
+  #  * @param yyylexpos current position
+  #  *
+  #  * @return <tt>YYACCEPT, YYABORT, YYPUSH_MORE</tt>
+  #  */
+  def push_parse(int yylextoken, Object yylexval, Position yylexpos) throws java.io.IOException :
       return push_parse(yylextoken, yylexval, new Location(yylexpos));
-  }
+  # }
 
 
 
 
-  /**
-   * Information needed to get the list of expected tokens and to forge
-   * a syntax error diagnostic.
-   */
-  public static final class Context {
-    Context(Calc parser, YYStack stack, SymbolKind token, Location loc) {
+  # /**
+  #  * Information needed to get the list of expected tokens and to forge
+  #  * a syntax error diagnostic.
+  #  */
+  class Context():
+    def __init__(self, Calc parser, YYStack stack, SymbolKind token, Location loc):
       yyparser = parser;
       yystack = stack;
       yytoken = token;
       yylocation = loc;
-    }
+    # }
 
     private Calc yyparser;
     private YYStack yystack;
@@ -1400,7 +1400,7 @@ class Calc():
         yyarg[yycount] = null;
       return yycount - yyoffset;
     }
-  }
+  # }
 
 
     /** Check the lookahead yytoken.
