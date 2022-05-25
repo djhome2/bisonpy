@@ -471,6 +471,48 @@ def yylloc(rhs, n):
 
 
 
+
+# /**
+#  * Returned by a Bison action in order to stop the parsing process and
+#  * return success (<tt>true</tt>).
+#  */
+YYACCEPT = 0
+
+# /**
+#  * Returned by a Bison action in order to stop the parsing process and
+#  * return failure (<tt>false</tt>).
+#  */
+YYABORT = 1
+
+
+# /**
+#  * Returned by a Bison action in order to request a new token.
+#  */
+YYPUSH_MORE = 4
+
+
+# /**
+#  * Returned by a Bison action in order to start error recovery without
+#  * printing an error message.
+#  */
+YYERROR = 2
+
+# /**
+#  * Internal return codes that are not supported for user semantic
+#  * actions.
+#  */
+YYERRLAB = 3
+YYNEWSTATE = 4
+YYDEFAULT = 5
+YYREDUCE = 6
+YYERRLAB1 = 7
+YYRETURN = 8
+  
+YYGETTOKEN = 9# /* Signify that a new token is expected when doing push-parsing.  */
+
+
+
+
 class Calc():
 # {
   
@@ -682,42 +724,6 @@ class Calc():
       print('', file = out)
     
   # }
-
-  # /**
-  #  * Returned by a Bison action in order to stop the parsing process and
-  #  * return success (<tt>true</tt>).
-  #  */
-  YYACCEPT = 0
-
-  # /**
-  #  * Returned by a Bison action in order to stop the parsing process and
-  #  * return failure (<tt>false</tt>).
-  #  */
-  YYABORT = 1
-
-
-  # /**
-  #  * Returned by a Bison action in order to request a new token.
-  #  */
-  YYPUSH_MORE = 4
-
-  # /**
-  #  * Returned by a Bison action in order to start error recovery without
-  #  * printing an error message.
-  #  */
-  YYERROR = 2
-
-  # /**
-  #  * Internal return codes that are not supported for user semantic
-  #  * actions.
-  #  */
-  YYERRLAB = 3
-  YYNEWSTATE = 4
-  YYDEFAULT = 5
-  YYREDUCE = 6
-  YYERRLAB1 = 7
-  YYRETURN = 8
-  YYGETTOKEN = 9# /* Signify that a new token is expected when doing push-parsing.  */
 
   yyerrstatus_ = 0
 
@@ -971,7 +977,7 @@ class Calc():
 
 
 
-#"Calc.py":975
+#"Calc.py":981
   #
   
 
@@ -1337,68 +1343,69 @@ class Calc():
   #  * a syntax error diagnostic.
   #  */
   class Context():
-    def __init__(self, Calc parser, YYStack stack, SymbolKind token, Location loc):
-      yyparser = parser;
-      yystack = stack;
-      yytoken = token;
-      yylocation = loc;
+    def __init__(self, parser, stack, token, loc):
+      self.yyparser = parser
+      self.yystack = stack
+      self.yytoken = token
+      self.yylocation = loc
     # }
 
-    private Calc yyparser;
-    private YYStack yystack;
+    # private Calc yyparser;
+    # private YYStack yystack;
 
 
-    /**
-     * The symbol kind of the lookahead token.
-     */
-    public final SymbolKind getToken() {
-      return yytoken;
-    }
+    # /**
+    #  * The symbol kind of the lookahead token.
+    #  */
+    def getToken(self):
+      return self.yytoken;
+    # }
 
-    private SymbolKind yytoken;
+    # private SymbolKind yytoken;
 
-    /**
-     * The location of the lookahead.
-     */
-    public final Location getLocation() {
-      return yylocation;
-    }
+    # /**
+    #  * The location of the lookahead.
+    #  */
+    def getLocation(self):
+      return self.yylocation;
+    # }
 
-    private Location yylocation;
-    static final int NTOKENS = Calc.YYNTOKENS_;
+    # private Location yylocation;
+    NTOKENS = YYNTOKENS_
 
-    /**
-     * Put in YYARG at most YYARGN of the expected tokens given the
-     * current YYCTX, and return the number of tokens stored in YYARG.  If
-     * YYARG is null, return the number of expected tokens (guaranteed to
-     * be less than YYNTOKENS).
-     */
-    int getExpectedTokens(SymbolKind yyarg[], int yyargn) {
-      return getExpectedTokens (yyarg, 0, yyargn);
-    }
+    # /**
+    #  * Put in YYARG at most YYARGN of the expected tokens given the
+    #  * current YYCTX, and return the number of tokens stored in YYARG.  If
+    #  * YYARG is null, return the number of expected tokens (guaranteed to
+    #  * be less than YYNTOKENS).
+    #  */
+    # def getExpectedTokens(self, yyarg, yyargn):
+    #   return getExpectedTokens (yyarg, 0, yyargn);
+    # }
 
-    int getExpectedTokens(SymbolKind yyarg[], int yyoffset, int yyargn) {
-      int yycount = yyoffset;
-      // Execute LAC once. We don't care if it is successful, we
-      // only do it for the sake of debugging output.
-      if (!yyparser.yylacEstablished)
-        yyparser.yylacCheck(yystack, yytoken);
+    def getExpectedTokens(self, yyarg, yyoffset=0, yyargn=0):
+      yycount = yyoffset;
+      # // Execute LAC once. We don't care if it is successful, we
+      # // only do it for the sake of debugging output.
+      if (not self.yyparser.yylacEstablished):
+        self.yyparser.yylacCheck(yystack, yytoken)
 
-      for (int yyx = 0; yyx < YYNTOKENS_; ++yyx)
-        {
-          SymbolKind yysym = SymbolKind.get(yyx);
-          if (yysym != SymbolKind.S_YYerror
-              && yysym != SymbolKind.S_YYUNDEF
-              && yyparser.yylacCheck(yystack, yysym))
-            {
-              if (yyarg == null)
-                yycount += 1;
-              else if (yycount == yyargn)
-                return 0;
-              else
-                yyarg[yycount++] = yysym;
-            }
-        }
+      for yyx in range(YYNTOKENS_):
+        # {
+        yysym = SymbolKind.get(yyx);
+        if (yysym != SymbolKind.S_YYerror
+            and yysym != SymbolKind.S_YYUNDEF
+            and self.yyparser.yylacCheck(self.yystack, yysym)):
+          # {
+            if (yyarg == None):
+              yycount += 1
+            elif (yycount == yyargn):
+              return 0
+            else:
+              yyarg[yycount] = yysym
+              yycount += 1
+          # }
+        
       if (yyarg != null && yycount == yyoffset && yyoffset < yyargn)
         yyarg[yycount] = null;
       return yycount - yyoffset;
@@ -1842,7 +1849,7 @@ class Calc():
  
   
 
-#"Calc.py":1846
+#"Calc.py":1853
   #
   
 

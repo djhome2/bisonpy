@@ -255,6 +255,48 @@ def yylloc(rhs, n):
 ]])[
 
 
+
+# /**
+#  * Returned by a Bison action in order to stop the parsing process and
+#  * return success (<tt>true</tt>).
+#  */
+YYACCEPT = 0
+
+# /**
+#  * Returned by a Bison action in order to stop the parsing process and
+#  * return failure (<tt>false</tt>).
+#  */
+YYABORT = 1
+
+]b4_push_if([
+# /**
+#  * Returned by a Bison action in order to request a new token.
+#  */
+YYPUSH_MORE = 4
+])[
+
+# /**
+#  * Returned by a Bison action in order to start error recovery without
+#  * printing an error message.
+#  */
+YYERROR = 2
+
+# /**
+#  * Internal return codes that are not supported for user semantic
+#  * actions.
+#  */
+YYERRLAB = 3
+YYNEWSTATE = 4
+YYDEFAULT = 5
+YYREDUCE = 6
+YYERRLAB1 = 7
+YYRETURN = 8
+]b4_push_if([[  
+YYGETTOKEN = 9# /* Signify that a new token is expected when doing push-parsing.  */
+]])[
+
+
+
 ]b4_parser_class_declaration[():
 # {
 ]b4_identification[
@@ -497,42 +539,6 @@ def yylloc(rhs, n):
       print('', file = out)
     
   # }
-
-  # /**
-  #  * Returned by a Bison action in order to stop the parsing process and
-  #  * return success (<tt>true</tt>).
-  #  */
-  YYACCEPT = 0
-
-  # /**
-  #  * Returned by a Bison action in order to stop the parsing process and
-  #  * return failure (<tt>false</tt>).
-  #  */
-  YYABORT = 1
-
-]b4_push_if([
-  # /**
-  #  * Returned by a Bison action in order to request a new token.
-  #  */
-  YYPUSH_MORE = 4])[
-
-  # /**
-  #  * Returned by a Bison action in order to start error recovery without
-  #  * printing an error message.
-  #  */
-  YYERROR = 2
-
-  # /**
-  #  * Internal return codes that are not supported for user semantic
-  #  * actions.
-  #  */
-  YYERRLAB = 3
-  YYNEWSTATE = 4
-  YYDEFAULT = 5
-  YYREDUCE = 6
-  YYERRLAB1 = 7
-  YYRETURN = 8
-]b4_push_if([[  YYGETTOKEN = 9# /* Signify that a new token is expected when doing push-parsing.  */]])[
 
   yyerrstatus_ = 0
 
@@ -1001,68 +1007,69 @@ b4_dollar_popdef[]dnl
   #  * a syntax error diagnostic.
   #  */
   class Context():
-    def __init__(self, ]b4_parser_class[ parser, YYStack stack, SymbolKind token]b4_locations_if([[, ]b4_location_type[ loc]])[):
-      yyparser = parser;
-      yystack = stack;
-      yytoken = token;]b4_locations_if([[
-      yylocation = loc;]])[
+    def __init__(self, parser, stack, token]b4_locations_if([[, loc]])[):
+      self.yyparser = parser
+      self.yystack = stack
+      self.yytoken = token]b4_locations_if([[
+      self.yylocation = loc]])[
     # }
 
-    private ]b4_parser_class[ yyparser;
-    private YYStack yystack;
+    # private ]b4_parser_class[ yyparser;
+    # private YYStack yystack;
 
 
-    /**
-     * The symbol kind of the lookahead token.
-     */
-    public final SymbolKind getToken() {
-      return yytoken;
-    }
+    # /**
+    #  * The symbol kind of the lookahead token.
+    #  */
+    def getToken(self):
+      return self.yytoken;
+    # }
 
-    private SymbolKind yytoken;]b4_locations_if([[
+    # private SymbolKind yytoken;]b4_locations_if([[
 
-    /**
-     * The location of the lookahead.
-     */
-    public final ]b4_location_type[ getLocation() {
-      return yylocation;
-    }
+    # /**
+    #  * The location of the lookahead.
+    #  */
+    def getLocation(self):
+      return self.yylocation;
+    # }
 
-    private ]b4_location_type[ yylocation;]])[
-    static final int NTOKENS = ]b4_parser_class[.YYNTOKENS_;
+    # private ]b4_location_type[ yylocation;]])[
+    NTOKENS = YYNTOKENS_
 
-    /**
-     * Put in YYARG at most YYARGN of the expected tokens given the
-     * current YYCTX, and return the number of tokens stored in YYARG.  If
-     * YYARG is null, return the number of expected tokens (guaranteed to
-     * be less than YYNTOKENS).
-     */
-    int getExpectedTokens(SymbolKind yyarg[], int yyargn) {
-      return getExpectedTokens (yyarg, 0, yyargn);
-    }
+    # /**
+    #  * Put in YYARG at most YYARGN of the expected tokens given the
+    #  * current YYCTX, and return the number of tokens stored in YYARG.  If
+    #  * YYARG is null, return the number of expected tokens (guaranteed to
+    #  * be less than YYNTOKENS).
+    #  */
+    # def getExpectedTokens(self, yyarg, yyargn):
+    #   return getExpectedTokens (yyarg, 0, yyargn);
+    # }
 
-    int getExpectedTokens(SymbolKind yyarg[], int yyoffset, int yyargn) {
-      int yycount = yyoffset;]b4_lac_if([b4_parse_trace_if([[
-      // Execute LAC once. We don't care if it is successful, we
-      // only do it for the sake of debugging output.
-      if (!yyparser.yylacEstablished)
-        yyparser.yylacCheck(yystack, yytoken);
+    def getExpectedTokens(self, yyarg, yyoffset=0, yyargn=0):
+      yycount = yyoffset;]b4_lac_if([b4_parse_trace_if([[
+      # // Execute LAC once. We don't care if it is successful, we
+      # // only do it for the sake of debugging output.
+      if (not self.yyparser.yylacEstablished):
+        self.yyparser.yylacCheck(yystack, yytoken)
 ]])[
-      for (int yyx = 0; yyx < YYNTOKENS_; ++yyx)
-        {
-          SymbolKind yysym = SymbolKind.get(yyx);
-          if (yysym != ]b4_symbol(error, kind)[
-              && yysym != ]b4_symbol(undef, kind)[
-              && yyparser.yylacCheck(yystack, yysym))
-            {
-              if (yyarg == null)
-                yycount += 1;
-              else if (yycount == yyargn)
-                return 0;
-              else
-                yyarg[yycount++] = yysym;
-            }
-        }]], [[
+      for yyx in range(YYNTOKENS_):
+        # {
+        yysym = SymbolKind.get(yyx);
+        if (yysym != ]b4_symbol(error, kind)[
+            and yysym != ]b4_symbol(undef, kind)[
+            and self.yyparser.yylacCheck(self.yystack, yysym)):
+          # {
+            if (yyarg == None):
+              yycount += 1
+            elif (yycount == yyargn):
+              return 0
+            else:
+              yyarg[yycount] = yysym
+              yycount += 1
+          # }
+        ]], [[
       int yyn = yypact_[this.yystack.stateAt(0)];
       if (!yyPactValueIsDefault(yyn))
         {
