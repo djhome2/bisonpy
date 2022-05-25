@@ -637,7 +637,10 @@ def yylloc(rhs, n):
   def push_parse(self, yylextoken, yylexval[]b4_locations_if([, yylexloc]))])[:
   ]b4_locations_if([[
     # /* @@$.  */
-    yyloc = None]])[
+    yyloc = None
+    if(yylexloc != None and isinstance(yylexloc, Position)):
+      yylexloc = Location(yylexloc)
+]])[
 ]b4_push_if([],[[
 ]b4_define_state[
 ]b4_lac_if([[
@@ -964,8 +967,8 @@ b4_dollar_popdef[]dnl
   #  *
   #  * @@return <tt>YYACCEPT, YYABORT, YYPUSH_MORE</tt>
   #  */
-  def push_parse(int yylextoken, ]b4_yystype[ yylexval, ]b4_position_type[ yylexpos)]b4_maybe_throws([b4_list2([b4_lex_throws], [b4_throws])])[ :
-      return push_parse(yylextoken, yylexval, new ]b4_location_type[(yylexpos));
+  # def push_parse(int yylextoken, ]b4_yystype[ yylexval, ]b4_position_type[ yylexpos)]b4_maybe_throws([b4_list2([b4_lex_throws], [b4_throws])])[ :
+  #     return push_parse(yylextoken, yylexval, new ]b4_location_type[(yylexpos));
   # }
 ]])])[
 

@@ -1027,6 +1027,9 @@ class Calc():
   
     # /* @$.  */
     yyloc = None
+    if(yylexloc != None and isinstance(yylexloc, Position)):
+      yylexloc = Location(yylexloc)
+
 
 
     if (not self.push_parse_initialized):
@@ -1322,8 +1325,8 @@ class Calc():
   #  *
   #  * @return <tt>YYACCEPT, YYABORT, YYPUSH_MORE</tt>
   #  */
-  def push_parse(int yylextoken, Object yylexval, Position yylexpos) throws java.io.IOException :
-      return push_parse(yylextoken, yylexval, new Location(yylexpos));
+  # def push_parse(int yylextoken, Object yylexval, Position yylexpos) throws java.io.IOException :
+  #     return push_parse(yylextoken, yylexval, new Location(yylexpos));
   # }
 
 
@@ -1839,7 +1842,7 @@ class Calc():
  
   
 
-#"Calc.py":1843
+#"Calc.py":1846
   #
   
 
