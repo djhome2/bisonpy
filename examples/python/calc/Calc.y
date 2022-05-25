@@ -173,7 +173,7 @@ exp:
       $$ = $1; }
 | exp "=" exp
   {
-      if ($1.intValue() != $3.intValue())
+      if ($1.intValue() != $3.intValue()):
         self.yyerror(@$, "calc: error: " + $1 + " != " + $3);
   }
 | exp "+" exp        { 
