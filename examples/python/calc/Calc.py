@@ -1125,58 +1125,58 @@ class Calc():
 
             else:
               # {
-                /* Shift the lookahead token.  */
-                yySymbolPrint("Shifting", yytoken,
-                              yylval, yylloc);
+                # /* Shift the lookahead token.  */
+                self.yySymbolPrint("Shifting", self.yytoken,
+                              self.yylval, self.yylloc);
 
-                /* Discard the token being shifted.  */
-                yychar = YYEMPTY_;
+                # /* Discard the token being shifted.  */
+                self.yychar = self.YYEMPTY_;
 
-                /* Count tokens shifted since error; after three, turn off error
-                   status.  */
-                if (yyerrstatus_ > 0)
-                  --yyerrstatus_;
+                # /* Count tokens shifted since error; after three, turn off error
+                #    status.  */
+                if (self.yyerrstatus_ > 0):
+                  self.yyerrstatus_ -= 1
 
-                yystate = yyn;
-                yystack.push(yystate, yylval, yylloc);
-                yylacDiscard("shift");
-                label = YYNEWSTATE;
+                self.yystate = yyn;
+                self.yystack.push(self.yystate, self.yylval, self.yylloc);
+                self.yylacDiscard("shift");
+                label = self.YYNEWSTATE;
               # }
           # }
         continue
 
-      /*-----------------------------------------------------------.
-      | yydefault -- do the default action for the current state.  |
-      `-----------------------------------------------------------*/
-      case YYDEFAULT:
-        yyn = yydefact_[yystate];
-        if (yyn == 0)
-          label = YYERRLAB;
+      # /*-----------------------------------------------------------.
+      # | yydefault -- do the default action for the current state.  |
+      # `-----------------------------------------------------------*/
+      if(label == self.YYDEFAULT):
+        yyn = self.yydefact_[self.yystate];
+        if (yyn == 0):
+          label = self.YYERRLAB;
         else
-          label = YYREDUCE;
-        break;
+          label = self.YYREDUCE;
+        continue
 
-      /*-----------------------------.
-      | yyreduce -- Do a reduction.  |
-      `-----------------------------*/
-      case YYREDUCE:
-        yylen = yyr2_[yyn];
-        label = yyaction(yyn, yystack, yylen);
-        yystate = yystack.stateAt(0);
-        break;
+      # /*-----------------------------.
+      # | yyreduce -- Do a reduction.  |
+      # `-----------------------------*/
+      if(label == self.YYREDUCE):
+        yylen = self.yyr2_[yyn];
+        label = self.yyaction(yyn, self.yystack, yylen);
+        self.yystate = self.yystack.stateAt(0);
+        continue
 
-      /*------------------------------------.
-      | yyerrlab -- here on detecting error |
-      `------------------------------------*/
-      case YYERRLAB:
-        /* If not already recovering from an error, report this error.  */
-        if (yyerrstatus_ == 0)
-          {
-            ++yynerrs;
-            if (yychar == YYEMPTY_)
-              yytoken = null;
-            yyreportSyntaxError(new Context(this, yystack, yytoken, yylloc));
-          }
+      # /*------------------------------------.
+      # | yyerrlab -- here on detecting error |
+      # `------------------------------------*/
+      if(label == self.YYERRLAB):
+        # /* If not already recovering from an error, report this error.  */
+        if (self.yyerrstatus_ == 0):
+          # {
+            yynerrs += 1
+            if (self.yychar == self.YYEMPTY_):
+              self.yytoken = None
+            self.yyreportSyntaxError(new Context(this, yystack, yytoken, yylloc));
+          # }
 
         yyerrloc = yylloc;
         if (yyerrstatus_ == 3)
