@@ -185,10 +185,10 @@ class ]b4_location_type[():
 #  * Communication interface between the scanner and the Bison-generated
 #  * parser <tt>]b4_parser_class[</tt>.
 #  */
-class Lexer():
 ]b4_token_enums[
   # /** Deprecated, use ]b4_symbol(eof, id)[ instead.  */
-  EOF = ]b4_symbol(eof, id)[
+EOF = ]b4_symbol(eof, id)[
+class Lexer():
 ]b4_pull_if([b4_locations_if([[
   # /**
   #  * Method to retrieve the beginning position of the last scanned token.

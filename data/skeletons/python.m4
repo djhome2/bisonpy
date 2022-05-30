@@ -150,8 +150,9 @@ m4_define([b4_integral_parser_table_define],
 # Output the definition of this token as an enum.
 m4_define([b4_token_enum],
 [b4_token_visible_if([$1],
-    [m4_format([[  #/** Token %s, to be returned by the scanner.  */
-  %s = %s%s
+    [m4_format([[
+#/** Token %s, to be returned by the scanner.  */
+%s = %s%s
 ]],
                b4_symbol([$1], [tag]),
                b4_symbol([$1], [id]),
@@ -162,7 +163,8 @@ m4_define([b4_token_enum],
 # --------------
 # Output the definition of the tokens (if there are) as enums.
 m4_define([b4_token_enums],
-[b4_any_token_visible_if([    #/* Token kinds.  */
+[b4_any_token_visible_if([
+#/* Token kinds.  */
 b4_symbol_foreach([b4_token_enum])])])
 
 

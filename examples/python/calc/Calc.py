@@ -402,41 +402,57 @@ class SymbolKind():
 #  * Communication interface between the scanner and the Bison-generated
 #  * parser <tt>Calc</tt>.
 #  */
-class Lexer():
-    #/* Token kinds.  */
-  #/** Token "end of file", to be returned by the scanner.  */
-  YYEOF = 0
-  #/** Token error, to be returned by the scanner.  */
-  YYerror = 256
-  #/** Token "invalid token", to be returned by the scanner.  */
-  YYUNDEF = 257
-  #/** Token "!", to be returned by the scanner.  */
-  BANG = 258
-  #/** Token "+", to be returned by the scanner.  */
-  PLUS = 259
-  #/** Token "-", to be returned by the scanner.  */
-  MINUS = 260
-  #/** Token "*", to be returned by the scanner.  */
-  STAR = 261
-  #/** Token "/", to be returned by the scanner.  */
-  SLASH = 262
-  #/** Token "^", to be returned by the scanner.  */
-  CARET = 263
-  #/** Token "(", to be returned by the scanner.  */
-  LPAREN = 264
-  #/** Token ")", to be returned by the scanner.  */
-  RPAREN = 265
-  #/** Token "=", to be returned by the scanner.  */
-  EQUAL = 266
-  #/** Token "end of line", to be returned by the scanner.  */
-  EOL = 267
-  #/** Token "number", to be returned by the scanner.  */
-  NUM = 268
-  #/** Token NEG, to be returned by the scanner.  */
-  NEG = 269
+
+#/* Token kinds.  */
+
+#/** Token "end of file", to be returned by the scanner.  */
+YYEOF = 0
+
+#/** Token error, to be returned by the scanner.  */
+YYerror = 256
+
+#/** Token "invalid token", to be returned by the scanner.  */
+YYUNDEF = 257
+
+#/** Token "!", to be returned by the scanner.  */
+BANG = 258
+
+#/** Token "+", to be returned by the scanner.  */
+PLUS = 259
+
+#/** Token "-", to be returned by the scanner.  */
+MINUS = 260
+
+#/** Token "*", to be returned by the scanner.  */
+STAR = 261
+
+#/** Token "/", to be returned by the scanner.  */
+SLASH = 262
+
+#/** Token "^", to be returned by the scanner.  */
+CARET = 263
+
+#/** Token "(", to be returned by the scanner.  */
+LPAREN = 264
+
+#/** Token ")", to be returned by the scanner.  */
+RPAREN = 265
+
+#/** Token "=", to be returned by the scanner.  */
+EQUAL = 266
+
+#/** Token "end of line", to be returned by the scanner.  */
+EOL = 267
+
+#/** Token "number", to be returned by the scanner.  */
+NUM = 268
+
+#/** Token NEG, to be returned by the scanner.  */
+NEG = 269
 
   # /** Deprecated, use YYEOF instead.  */
-  EOF = YYEOF
+EOF = YYEOF
+class Lexer():
 
   # /**
   #  * Emit an error referring to the given locationin a user-defined way.
@@ -978,7 +994,7 @@ class Calc():
 
 
 
-#"Calc.py":982
+#"Calc.py":998
   #
   
 
@@ -1849,7 +1865,7 @@ class Calc():
  
   
 
-#"Calc.py":1853
+#"Calc.py":1869
   #
   
 
