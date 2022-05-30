@@ -1572,34 +1572,34 @@ class Calc():
 
 
 
-  /**
-   * Build and emit a "syntax error" message in a user-defined way.
-   *
-   * @param ctx  The context of the error.
-   */
-  private void yyreportSyntaxError(Context yyctx) {
-      yylexer.reportSyntaxError(yyctx);
-  }
+  # /**
+  #  * Build and emit a "syntax error" message in a user-defined way.
+  #  *
+  #  * @param ctx  The context of the error.
+  #  */
+  def  yyreportSyntaxError(self,  yyctx) :
+      self.yylexer.reportSyntaxError(yyctx);
+  # }
 
-  /**
-   * Whether the given <code>yypact_</code> value indicates a defaulted state.
-   * @param yyvalue   the value to check
-   */
-  private static boolean yyPactValueIsDefault(int yyvalue) {
-    return yyvalue == yypact_ninf_;
-  }
+  # /**
+  #  * Whether the given <code>yypact_</code> value indicates a defaulted state.
+  #  * @param yyvalue   the value to check
+  #  */
+  def  yyPactValueIsDefault(self, yyvalue) :
+    return yyvalue == self.yypact_ninf_;
+  # }
 
-  /**
-   * Whether the given <code>yytable_</code>
-   * value indicates a syntax error.
-   * @param yyvalue the value to check
-   */
-  private static boolean yyTableValueIsError(int yyvalue) {
-    return yyvalue == yytable_ninf_;
-  }
+  # /**
+  #  * Whether the given <code>yytable_</code>
+  #  * value indicates a syntax error.
+  #  * @param yyvalue the value to check
+  #  */
+  def  yyTableValueIsError(self,  yyvalue):
+    return yyvalue == self.yytable_ninf_;
+  # }
 
-  private static final byte yypact_ninf_ = -10;
-  private static final byte yytable_ninf_ = -1;
+  yypact_ninf_ = -10;
+  yytable_ninf_ = -1;
 
 #YYPACT[STATE-NUM] -- Index in YYTABLE of the portion describing
   #
@@ -1764,39 +1764,39 @@ class Calc():
   
 
 
-  // Report on the debug stream that the rule yyrule is going to be reduced.
-  private void yyReducePrint (int yyrule, YYStack yystack)
-  {
-    if (yydebug == 0)
+  # // Report on the debug stream that the rule yyrule is going to be reduced.
+  def yyReducePrint ( yyrule, yystack):
+  # {
+    if (yydebug == 0):
       return;
 
-    int yylno = yyrline_[yyrule];
-    int yynrhs = yyr2_[yyrule];
-    /* Print the symbols being reduced, and their result.  */
+    yylno = yyrline_[yyrule];
+    yynrhs = yyr2_[yyrule];
+    # /* Print the symbols being reduced, and their result.  */
     yycdebug ("Reducing stack by rule " + (yyrule - 1)
               + " (line " + yylno + "):");
 
-    /* The symbols being reduced.  */
-    for (int yyi = 0; yyi < yynrhs; yyi++)
+    # /* The symbols being reduced.  */
+    for  yyi in range( yynrhs):
       yySymbolPrint("   $" + (yyi + 1) + " =",
                     SymbolKind.get(yystos_[yystack.stateAt(yynrhs - (yyi + 1))]),
                     yystack.valueAt ((yynrhs) - (yyi + 1)),
                     yystack.locationAt ((yynrhs) - (yyi + 1)));
-  }
+  
 
-  /* YYTRANSLATE_(TOKEN-NUM) -- Symbol number corresponding to TOKEN-NUM
-     as returned by yylex, with out-of-bounds checking.  */
-  private static final SymbolKind yytranslate_(int t)
-  {
-    // Last valid token kind.
-    int code_max = 269;
-    if (t <= 0)
+  # /* YYTRANSLATE_(TOKEN-NUM) -- Symbol number corresponding to TOKEN-NUM
+  #    as returned by yylex, with out-of-bounds checking.  */
+  def yytranslate_(self, t):
+  
+    # // Last valid token kind.
+    code_max = 269;
+    if (t <= 0):
       return SymbolKind.S_YYEOF;
-    else if (t <= code_max)
+    elif (t <= code_max):
       return SymbolKind.get(yytranslate_table_[t]);
-    else
+    else:
       return SymbolKind.S_YYUNDEF;
-  }
+  # }
   
   def yytranslate_table_init():  
       return (

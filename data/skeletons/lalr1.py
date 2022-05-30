@@ -1299,23 +1299,23 @@ b4_dollar_popdef[]dnl
   # }
 ]])[
 
-  /**
-   * Build and emit a "syntax error" message in a user-defined way.
-   *
-   * @@param ctx  The context of the error.
-   */
-  private void yyreportSyntaxError(Context yyctx) {]b4_parse_error_bmatch(
+  # /**
+  #  * Build and emit a "syntax error" message in a user-defined way.
+  #  *
+  #  * @@param ctx  The context of the error.
+  #  */
+  def  yyreportSyntaxError(self,  yyctx) :]b4_parse_error_bmatch(
 [custom], [[
-      yylexer.reportSyntaxError(yyctx);]],
+      self.yylexer.reportSyntaxError(yyctx);]],
 [detailed\|verbose], [[
-      if (yyErrorVerbose) {
-          final int argmax = 5;
-          SymbolKind[] yyarg = new SymbolKind[argmax];
-          int yycount = yysyntaxErrorArguments(yyctx, yyarg, argmax);
-          String[] yystr = new String[yycount];
-          for (int yyi = 0; yyi < yycount; ++yyi) {
-              yystr[yyi] = yyarg[yyi].getName();
-          }
+      if (yyErrorVerbose) :
+          argmax = 5
+          yyarg = [None] * argmax
+          yycount = yysyntaxErrorArguments(yyctx, yyarg, argmax);
+          yystr = [None] * yycount
+          for yyi in range(yycount):
+              yystr[yyi] = yyarg[yyi].getName()
+          # }
           String yyformat;
           switch (yycount) {
               default:
@@ -1332,27 +1332,27 @@ b4_dollar_popdef[]dnl
       }]],
 [simple], [[
       yyerror(]b4_locations_if([[yyctx.yylocation, ]])[]b4_trans(["syntax error"])[);]])[
-  }
+  # }
 
-  /**
-   * Whether the given <code>yypact_</code> value indicates a defaulted state.
-   * @@param yyvalue   the value to check
-   */
-  private static boolean yyPactValueIsDefault(int yyvalue) {
-    return yyvalue == yypact_ninf_;
-  }
+  # /**
+  #  * Whether the given <code>yypact_</code> value indicates a defaulted state.
+  #  * @@param yyvalue   the value to check
+  #  */
+  def  yyPactValueIsDefault(self, yyvalue) :
+    return yyvalue == self.yypact_ninf_;
+  # }
 
-  /**
-   * Whether the given <code>yytable_</code>
-   * value indicates a syntax error.
-   * @@param yyvalue the value to check
-   */
-  private static boolean yyTableValueIsError(int yyvalue) {
-    return yyvalue == yytable_ninf_;
-  }
+  # /**
+  #  * Whether the given <code>yytable_</code>
+  #  * value indicates a syntax error.
+  #  * @@param yyvalue the value to check
+  #  */
+  def  yyTableValueIsError(self,  yyvalue):
+    return yyvalue == self.yytable_ninf_;
+  # }
 
-  private static final ]b4_int_type_for([b4_pact])[ yypact_ninf_ = ]b4_pact_ninf[;
-  private static final ]b4_int_type_for([b4_table])[ yytable_ninf_ = ]b4_table_ninf[;
+  yypact_ninf_ = ]b4_pact_ninf[;
+  yytable_ninf_ = ]b4_table_ninf[;
 
 ]b4_parser_tables_define[
 
@@ -1361,44 +1361,44 @@ b4_dollar_popdef[]dnl
   [[YYRLINE[YYN] -- Source line where rule number YYN was defined.]])[
 
 
-  // Report on the debug stream that the rule yyrule is going to be reduced.
-  private void yyReducePrint (int yyrule, YYStack yystack)
-  {
-    if (yydebug == 0)
+  # // Report on the debug stream that the rule yyrule is going to be reduced.
+  def yyReducePrint ( yyrule, yystack):
+  # {
+    if (yydebug == 0):
       return;
 
-    int yylno = yyrline_[yyrule];
-    int yynrhs = yyr2_[yyrule];
-    /* Print the symbols being reduced, and their result.  */
+    yylno = yyrline_[yyrule];
+    yynrhs = yyr2_[yyrule];
+    # /* Print the symbols being reduced, and their result.  */
     yycdebug ("Reducing stack by rule " + (yyrule - 1)
               + " (line " + yylno + "):");
 
-    /* The symbols being reduced.  */
-    for (int yyi = 0; yyi < yynrhs; yyi++)
+    # /* The symbols being reduced.  */
+    for  yyi in range( yynrhs):
       yySymbolPrint("   $" + (yyi + 1) + " =",
                     SymbolKind.get(yystos_[yystack.stateAt(yynrhs - (yyi + 1))]),
                     ]b4_rhs_data(yynrhs, yyi + 1)b4_locations_if([,
                     b4_rhs_location(yynrhs, yyi + 1)])[);
-  }]])[
+  ]])[
 
-  /* YYTRANSLATE_(TOKEN-NUM) -- Symbol number corresponding to TOKEN-NUM
-     as returned by yylex, with out-of-bounds checking.  */
-  private static final SymbolKind yytranslate_(int t)
+  # /* YYTRANSLATE_(TOKEN-NUM) -- Symbol number corresponding to TOKEN-NUM
+  #    as returned by yylex, with out-of-bounds checking.  */
+  def yytranslate_(self, t):
 ]b4_api_token_raw_if(dnl
-[[  {
+[[  
     return SymbolKind.get(t);
-  }
+  
 ]],
-[[  {
-    // Last valid token kind.
-    int code_max = ]b4_code_max[;
-    if (t <= 0)
+[[  
+    # // Last valid token kind.
+    code_max = ]b4_code_max[;
+    if (t <= 0):
       return ]b4_symbol(eof, kind)[;
-    else if (t <= code_max)
+    elif (t <= code_max):
       return SymbolKind.get(yytranslate_table_[t]);
-    else
+    else:
       return ]b4_symbol(undef, kind)[;
-  }
+  # }
   ]b4_integral_parser_table_define([translate_table], [b4_translate])[
 ]])[
 
