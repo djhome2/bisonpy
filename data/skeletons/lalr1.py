@@ -413,7 +413,7 @@ YYGETTOKEN = 9# /* Signify that a new token is expected when doing push-parsing.
 
   # /**
   #  * Print an error message via the lexer.
-  #  *]b4_locations_if([[ Use a <code>null</code> location.]])[
+  #  *]b4_locations_if([[ Use a <code>None</code> location.]])[
   #  * @@param msg The error message.
   #  */
   def yyerror(self, *args):
@@ -509,8 +509,8 @@ YYGETTOKEN = 9# /* Signify that a new token is expected when doing push-parsing.
     def pop(self, num=1):
       # // Avoid memory leaks... garbage collection is a white lie!
       # if (0 < num) {
-      #   java.util.Arrays.fill(valueStack, height - num + 1, height + 1, null);]b4_locations_if([[
-      #   java.util.Arrays.fill(locStack, height - num + 1, height + 1, null);]])[
+      #   java.util.Arrays.fill(valueStack, height - num + 1, height + 1, None);]b4_locations_if([[
+      #   java.util.Arrays.fill(locStack, height - num + 1, height + 1, None);]])[
       # }
       self.height -= num
     
@@ -610,7 +610,7 @@ YYGETTOKEN = 9# /* Signify that a new token is expected when doing push-parsing.
         else:
           sToken = " nterm "
         if(yyvalue == None):
-          s_yyvalue = "(null)"
+          s_yyvalue = "(None)"
         else:
           s_yyvalue = str(yyvalue)
         self.yycdebug(s
@@ -988,7 +988,7 @@ b4_dollar_popdef[]dnl
   #  *          imply that there were no syntax errors.
   #  */
   def parse()]b4_maybe_throws([b4_list2([b4_lex_throws], [b4_throws])])[ :
-      if (yylexer == null)
+      if (yylexer == None)
           throw new NullPointerException("Null Lexer");
       int status;
       do {
@@ -1012,6 +1012,8 @@ b4_dollar_popdef[]dnl
       self.yystack = stack
       self.yytoken = token]b4_locations_if([[
       self.yylocation = loc]])[
+      self.yylacStack = []
+      self.yylacEstablished = False
     # }
 
     # private ]b4_parser_class[ yyparser;
@@ -1040,7 +1042,7 @@ b4_dollar_popdef[]dnl
     # /**
     #  * Put in YYARG at most YYARGN of the expected tokens given the
     #  * current YYCTX, and return the number of tokens stored in YYARG.  If
-    #  * YYARG is null, return the number of expected tokens (guaranteed to
+    #  * YYARG is None, return the number of expected tokens (guaranteed to
     #  * be less than YYNTOKENS).
     #  */
     # def getExpectedTokens(self, yyarg, yyargn):
@@ -1071,7 +1073,7 @@ b4_dollar_popdef[]dnl
           # }
         ]], [[
       yyn = yypact_[this.yystack.stateAt(0)];
-      if (!yyPactValueIsDefault(yyn)):
+      if (not yyPactValueIsDefault(yyn)):
         # {
           # /* Start YYX at -YYN if negative to avoid negative
           #    indexes in YYCHECK.  In other words, skip the first
@@ -1108,69 +1110,83 @@ b4_dollar_popdef[]dnl
     # {
       # // Logically, the yylacStack's lifetime is confined to this function.
       # // Clear it, to get rid of potential left-overs from previous call.
-      self.yylacStack.clear();
+      yylacStack = self.yylacStack
+      yylacStack.clear()
       # // Reduce until we encounter a shift and thereby accept the token.
-      self.yycdebugNnl("LAC: checking lookahead " + yytoken.getName() + ":");
+      ]b4_parser_class[.yycdebugNnl("LAC: checking lookahead " + yytoken.getName() + ":")
       lacTop = 0;
       while (True):
         # {
-        int topState = (yylacStack.isEmpty()
-                        ? yystack.stateAt(lacTop)
-                        : yylacStack.get(yylacStack.size() - 1));
-        int yyrule = yypact_[topState];
-        if (yyPactValueIsDefault(yyrule)
-            || (yyrule += yytoken.getCode()) < 0 || YYLAST_ < yyrule
-            || yycheck_[yyrule] != yytoken.getCode())
-          {
-            // Use the default action.
+        if(yylacStack.isEmpty()):
+          topState = yystack.stateAt(lacTop)
+        else:
+          topState = yylacStack.get(yylacStack.size() - 1)
+        # topState = (yylacStack.isEmpty()
+        #                 ? yystack.stateAt(lacTop)
+        #                 : yylacStack.get(yylacStack.size() - 1));
+        yyrule = ]b4_parser_class[.yypact_[topState];
+        check = ]b4_parser_class[.yyPactValueIsDefault(yyrule)
+        if (not check):
+          yyrule += yytoken.getCode()
+          check = yyrule < 0 or YYLAST_ < yyrule or yycheck_[yyrule] != yytoken.getCode()
+        if (check):
+          # {
+            # // Use the default action.
             yyrule = yydefact_[+topState];
-            if (yyrule == 0) {
-              yycdebug(" Err");
+            if (yyrule == 0) :
+              ]b4_parser_class[.yycdebug(" Err");
               return False;
-            }
-          }
-        else
-          {
-            // Use the action from yytable.
+            # }
+          # }
+        else:
+          # {
+            # // Use the action from yytable.
             yyrule = yytable_[yyrule];
-            if (yyTableValueIsError(yyrule)) {
-              yycdebug(" Err");
+            if (]b4_parser_class[.yyTableValueIsError(yyrule)) :
+              ]b4_parser_class[.yycdebug(" Err");
               return False;
-            }
-            if (0 < yyrule) {
-              yycdebug(" S" + yyrule);
+            # }
+            if (0 < yyrule) :
+              ]b4_parser_class[.yycdebug(" S" + yyrule);
               return True;
-            }
+            # }
             yyrule = -yyrule;
-          }
-        // By now we know we have to simulate a reduce.
-        yycdebugNnl(" R" + (yyrule - 1));
-        // Pop the corresponding number of values from the stack.
-        {
-          int yylen = yyr2_[yyrule];
-          // First pop from the LAC stack as many tokens as possible.
-          int lacSize = yylacStack.size();
-          if (yylen < lacSize) {
-            // yylacStack.setSize(lacSize - yylen);
-            for (/* Nothing */; 0 < yylen; yylen -= 1) {
-              yylacStack.remove(yylacStack.size() - 1);
-            }
-            yylen = 0;
-          } else if (lacSize != 0) {
-            yylacStack.clear();
-            yylen -= lacSize;
-          }
-          // Only afterwards look at the main stack.
-          // We simulate popping elements by incrementing lacTop.
-          lacTop += yylen;
-        }
-        // Keep topState in sync with the updated stack.
-        topState = (yylacStack.isEmpty()
-                    ? yystack.stateAt(lacTop)
-                    : yylacStack.get(yylacStack.size() - 1));
-        // Push the resulting state of the reduction.
-        int state = yyLRGotoState(topState, yyr1_[yyrule]);
-        yycdebugNnl(" G" + state);
+          # }
+        # // By now we know we have to simulate a reduce.
+        ]b4_parser_class[.yycdebugNnl(" R" + (yyrule - 1));
+        # // Pop the corresponding number of values from the stack.
+        # {
+        yylen = yyr2_[yyrule];
+        # // First pop from the LAC stack as many tokens as possible.
+        lacSize = yylacStack.size();
+        if (yylen < lacSize) :
+          # // yylacStack.setSize(lacSize - yylen);
+          # for (/* Nothing */; 0 < yylen; yylen -= 1) {
+          #   yylacStack.remove(yylacStack.size() - 1);
+          while(0 < yylen):
+            yylacStack.remove(yylacStack.size() - 1)
+            yylen -= 1
+          # }
+          yylen = 0;
+        elif (lacSize != 0) :
+          yylacStack.clear();
+          yylen -= lacSize;
+        # }
+        # // Only afterwards look at the main stack.
+        # // We simulate popping elements by incrementing lacTop.
+        lacTop += yylen;
+        # }
+        # // Keep topState in sync with the updated stack.
+        if(yylacStack.isEmpty()):
+          topState = yystack.stateAt(lacTop)
+        else:
+          topState = yylacStack.get(yylacStack.size() - 1)
+        # topState = (yylacStack.isEmpty()
+        #             ? yystack.stateAt(lacTop)
+        #             : yylacStack.get(yylacStack.size() - 1));
+        # // Push the resulting state of the reduction.
+        state = ]b4_parser_class[.yyLRGotoState(topState, yyr1_[yyrule]);
+        ]b4_parser_class[.yycdebugNnl(" G" + state);
         yylacStack.add(state);
       # }
     # }
@@ -1178,7 +1194,7 @@ b4_dollar_popdef[]dnl
     # /** Establish the initial context if no initial context currently exists.
     #  * \returns  True iff the token will be eventually shifted.
     #  */
-    def yylacEstablish(YYStack yystack, SymbolKind yytoken) :
+    def yylacEstablish(self, yystack, yytoken) :
       # /* Establish the initial context for the current lookahead if no initial
       #    context is currently established.
 
@@ -1202,85 +1218,85 @@ b4_dollar_popdef[]dnl
       #    follows.  If no initial context is currently established for the
       #    current lookahead, then check if that lookahead can eventually be
       #    shifted if syntactic actions continue from the current context.  */
-      if (yylacEstablished) {
+      if (self.yylacEstablished) :
         return True;
-      } else {
+      else:
         yycdebug("LAC: initial context established for " + yytoken.getName());
-        yylacEstablished = True;
+        self.yylacEstablished = True;
         return yylacCheck(yystack, yytoken);
-      }
-    }
+      # }
+    # }
 
-    /** Discard any previous initial lookahead context because of event.
-     * \param event  the event which caused the lookahead to be discarded.
-     *               Only used for debbuging output.  */
-    void yylacDiscard(String event) {
-     /* Discard any previous initial lookahead context because of Event,
-        which may be a lookahead change or an invalidation of the currently
-        established initial context for the current lookahead.
+    # /** Discard any previous initial lookahead context because of event.
+    #  * \param event  the event which caused the lookahead to be discarded.
+    #  *               Only used for debbuging output.  */
+    def yylacDiscard(self,  event):
+    #  /* Discard any previous initial lookahead context because of Event,
+    #     which may be a lookahead change or an invalidation of the currently
+    #     established initial context for the current lookahead.
 
-        The most common example of a lookahead change is a shift.  An example
-        of both cases is syntax error recovery.  That is, a syntax error
-        occurs when the lookahead is syntactically erroneous for the
-        currently established initial context, so error recovery manipulates
-        the parser stacks to try to find a new initial context in which the
-        current lookahead is syntactically acceptable.  If it fails to find
-        such a context, it discards the lookahead.  */
-      if (yylacEstablished) {
+    #     The most common example of a lookahead change is a shift.  An example
+    #     of both cases is syntax error recovery.  That is, a syntax error
+    #     occurs when the lookahead is syntactically erroneous for the
+    #     currently established initial context, so error recovery manipulates
+    #     the parser stacks to try to find a new initial context in which the
+    #     current lookahead is syntactically acceptable.  If it fails to find
+    #     such a context, it discards the lookahead.  */
+      if (self.yylacEstablished) :
         yycdebug("LAC: initial context discarded due to " + event);
-        yylacEstablished = False;
-      }
-    }
+        self.yylacEstablished = False;
+      # }
+    # }
 
-    /** The stack for LAC.
-     * Logically, the yylacStack's lifetime is confined to the function
-     * yylacCheck. We just store it as a member of this class to hold
-     * on to the memory and to avoid frequent reallocations.
-     */
-    ArrayList<Integer> yylacStack;
-    /**  Whether an initial LAC context was established. */
-    boolean yylacEstablished;
+    # /** The stack for LAC.
+    #  * Logically, the yylacStack's lifetime is confined to the function
+    #  * yylacCheck. We just store it as a member of this class to hold
+    #  * on to the memory and to avoid frequent reallocations.
+    #  */
+    # yylacStack = []
+    # /**  Whether an initial LAC context was established. */
+    # yylacEstablished = False
 ]])[
 
 ]b4_parse_error_bmatch(
 [detailed\|verbose], [[
-  private int yysyntaxErrorArguments(Context yyctx, SymbolKind[] yyarg, int yyargn) {
-    /* There are many possibilities here to consider:
-       - If this state is a consistent state with a default action,
-         then the only way this function was invoked is if the
-         default action is an error action.  In that case, don't
-         check for expected tokens because there are none.
-       - The only way there can be no lookahead present (in tok) is
-         if this state is a consistent state with a default action.
-         Thus, detecting the absence of a lookahead is sufficient to
-         determine that there is no unexpected or expected token to
-         report.  In that case, just report a simple "syntax error".
-       - Don't assume there isn't a lookahead just because this
-         state is a consistent state with a default action.  There
-         might have been a previous inconsistent state, consistent
-         state with a non-default action, or user semantic action
-         that manipulated yychar.  (However, yychar is currently out
-         of scope during semantic actions.)
-       - Of course, the expected token list depends on states to
-         have correct lookahead information, and it depends on the
-         parser not to perform extra reductions after fetching a
-         lookahead from the scanner and before detecting a syntax
-         error.  Thus, state merging (from LALR or IELR) and default
-         reductions corrupt the expected token list.  However, the
-         list is correct for canonical LR with one exception: it
-         will still contain any token that will not be accepted due
-         to an error action in a later state.
-    */
-    int yycount = 0;
-    if (yyctx.getToken() != null)
-      {
-        if (yyarg != null)
-          yyarg[yycount] = yyctx.getToken();
-        yycount += 1;
-        yycount += yyctx.getExpectedTokens(yyarg, 1, yyargn);
-      }
+  def yysyntaxErrorArguments(self,  yyctx,  yyarg,  yyargn) :
+    # /* There are many possibilities here to consider:
+    #    - If this state is a consistent state with a default action,
+    #      then the only way this function was invoked is if the
+    #      default action is an error action.  In that case, don't
+    #      check for expected tokens because there are none.
+    #    - The only way there can be no lookahead present (in tok) is
+    #      if this state is a consistent state with a default action.
+    #      Thus, detecting the absence of a lookahead is sufficient to
+    #      determine that there is no unexpected or expected token to
+    #      report.  In that case, just report a simple "syntax error".
+    #    - Don't assume there isn't a lookahead just because this
+    #      state is a consistent state with a default action.  There
+    #      might have been a previous inconsistent state, consistent
+    #      state with a non-default action, or user semantic action
+    #      that manipulated yychar.  (However, yychar is currently out
+    #      of scope during semantic actions.)
+    #    - Of course, the expected token list depends on states to
+    #      have correct lookahead information, and it depends on the
+    #      parser not to perform extra reductions after fetching a
+    #      lookahead from the scanner and before detecting a syntax
+    #      error.  Thus, state merging (from LALR or IELR) and default
+    #      reductions corrupt the expected token list.  However, the
+    #      list is correct for canonical LR with one exception: it
+    #      will still contain any token that will not be accepted due
+    #      to an error action in a later state.
+    # */
+    yycount = 0;
+    if (yyctx.getToken() != None):
+      # {
+      if (yyarg != None):
+        yyarg[yycount] = yyctx.getToken();
+      yycount += 1;
+      yycount += yyctx.getExpectedTokens(yyarg, 1, yyargn);
+      # }
     return yycount;
-  }
+  # }
 ]])[
 
   /**

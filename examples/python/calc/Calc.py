@@ -598,7 +598,7 @@ class Calc():
 
   # /**
   #  * Print an error message via the lexer.
-  #  * Use a <code>null</code> location.
+  #  * Use a <code>None</code> location.
   #  * @param msg The error message.
   #  */
   def yyerror(self, *args):
@@ -694,8 +694,8 @@ class Calc():
     def pop(self, num=1):
       # // Avoid memory leaks... garbage collection is a white lie!
       # if (0 < num) {
-      #   java.util.Arrays.fill(valueStack, height - num + 1, height + 1, null);
-      #   java.util.Arrays.fill(locStack, height - num + 1, height + 1, null);
+      #   java.util.Arrays.fill(valueStack, height - num + 1, height + 1, None);
+      #   java.util.Arrays.fill(locStack, height - num + 1, height + 1, None);
       # }
       self.height -= num
     
@@ -1007,7 +1007,7 @@ class Calc():
         else:
           sToken = " nterm "
         if(yyvalue == None):
-          s_yyvalue = "(null)"
+          s_yyvalue = "(None)"
         else:
           s_yyvalue = str(yyvalue)
         self.yycdebug(s
@@ -1348,6 +1348,8 @@ class Calc():
       self.yystack = stack
       self.yytoken = token
       self.yylocation = loc
+      self.yylacStack = []
+      self.yylacEstablished = False
     # }
 
     # private Calc yyparser;
@@ -1376,7 +1378,7 @@ class Calc():
     # /**
     #  * Put in YYARG at most YYARGN of the expected tokens given the
     #  * current YYCTX, and return the number of tokens stored in YYARG.  If
-    #  * YYARG is null, return the number of expected tokens (guaranteed to
+    #  * YYARG is None, return the number of expected tokens (guaranteed to
     #  * be less than YYNTOKENS).
     #  */
     # def getExpectedTokens(self, yyarg, yyargn):
@@ -1388,7 +1390,7 @@ class Calc():
       # // Execute LAC once. We don't care if it is successful, we
       # // only do it for the sake of debugging output.
       if (not self.yyparser.yylacEstablished):
-        self.yyparser.yylacCheck(yystack, yytoken)
+        self.yyparser.yylacCheck(self.yystack, self.yytoken)
 
       for yyx in range(YYNTOKENS_):
         # {
@@ -1420,69 +1422,83 @@ class Calc():
     # {
       # // Logically, the yylacStack's lifetime is confined to this function.
       # // Clear it, to get rid of potential left-overs from previous call.
-      Calc.yylacStack.clear();
+      yylacStack = self.yylacStack
+      yylacStack.clear()
       # // Reduce until we encounter a shift and thereby accept the token.
-      yycdebugNnl("LAC: checking lookahead " + yytoken.getName() + ":");
+      Calc.yycdebugNnl("LAC: checking lookahead " + yytoken.getName() + ":")
       lacTop = 0;
       while (True):
         # {
-        int topState = (yylacStack.isEmpty()
-                        ? yystack.stateAt(lacTop)
-                        : yylacStack.get(yylacStack.size() - 1));
-        int yyrule = yypact_[topState];
-        if (yyPactValueIsDefault(yyrule)
-            || (yyrule += yytoken.getCode()) < 0 || YYLAST_ < yyrule
-            || yycheck_[yyrule] != yytoken.getCode())
-          {
-            // Use the default action.
+        if(yylacStack.isEmpty()):
+          topState = yystack.stateAt(lacTop)
+        else:
+          topState = yylacStack.get(yylacStack.size() - 1)
+        # topState = (yylacStack.isEmpty()
+        #                 ? yystack.stateAt(lacTop)
+        #                 : yylacStack.get(yylacStack.size() - 1));
+        yyrule = Calc.yypact_[topState];
+        check = Calc.yyPactValueIsDefault(yyrule)
+        if (not check):
+          yyrule += yytoken.getCode()
+          check = yyrule < 0 or YYLAST_ < yyrule or yycheck_[yyrule] != yytoken.getCode()
+        if (check):
+          # {
+            # // Use the default action.
             yyrule = yydefact_[+topState];
-            if (yyrule == 0) {
-              yycdebug(" Err");
+            if (yyrule == 0) :
+              Calc.yycdebug(" Err");
               return False;
-            }
-          }
-        else
-          {
-            // Use the action from yytable.
+            # }
+          # }
+        else:
+          # {
+            # // Use the action from yytable.
             yyrule = yytable_[yyrule];
-            if (yyTableValueIsError(yyrule)) {
-              yycdebug(" Err");
+            if (Calc.yyTableValueIsError(yyrule)) :
+              Calc.yycdebug(" Err");
               return False;
-            }
-            if (0 < yyrule) {
-              yycdebug(" S" + yyrule);
+            # }
+            if (0 < yyrule) :
+              Calc.yycdebug(" S" + yyrule);
               return True;
-            }
+            # }
             yyrule = -yyrule;
-          }
-        // By now we know we have to simulate a reduce.
-        yycdebugNnl(" R" + (yyrule - 1));
-        // Pop the corresponding number of values from the stack.
-        {
-          int yylen = yyr2_[yyrule];
-          // First pop from the LAC stack as many tokens as possible.
-          int lacSize = yylacStack.size();
-          if (yylen < lacSize) {
-            // yylacStack.setSize(lacSize - yylen);
-            for (/* Nothing */; 0 < yylen; yylen -= 1) {
-              yylacStack.remove(yylacStack.size() - 1);
-            }
-            yylen = 0;
-          } else if (lacSize != 0) {
-            yylacStack.clear();
-            yylen -= lacSize;
-          }
-          // Only afterwards look at the main stack.
-          // We simulate popping elements by incrementing lacTop.
-          lacTop += yylen;
-        }
-        // Keep topState in sync with the updated stack.
-        topState = (yylacStack.isEmpty()
-                    ? yystack.stateAt(lacTop)
-                    : yylacStack.get(yylacStack.size() - 1));
-        // Push the resulting state of the reduction.
-        int state = yyLRGotoState(topState, yyr1_[yyrule]);
-        yycdebugNnl(" G" + state);
+          # }
+        # // By now we know we have to simulate a reduce.
+        Calc.yycdebugNnl(" R" + (yyrule - 1));
+        # // Pop the corresponding number of values from the stack.
+        # {
+        yylen = yyr2_[yyrule];
+        # // First pop from the LAC stack as many tokens as possible.
+        lacSize = yylacStack.size();
+        if (yylen < lacSize) :
+          # // yylacStack.setSize(lacSize - yylen);
+          # for (/* Nothing */; 0 < yylen; yylen -= 1) {
+          #   yylacStack.remove(yylacStack.size() - 1);
+          while(0 < yylen):
+            yylacStack.remove(yylacStack.size() - 1)
+            yylen -= 1
+          # }
+          yylen = 0;
+        elif (lacSize != 0) :
+          yylacStack.clear();
+          yylen -= lacSize;
+        # }
+        # // Only afterwards look at the main stack.
+        # // We simulate popping elements by incrementing lacTop.
+        lacTop += yylen;
+        # }
+        # // Keep topState in sync with the updated stack.
+        if(yylacStack.isEmpty()):
+          topState = yystack.stateAt(lacTop)
+        else:
+          topState = yylacStack.get(yylacStack.size() - 1)
+        # topState = (yylacStack.isEmpty()
+        #             ? yystack.stateAt(lacTop)
+        #             : yylacStack.get(yylacStack.size() - 1));
+        # // Push the resulting state of the reduction.
+        state = Calc.yyLRGotoState(topState, yyr1_[yyrule]);
+        Calc.yycdebugNnl(" G" + state);
         yylacStack.add(state);
       # }
     # }
@@ -1490,7 +1506,7 @@ class Calc():
     # /** Establish the initial context if no initial context currently exists.
     #  * \returns  True iff the token will be eventually shifted.
     #  */
-    def yylacEstablish(YYStack yystack, SymbolKind yytoken) :
+    def yylacEstablish(self, yystack, yytoken) :
       # /* Establish the initial context for the current lookahead if no initial
       #    context is currently established.
 
@@ -1514,44 +1530,44 @@ class Calc():
       #    follows.  If no initial context is currently established for the
       #    current lookahead, then check if that lookahead can eventually be
       #    shifted if syntactic actions continue from the current context.  */
-      if (yylacEstablished) {
+      if (self.yylacEstablished) :
         return True;
-      } else {
+      else:
         yycdebug("LAC: initial context established for " + yytoken.getName());
-        yylacEstablished = True;
+        self.yylacEstablished = True;
         return yylacCheck(yystack, yytoken);
-      }
-    }
+      # }
+    # }
 
-    /** Discard any previous initial lookahead context because of event.
-     * \param event  the event which caused the lookahead to be discarded.
-     *               Only used for debbuging output.  */
-    void yylacDiscard(String event) {
-     /* Discard any previous initial lookahead context because of Event,
-        which may be a lookahead change or an invalidation of the currently
-        established initial context for the current lookahead.
+    # /** Discard any previous initial lookahead context because of event.
+    #  * \param event  the event which caused the lookahead to be discarded.
+    #  *               Only used for debbuging output.  */
+    def yylacDiscard(self,  event):
+    #  /* Discard any previous initial lookahead context because of Event,
+    #     which may be a lookahead change or an invalidation of the currently
+    #     established initial context for the current lookahead.
 
-        The most common example of a lookahead change is a shift.  An example
-        of both cases is syntax error recovery.  That is, a syntax error
-        occurs when the lookahead is syntactically erroneous for the
-        currently established initial context, so error recovery manipulates
-        the parser stacks to try to find a new initial context in which the
-        current lookahead is syntactically acceptable.  If it fails to find
-        such a context, it discards the lookahead.  */
-      if (yylacEstablished) {
+    #     The most common example of a lookahead change is a shift.  An example
+    #     of both cases is syntax error recovery.  That is, a syntax error
+    #     occurs when the lookahead is syntactically erroneous for the
+    #     currently established initial context, so error recovery manipulates
+    #     the parser stacks to try to find a new initial context in which the
+    #     current lookahead is syntactically acceptable.  If it fails to find
+    #     such a context, it discards the lookahead.  */
+      if (self.yylacEstablished) :
         yycdebug("LAC: initial context discarded due to " + event);
-        yylacEstablished = False;
-      }
-    }
+        self.yylacEstablished = False;
+      # }
+    # }
 
-    /** The stack for LAC.
-     * Logically, the yylacStack's lifetime is confined to the function
-     * yylacCheck. We just store it as a member of this class to hold
-     * on to the memory and to avoid frequent reallocations.
-     */
-    ArrayList<Integer> yylacStack;
-    /**  Whether an initial LAC context was established. */
-    boolean yylacEstablished;
+    # /** The stack for LAC.
+    #  * Logically, the yylacStack's lifetime is confined to the function
+    #  * yylacCheck. We just store it as a member of this class to hold
+    #  * on to the memory and to avoid frequent reallocations.
+    #  */
+    # yylacStack = []
+    # /**  Whether an initial LAC context was established. */
+    # yylacEstablished = False
 
 
 
@@ -1849,7 +1865,7 @@ class Calc():
  
   
 
-#"Calc.py":1853
+#"Calc.py":1869
   #
   
 
