@@ -108,24 +108,7 @@ class Position():
 }
 
 %code {
-  import sys
-  def main(args):
-    scanner = CalcLexer(System.in);
-    parser = Calc(scanner);
-    for arg in args:
-      if (arg =="-p")
-        parser.setDebugLevel(1);
-    status = 0;
-    while(true):
-      token = scanner.getToken();
-      lval = scanner.getValue();
-      yyloc = scanner.getLocation();
-      status = parser.push_parse(token, lval, yyloc);
-      if(status != Calc.YYPUSH_MORE):
-        break      
-    if (status != Calc.YYACCEPT)
-      sys.exit(1);
-    return
+  
 
  
   
@@ -199,122 +182,121 @@ exp:
 ;
 
 %%
-class CalcLexer implements Calc.Lexer {
+class CalcLexer (Lexer)  :
 
-  StreamTokenizer st;
-  PositionReader reader;
+  #StreamTokenizer st;
+  #PositionReader reader;
 
-  public CalcLexer(InputStream is) {
-    reader = new PositionReader(new InputStreamReader(is));
-    st = new StreamTokenizer(reader);
-    st.resetSyntax();
-    st.eolIsSignificant(true);
-    st.wordChars('0', '9');
-  }
+  def __init__( self, is):
+    self.reader =  PositionReader( InputStreamReader(is));
+    self.st =  StreamTokenizer(reader);
+    self.st.resetSyntax();
+    self.st.eolIsSignificant(True);
+    self.st.wordChars('0', '9');
+  #}
 
-  Position start = new Position(1, 0);
-  Position end = new Position(1, 0);
+  start =  Position(1, 0);
+  end =  Position(1, 0);
 
-  /**
-   * The location of the last token read.
-   * Implemented with getStartPos and getEndPos in pull parsers.
-   */
-  public Calc.Location getLocation() {
-    return new Calc.Location(new Position(start), new Position(end));
-  }
+  #/**
+  # * The location of the last token read.
+  # * Implemented with getStartPos and getEndPos in pull parsers.
+  # */
+  def  getLocation(self) :
+    return Location( Position(self.start),  Position(self.end));
+  #}
 
-  /**
-   * Build and emit a syntax error message.
-   */
-  public void reportSyntaxError(Calc.Context ctx) {
+  #/**
+  # * Build and emit a syntax error message.
+  # */
+  def  reportSyntaxError(self,  ctx) :
     System.err.print(ctx.getLocation() + ": syntax error");
-    {
-      final int TOKENMAX = 10;
-      Calc.SymbolKind[] arg = new Calc.SymbolKind[TOKENMAX];
-      int n = ctx.getExpectedTokens(arg, TOKENMAX);
-      for (int i = 0; i < n; ++i)
-        System.err.print((i == 0 ? ": expected " : " or ")
-                         + arg[i].getName());
-    }
-    {
-      Calc.SymbolKind lookahead = ctx.getToken();
-      if (lookahead != null)
-        System.err.print(" before " + lookahead.getName());
-    }
+    #{
+    TOKENMAX = 10;
+    arg =  [None] * TOKENMAX
+    n = ctx.getExpectedTokens(arg, TOKENMAX);
+    for  i in range( n):
+      System.err.print((i == 0 ? ": expected " : " or ")
+                        + arg[i].getName());
+  #}
+  #{
+    lookahead = ctx.getToken();
+    if (lookahead != None):
+      System.err.print(" before " + lookahead.getName());
+  #}
     System.err.println("");
-  }
+  #}
 
-  /**
-   * Emit an error referring to the given location in a user-defined way.
-   *
-   * @@param loc The location of the element to which the
-   *                error message is related.
-   * @@param msg The string for the error message.
-   */
-  public void yyerror(Calc.Location loc, String msg) {
-    if (loc == null)
+  #/**
+  # * Emit an error referring to the given location in a user-defined way.
+  # *
+  # * @@param loc The location of the element to which the
+  # *                error message is related.
+  # * @@param msg The string for the error message.
+  # */
+  def  yyerror(self,  loc,  msg):
+    if (loc == None):
       System.err.println(msg);
-    else
+    else:
       System.err.println(loc + ": " + msg);
-  }
+  #}
 
-  Integer yylval;
+  yylval = None;
 
-  /**
-   * The value of the last token read.  Called getLVal in pull parsers.
-   */
-  public Object getValue() {
-    return yylval;
-  }
+  #/**
+  # * The value of the last token read.  Called getLVal in pull parsers.
+  # */
+  def  getValue():
+    return self.yylval;
+  #}
 
-  /**
-   * Fetch the next token.  Called yylex in pull parsers.
-   */
-  public int getToken() throws IOException {
+  #/**
+  # * Fetch the next token.  Called yylex in pull parsers.
+  # */
+  def  getToken():
     start.set(reader.getPosition());
-    int ttype = st.nextToken();
+    ttype = st.nextToken();
     end.set(reader.getPosition());
-    switch (ttype) {
-    case StreamTokenizer.TT_EOF:
+    if (ttype == StreamTokenizer.TT_EOF):
       return YYEOF;
-    case StreamTokenizer.TT_EOL:
+    if (ttype ==  StreamTokenizer.TT_EOL):
       end.line += 1;
       end.column = 0;
       return EOL;
-    case StreamTokenizer.TT_WORD:
+    if (ttype ==  StreamTokenizer.TT_WORD):
       yylval = Integer.parseInt(st.sval);
       end.set(reader.getPreviousPosition());
       return NUM;
-    case ' ': case '\t':
+    if (ttype ==  ' ' or ttype ==  '\t'):
       return getToken();
-    case '!':
+    if (ttype ==  '!'):
       return BANG;
-    case '+':
+    if (ttype ==  '+'):
       return PLUS;
-    case '-':
+    if (ttype ==  '-'):
       return MINUS;
-    case '*':
+    if (ttype ==  '*'):
       return STAR;
-    case '/':
+    if (ttype ==  '/'):
       return SLASH;
-    case '^':
+    if (ttype ==  '^'):
       return CARET;
-    case '(':
+    if (ttype ==  '('):
       return LPAREN;
-    case ')':
+    if (ttype ==  ')'):
       return RPAREN;
-    case '=':
+    if (ttype ==  '='):
       return EQUAL;
-    default:
-      throw new AssertionError("invalid character: " + ttype);
-    }
-  }
-}
+    
+    raise  AssertionError("invalid character: " + ttype);
+    #}
+  #}
+#}
 
-/**
- * A Stream reader that keeps track of the current Position.
- */
-class PositionReader extends BufferedReader {
+#/**
+# * A Stream reader that keeps track of the current Position.
+# */
+class PositionReader ( BufferedReader) {
 
   private Position position = new Position();
   // Position before the latest call to "read", i.e. position
@@ -348,3 +330,28 @@ class PositionReader extends BufferedReader {
     return previousPosition;
   }
 }
+
+
+import sys
+def main(args):
+  scanner = CalcLexer(sys.stdin);
+  parser = Calc(scanner);
+  for arg in args:
+    if (arg =="-p")
+      parser.setDebugLevel(1);
+  status = 0;
+  while(True):
+    token = scanner.getToken();
+    lval = scanner.getValue();
+    yyloc = scanner.getLocation();
+    status = parser.push_parse(token, lval, yyloc);
+    if(status != Calc.YYPUSH_MORE):
+      break      
+  if (status != Calc.YYACCEPT)
+    sys.exit(1);
+  return
+
+if __name__ == "__main__":
+    # execute only if run as a script
+    import sys
+    main(sys.args)
