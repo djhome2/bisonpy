@@ -184,7 +184,7 @@ m4_define([b4_symbol_kind_in],
 # --------------------------
 # Output the definition of this symbol as an enum.
 m4_define([b4_symbol_enum],
-[m4_format([  %-30s %s],
+[m4_format([%-30s %s],
            m4_format([[%s = %s]],
                      b4_symbol([$1], [kind_base]),
                      [$1]),
@@ -195,9 +195,10 @@ m4_define([b4_symbol_enum],
 # ----------------------
 # The definition of the symbol internal numbers as an enum.
 m4_define([b4_declare_symbol_enum],
-[[class SymbolKind(Enum):
-  # {
+[[
 ]b4_symbol_foreach([b4_symbol_enum])[
+class SymbolKind():
+  # {
 
   # private final int yycode_;
 

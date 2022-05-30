@@ -259,85 +259,86 @@ class Location():
 
 
 
-class SymbolKind(Enum):
+
+S_YYEOF = 0                    #"end of file"
+  #
+  
+
+S_YYerror = 1                  #error
+  #
+  
+
+S_YYUNDEF = 2                  #"invalid token"
+  #
+  
+
+S_BANG = 3                     #"!"
+  #
+  
+
+S_PLUS = 4                     #"+"
+  #
+  
+
+S_MINUS = 5                    #"-"
+  #
+  
+
+S_STAR = 6                     #"*"
+  #
+  
+
+S_SLASH = 7                    #"/"
+  #
+  
+
+S_CARET = 8                    #"^"
+  #
+  
+
+S_LPAREN = 9                   #"("
+  #
+  
+
+S_RPAREN = 10                  #")"
+  #
+  
+
+S_EQUAL = 11                   #"="
+  #
+  
+
+S_EOL = 12                     #"end of line"
+  #
+  
+
+S_NUM = 13                     #"number"
+  #
+  
+
+S_NEG = 14                     #NEG
+  #
+  
+
+S_YYACCEPT = 15                #$accept
+  #
+  
+
+S_input = 16                   #input
+  #
+  
+
+S_line = 17                    #line
+  #
+  
+
+S_exp = 18                     #exp
+  #
+  
+
+
+class SymbolKind():
   # {
-  S_YYEOF = 0                    #"end of file"
-  #
-  
-
-  S_YYerror = 1                  #error
-  #
-  
-
-  S_YYUNDEF = 2                  #"invalid token"
-  #
-  
-
-  S_BANG = 3                     #"!"
-  #
-  
-
-  S_PLUS = 4                     #"+"
-  #
-  
-
-  S_MINUS = 5                    #"-"
-  #
-  
-
-  S_STAR = 6                     #"*"
-  #
-  
-
-  S_SLASH = 7                    #"/"
-  #
-  
-
-  S_CARET = 8                    #"^"
-  #
-  
-
-  S_LPAREN = 9                   #"("
-  #
-  
-
-  S_RPAREN = 10                  #")"
-  #
-  
-
-  S_EQUAL = 11                   #"="
-  #
-  
-
-  S_EOL = 12                     #"end of line"
-  #
-  
-
-  S_NUM = 13                     #"number"
-  #
-  
-
-  S_NEG = 14                     #NEG
-  #
-  
-
-  S_YYACCEPT = 15                #$accept
-  #
-  
-
-  S_input = 16                   #input
-  #
-  
-
-  S_line = 17                    #line
-  #
-  
-
-  S_exp = 18                     #exp
-  #
-  
-
-
 
   # private final int yycode_;
 
@@ -977,7 +978,7 @@ class Calc():
 
 
 
-#"Calc.py":981
+#"Calc.py":982
   #
   
 
@@ -1848,7 +1849,7 @@ class Calc():
  
   
 
-#"Calc.py":1852
+#"Calc.py":1853
   #
   
 
@@ -2038,4 +2039,4 @@ def main(args):
 if __name__ == "__main__":
     # execute only if run as a script
     import sys
-    main(sys.args)
+    main(sys.argv)
