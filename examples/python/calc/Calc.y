@@ -182,13 +182,56 @@ exp:
 ;
 
 %%
+
+
+#/**
+# * A Stream reader that keeps track of the current Position.
+# */
+class PositionReader ( ) :
+
+  #position =  Position()
+  #// Position before the latest call to "read", i.e. position
+  #// of the last character of the current token.
+  #previousPosition =  Position()
+
+  def __init__( self, reader) :
+    self.reader = reader
+    self.position = Position()
+    self.previousPosition = Position()
+  
+
+  def  read(self):
+    self.previousPosition.set(self.position);
+    res = super.read(1);
+    if (res > -1) :
+      c = int( res);
+      if (c == '\r' or c == '\n'):
+        position.line += 1;
+        position.column = 1;
+      else:
+        position.column += 1;
+      #}
+    #}
+    return res;
+  #}
+
+  def  getPosition(self) :
+    return self.position;
+  
+
+  def  getPreviousPosition(self):
+    return self.previousPosition;
+  #}
+#}
+
+
 class CalcLexer (Lexer)  :
 
   #StreamTokenizer st;
   #PositionReader reader;
 
-  def __init__( self, is):
-    self.reader =  PositionReader( InputStreamReader(is));
+  def __init__( self, is2):
+    self.reader =  PositionReader(is2)
     self.st =  StreamTokenizer(reader);
     self.st.resetSyntax();
     self.st.eolIsSignificant(True);
@@ -210,21 +253,23 @@ class CalcLexer (Lexer)  :
   # * Build and emit a syntax error message.
   # */
   def  reportSyntaxError(self,  ctx) :
-    System.err.print(ctx.getLocation() + ": syntax error");
+    print(ctx.getLocation() + ": syntax error", file = sys.stderr);
     #{
     TOKENMAX = 10;
     arg =  [None] * TOKENMAX
     n = ctx.getExpectedTokens(arg, TOKENMAX);
     for  i in range( n):
-      System.err.print((i == 0 ? ": expected " : " or ")
-                        + arg[i].getName());
+      if(i == 0):
+        print(": expected " + arg[i].getName(), file = sys.stderr)
+      else:
+        print(" or " + arg[i].getName(), file = sys.stderr);
   #}
   #{
     lookahead = ctx.getToken();
     if (lookahead != None):
-      System.err.print(" before " + lookahead.getName());
+      print(" before " + lookahead.getName(), file = sys.stderr);
   #}
-    System.err.println("");
+    println("", file = sys.stderr);
   #}
 
   #/**
@@ -293,51 +338,13 @@ class CalcLexer (Lexer)  :
   #}
 #}
 
-#/**
-# * A Stream reader that keeps track of the current Position.
-# */
-class PositionReader ( BufferedReader) {
-
-  private Position position = new Position();
-  // Position before the latest call to "read", i.e. position
-  // of the last character of the current token.
-  private Position previousPosition = new Position();
-
-  public PositionReader(Reader reader) {
-    super(reader);
-  }
-
-  public int read() throws IOException {
-    previousPosition.set(position);
-    int res = super.read();
-    if (res > -1) {
-      char c = (char) res;
-      if (c == '\r' || c == '\n') {
-        position.line += 1;
-        position.column = 1;
-      } else {
-        position.column += 1;
-      }
-    }
-    return res;
-  }
-
-  public Position getPosition() {
-    return position;
-  }
-
-  public Position getPreviousPosition() {
-    return previousPosition;
-  }
-}
-
 
 import sys
 def main(args):
   scanner = CalcLexer(sys.stdin);
   parser = Calc(scanner);
   for arg in args:
-    if (arg =="-p")
+    if (arg =="-p"):
       parser.setDebugLevel(1);
   status = 0;
   while(True):
@@ -347,7 +354,7 @@ def main(args):
     status = parser.push_parse(token, lval, yyloc);
     if(status != Calc.YYPUSH_MORE):
       break      
-  if (status != Calc.YYACCEPT)
+  if (status != Calc.YYACCEPT):
     sys.exit(1);
   return
 
