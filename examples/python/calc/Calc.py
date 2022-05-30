@@ -474,13 +474,13 @@ def yylloc(rhs, n):
 
 # /**
 #  * Returned by a Bison action in order to stop the parsing process and
-#  * return success (<tt>true</tt>).
+#  * return success (<tt>True</tt>).
 #  */
 YYACCEPT = 0
 
 # /**
 #  * Returned by a Bison action in order to stop the parsing process and
-#  * return failure (<tt>false</tt>).
+#  * return failure (<tt>False</tt>).
 #  */
 YYABORT = 1
 
@@ -830,7 +830,7 @@ class Calc():
   
 
   
-      if (yystack.valueAt (2).intValue() != yystack.valueAt (0).intValue())
+      if (yystack.valueAt (2).intValue() != yystack.valueAt (0).intValue()):
         self.yyerror((yyloc), "calc: error: " + yystack.valueAt (2) + " != " + yystack.valueAt (0));
   
   # break;
@@ -1161,7 +1161,7 @@ class Calc():
         yyn = self.yydefact_[self.yystate];
         if (yyn == 0):
           label = self.YYERRLAB;
-        else
+        else:
           label = self.YYREDUCE;
         continue
 
@@ -1406,119 +1406,119 @@ class Calc():
               yycount += 1
           # }
         
-      if (yyarg != null && yycount == yyoffset && yyoffset < yyargn)
-        yyarg[yycount] = null;
-      return yycount - yyoffset;
-    }
+      if (yyarg != None and yycount == yyoffset and yyoffset < yyargn):
+        yyarg[yycount] = None
+      return yycount - yyoffset
+    # }
   # }
 
 
-    /** Check the lookahead yytoken.
-     * \returns  true iff the token will be eventually shifted.
-     */
-    boolean yylacCheck(YYStack yystack, SymbolKind yytoken)
-    {
-      // Logically, the yylacStack's lifetime is confined to this function.
-      // Clear it, to get rid of potential left-overs from previous call.
-      yylacStack.clear();
-      // Reduce until we encounter a shift and thereby accept the token.
+    # /** Check the lookahead yytoken.
+    #  * \returns  True iff the token will be eventually shifted.
+    #  */
+    def yylacCheck(self, yystack, yytoken):
+    # {
+      # // Logically, the yylacStack's lifetime is confined to this function.
+      # // Clear it, to get rid of potential left-overs from previous call.
+      Calc.yylacStack.clear();
+      # // Reduce until we encounter a shift and thereby accept the token.
       yycdebugNnl("LAC: checking lookahead " + yytoken.getName() + ":");
-      int lacTop = 0;
-      while (true)
-        {
-          int topState = (yylacStack.isEmpty()
-                          ? yystack.stateAt(lacTop)
-                          : yylacStack.get(yylacStack.size() - 1));
-          int yyrule = yypact_[topState];
-          if (yyPactValueIsDefault(yyrule)
-              || (yyrule += yytoken.getCode()) < 0 || YYLAST_ < yyrule
-              || yycheck_[yyrule] != yytoken.getCode())
-            {
-              // Use the default action.
-              yyrule = yydefact_[+topState];
-              if (yyrule == 0) {
-                yycdebug(" Err");
-                return false;
-              }
-            }
-          else
-            {
-              // Use the action from yytable.
-              yyrule = yytable_[yyrule];
-              if (yyTableValueIsError(yyrule)) {
-                yycdebug(" Err");
-                return false;
-              }
-              if (0 < yyrule) {
-                yycdebug(" S" + yyrule);
-                return true;
-              }
-              yyrule = -yyrule;
-            }
-          // By now we know we have to simulate a reduce.
-          yycdebugNnl(" R" + (yyrule - 1));
-          // Pop the corresponding number of values from the stack.
+      lacTop = 0;
+      while (True):
+        # {
+        int topState = (yylacStack.isEmpty()
+                        ? yystack.stateAt(lacTop)
+                        : yylacStack.get(yylacStack.size() - 1));
+        int yyrule = yypact_[topState];
+        if (yyPactValueIsDefault(yyrule)
+            || (yyrule += yytoken.getCode()) < 0 || YYLAST_ < yyrule
+            || yycheck_[yyrule] != yytoken.getCode())
           {
-            int yylen = yyr2_[yyrule];
-            // First pop from the LAC stack as many tokens as possible.
-            int lacSize = yylacStack.size();
-            if (yylen < lacSize) {
-              // yylacStack.setSize(lacSize - yylen);
-              for (/* Nothing */; 0 < yylen; yylen -= 1) {
-                yylacStack.remove(yylacStack.size() - 1);
-              }
-              yylen = 0;
-            } else if (lacSize != 0) {
-              yylacStack.clear();
-              yylen -= lacSize;
+            // Use the default action.
+            yyrule = yydefact_[+topState];
+            if (yyrule == 0) {
+              yycdebug(" Err");
+              return False;
             }
-            // Only afterwards look at the main stack.
-            // We simulate popping elements by incrementing lacTop.
-            lacTop += yylen;
           }
-          // Keep topState in sync with the updated stack.
-          topState = (yylacStack.isEmpty()
-                      ? yystack.stateAt(lacTop)
-                      : yylacStack.get(yylacStack.size() - 1));
-          // Push the resulting state of the reduction.
-          int state = yyLRGotoState(topState, yyr1_[yyrule]);
-          yycdebugNnl(" G" + state);
-          yylacStack.add(state);
+        else
+          {
+            // Use the action from yytable.
+            yyrule = yytable_[yyrule];
+            if (yyTableValueIsError(yyrule)) {
+              yycdebug(" Err");
+              return False;
+            }
+            if (0 < yyrule) {
+              yycdebug(" S" + yyrule);
+              return True;
+            }
+            yyrule = -yyrule;
+          }
+        // By now we know we have to simulate a reduce.
+        yycdebugNnl(" R" + (yyrule - 1));
+        // Pop the corresponding number of values from the stack.
+        {
+          int yylen = yyr2_[yyrule];
+          // First pop from the LAC stack as many tokens as possible.
+          int lacSize = yylacStack.size();
+          if (yylen < lacSize) {
+            // yylacStack.setSize(lacSize - yylen);
+            for (/* Nothing */; 0 < yylen; yylen -= 1) {
+              yylacStack.remove(yylacStack.size() - 1);
+            }
+            yylen = 0;
+          } else if (lacSize != 0) {
+            yylacStack.clear();
+            yylen -= lacSize;
+          }
+          // Only afterwards look at the main stack.
+          // We simulate popping elements by incrementing lacTop.
+          lacTop += yylen;
         }
-    }
+        // Keep topState in sync with the updated stack.
+        topState = (yylacStack.isEmpty()
+                    ? yystack.stateAt(lacTop)
+                    : yylacStack.get(yylacStack.size() - 1));
+        // Push the resulting state of the reduction.
+        int state = yyLRGotoState(topState, yyr1_[yyrule]);
+        yycdebugNnl(" G" + state);
+        yylacStack.add(state);
+      # }
+    # }
 
-    /** Establish the initial context if no initial context currently exists.
-     * \returns  true iff the token will be eventually shifted.
-     */
-    boolean yylacEstablish(YYStack yystack, SymbolKind yytoken) {
-      /* Establish the initial context for the current lookahead if no initial
-         context is currently established.
+    # /** Establish the initial context if no initial context currently exists.
+    #  * \returns  True iff the token will be eventually shifted.
+    #  */
+    def yylacEstablish(YYStack yystack, SymbolKind yytoken) :
+      # /* Establish the initial context for the current lookahead if no initial
+      #    context is currently established.
 
-         We define a context as a snapshot of the parser stacks.  We define
-         the initial context for a lookahead as the context in which the
-         parser initially examines that lookahead in order to select a
-         syntactic action.  Thus, if the lookahead eventually proves
-         syntactically unacceptable (possibly in a later context reached via a
-         series of reductions), the initial context can be used to determine
-         the exact set of tokens that would be syntactically acceptable in the
-         lookahead's place.  Moreover, it is the context after which any
-         further semantic actions would be erroneous because they would be
-         determined by a syntactically unacceptable token.
+      #    We define a context as a snapshot of the parser stacks.  We define
+      #    the initial context for a lookahead as the context in which the
+      #    parser initially examines that lookahead in order to select a
+      #    syntactic action.  Thus, if the lookahead eventually proves
+      #    syntactically unacceptable (possibly in a later context reached via a
+      #    series of reductions), the initial context can be used to determine
+      #    the exact set of tokens that would be syntactically acceptable in the
+      #    lookahead's place.  Moreover, it is the context after which any
+      #    further semantic actions would be erroneous because they would be
+      #    determined by a syntactically unacceptable token.
 
-         yylacEstablish should be invoked when a reduction is about to be
-         performed in an inconsistent state (which, for the purposes of LAC,
-         includes consistent states that don't know they're consistent because
-         their default reductions have been disabled).
+      #    yylacEstablish should be invoked when a reduction is about to be
+      #    performed in an inconsistent state (which, for the purposes of LAC,
+      #    includes consistent states that don't know they're consistent because
+      #    their default reductions have been disabled).
 
-         For parse.lac=full, the implementation of yylacEstablish is as
-         follows.  If no initial context is currently established for the
-         current lookahead, then check if that lookahead can eventually be
-         shifted if syntactic actions continue from the current context.  */
+      #    For parse.lac=full, the implementation of yylacEstablish is as
+      #    follows.  If no initial context is currently established for the
+      #    current lookahead, then check if that lookahead can eventually be
+      #    shifted if syntactic actions continue from the current context.  */
       if (yylacEstablished) {
-        return true;
+        return True;
       } else {
         yycdebug("LAC: initial context established for " + yytoken.getName());
-        yylacEstablished = true;
+        yylacEstablished = True;
         return yylacCheck(yystack, yytoken);
       }
     }
@@ -1540,7 +1540,7 @@ class Calc():
         such a context, it discards the lookahead.  */
       if (yylacEstablished) {
         yycdebug("LAC: initial context discarded due to " + event);
-        yylacEstablished = false;
+        yylacEstablished = False;
       }
     }
 

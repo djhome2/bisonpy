@@ -41,7 +41,7 @@ m4_case(b4_percent_define_get([[api.push-pull]]),
         [pull], [m4_define([b4_push_flag], [[0]])],
         [push], [m4_define([b4_pull_flag], [[0]])])
 
-# Define a macro to be true when api.push-pull has the value "both".
+# Define a macro to be True when api.push-pull has the value "both".
 m4_define([b4_both_if],[b4_push_if([b4_pull_if([$1],[$2])],[$2])])
 
 # Handle BISON_USE_PUSH_FOR_PULL for the test suite.  So that push parsing
@@ -258,13 +258,13 @@ def yylloc(rhs, n):
 
 # /**
 #  * Returned by a Bison action in order to stop the parsing process and
-#  * return success (<tt>true</tt>).
+#  * return success (<tt>True</tt>).
 #  */
 YYACCEPT = 0
 
 # /**
 #  * Returned by a Bison action in order to stop the parsing process and
-#  * return failure (<tt>false</tt>).
+#  * return failure (<tt>False</tt>).
 #  */
 YYABORT = 1
 
@@ -306,7 +306,7 @@ YYGETTOKEN = 9# /* Signify that a new token is expected when doing push-parsing.
   # /**
   #  * True if verbose error messages are enabled.
   #  */
-  yyErrorVerbose = true
+  yyErrorVerbose = True
 
   # /**
   #  * Whether verbose error messages are enabled.
@@ -347,7 +347,7 @@ YYGETTOKEN = 9# /* Signify that a new token is expected when doing push-parsing.
   {
 ]b4_percent_code_get([[init]])[]b4_lac_if([[
     this.yylacStack = new ArrayList<Integer>();
-    this.yylacEstablished = false;]])[
+    this.yylacEstablished = False;]])[
     this.yylexer = new YYLexer(]b4_lex_param_call[);
 ]b4_parse_param_cons[
   }
@@ -626,7 +626,7 @@ YYGETTOKEN = 9# /* Signify that a new token is expected when doing push-parsing.
   #  * Parse input from the scanner that was specified at object construction
   #  * time.  Return whether the end of the input was reached successfully.
   #  *
-  #  * @@return <tt>true</tt> if the parsing succeeds.  Note that this does not
+  #  * @@return <tt>True</tt> if the parsing succeeds.  Note that this does not
   #  *          imply that there were no syntax errors.
   #  */
   def parse()]b4_maybe_throws([b4_list2([b4_lex_throws], [b4_throws])])[]])[
@@ -801,7 +801,7 @@ b4_dollar_popdef[]dnl
         yyn = self.yydefact_[self.yystate];
         if (yyn == 0):
           label = self.YYERRLAB;
-        else
+        else:
           label = self.YYREDUCE;
         continue
 
@@ -837,7 +837,7 @@ b4_dollar_popdef[]dnl
               # {
                 # /* Return failure if at end of input.  */
                 if (yychar == Lexer.]b4_symbol(eof, id)[):
-                  ]b4_push_if([label = self.YYABORT; continue;], [return false;])[
+                  ]b4_push_if([label = self.YYABORT; continue;], [return False;])[
               # }
             else:
               yychar = YYEMPTY_;
@@ -886,7 +886,7 @@ b4_dollar_popdef[]dnl
             # /* Pop the current state because it cannot handle the
             #  * error token.  */
             if (self.yystack.height == 0):
-              ]b4_push_if([label = self.YYABORT; break;],[return false;])[
+              ]b4_push_if([label = self.YYABORT; break;],[return False;])[
 
 ]b4_locations_if([[
             yyerrloc = self.yystack.locationAt (0);]])[
@@ -920,12 +920,12 @@ b4_dollar_popdef[]dnl
         # /* Accept.  */
       if(label == self.YYACCEPT):
         ]b4_push_if([self.push_parse_initialized = False; return self.YYACCEPT;],
-                    [return true;])[
+                    [return True;])[
 
         # /* Abort.  */
       if(label == self.YYABORT):
         ]b4_push_if([self.push_parse_initialized = False; return self.YYABORT;],
-                    [return false;])[
+                    [return False;])[
       # }
 # }
 ]b4_push_if([[
@@ -984,7 +984,7 @@ b4_dollar_popdef[]dnl
   #  * time.  Return whether the end of the input was reached successfully.
   #  * This version of parse() is defined only when api.push-push=both.
   #  *
-  #  * @@return <tt>true</tt> if the parsing succeeds.  Note that this does not
+  #  * @@return <tt>True</tt> if the parsing succeeds.  Note that this does not
   #  *          imply that there were no syntax errors.
   #  */
   def parse()]b4_maybe_throws([b4_list2([b4_lex_throws], [b4_throws])])[ :
@@ -1052,7 +1052,7 @@ b4_dollar_popdef[]dnl
       # // Execute LAC once. We don't care if it is successful, we
       # // only do it for the sake of debugging output.
       if (not self.yyparser.yylacEstablished):
-        self.yyparser.yylacCheck(yystack, yytoken)
+        self.yyparser.yylacCheck(self.yystack, self.yytoken)
 ]])[
       for yyx in range(YYNTOKENS_):
         # {
@@ -1070,142 +1070,143 @@ b4_dollar_popdef[]dnl
               yycount += 1
           # }
         ]], [[
-      int yyn = yypact_[this.yystack.stateAt(0)];
-      if (!yyPactValueIsDefault(yyn))
-        {
-          /* Start YYX at -YYN if negative to avoid negative
-             indexes in YYCHECK.  In other words, skip the first
-             -YYN actions for this state because they are default
-             actions.  */
+      yyn = yypact_[this.yystack.stateAt(0)];
+      if (!yyPactValueIsDefault(yyn)):
+        # {
+          # /* Start YYX at -YYN if negative to avoid negative
+          #    indexes in YYCHECK.  In other words, skip the first
+          #    -YYN actions for this state because they are default
+          #    actions.  */
           int yyxbegin = yyn < 0 ? -yyn : 0;
           /* Stay within bounds of both yycheck and yytname.  */
           int yychecklim = YYLAST_ - yyn + 1;
           int yyxend = yychecklim < NTOKENS ? yychecklim : NTOKENS;
           for (int yyx = yyxbegin; yyx < yyxend; ++yyx)
             if (yycheck_[yyx + yyn] == yyx && yyx != ]b4_symbol(error, kind)[.getCode()
-                && !yyTableValueIsError(yytable_[yyx + yyn]))
-              {
-                if (yyarg == null)
-                  yycount += 1;
-                else if (yycount == yyargn)
-                  return 0; // FIXME: this is incorrect.
-                else
-                  yyarg[yycount++] = SymbolKind.get(yyx);
-              }
-        }]])[
-      if (yyarg != null && yycount == yyoffset && yyoffset < yyargn)
-        yyarg[yycount] = null;
-      return yycount - yyoffset;
-    }
+                && !yyTableValueIsError(yytable_[yyx + yyn])):
+              # {
+                if (yyarg == None):
+                  yycount += 1
+                elif (yycount == yyargn):
+                  return 0#; // FIXME: this is incorrect.
+                else:
+                  yyarg[yycount] = SymbolKind.get(yyx)
+                  yycount += 1
+              # }
+        ]])[
+      if (yyarg != None and yycount == yyoffset and yyoffset < yyargn):
+        yyarg[yycount] = None
+      return yycount - yyoffset
+    # }
   # }
 
 ]b4_lac_if([[
-    /** Check the lookahead yytoken.
-     * \returns  true iff the token will be eventually shifted.
-     */
-    boolean yylacCheck(YYStack yystack, SymbolKind yytoken)
-    {
-      // Logically, the yylacStack's lifetime is confined to this function.
-      // Clear it, to get rid of potential left-overs from previous call.
-      yylacStack.clear();
-      // Reduce until we encounter a shift and thereby accept the token.
-      yycdebugNnl("LAC: checking lookahead " + yytoken.getName() + ":");
-      int lacTop = 0;
-      while (true)
-        {
-          int topState = (yylacStack.isEmpty()
-                          ? yystack.stateAt(lacTop)
-                          : yylacStack.get(yylacStack.size() - 1));
-          int yyrule = yypact_[topState];
-          if (yyPactValueIsDefault(yyrule)
-              || (yyrule += yytoken.getCode()) < 0 || YYLAST_ < yyrule
-              || yycheck_[yyrule] != yytoken.getCode())
-            {
-              // Use the default action.
-              yyrule = yydefact_[+topState];
-              if (yyrule == 0) {
-                yycdebug(" Err");
-                return false;
-              }
-            }
-          else
-            {
-              // Use the action from yytable.
-              yyrule = yytable_[yyrule];
-              if (yyTableValueIsError(yyrule)) {
-                yycdebug(" Err");
-                return false;
-              }
-              if (0 < yyrule) {
-                yycdebug(" S" + yyrule);
-                return true;
-              }
-              yyrule = -yyrule;
-            }
-          // By now we know we have to simulate a reduce.
-          yycdebugNnl(" R" + (yyrule - 1));
-          // Pop the corresponding number of values from the stack.
+    # /** Check the lookahead yytoken.
+    #  * \returns  True iff the token will be eventually shifted.
+    #  */
+    def yylacCheck(self, yystack, yytoken):
+    # {
+      # // Logically, the yylacStack's lifetime is confined to this function.
+      # // Clear it, to get rid of potential left-overs from previous call.
+      self.yylacStack.clear();
+      # // Reduce until we encounter a shift and thereby accept the token.
+      self.yycdebugNnl("LAC: checking lookahead " + yytoken.getName() + ":");
+      lacTop = 0;
+      while (True):
+        # {
+        int topState = (yylacStack.isEmpty()
+                        ? yystack.stateAt(lacTop)
+                        : yylacStack.get(yylacStack.size() - 1));
+        int yyrule = yypact_[topState];
+        if (yyPactValueIsDefault(yyrule)
+            || (yyrule += yytoken.getCode()) < 0 || YYLAST_ < yyrule
+            || yycheck_[yyrule] != yytoken.getCode())
           {
-            int yylen = yyr2_[yyrule];
-            // First pop from the LAC stack as many tokens as possible.
-            int lacSize = yylacStack.size();
-            if (yylen < lacSize) {
-              // yylacStack.setSize(lacSize - yylen);
-              for (/* Nothing */; 0 < yylen; yylen -= 1) {
-                yylacStack.remove(yylacStack.size() - 1);
-              }
-              yylen = 0;
-            } else if (lacSize != 0) {
-              yylacStack.clear();
-              yylen -= lacSize;
+            // Use the default action.
+            yyrule = yydefact_[+topState];
+            if (yyrule == 0) {
+              yycdebug(" Err");
+              return False;
             }
-            // Only afterwards look at the main stack.
-            // We simulate popping elements by incrementing lacTop.
-            lacTop += yylen;
           }
-          // Keep topState in sync with the updated stack.
-          topState = (yylacStack.isEmpty()
-                      ? yystack.stateAt(lacTop)
-                      : yylacStack.get(yylacStack.size() - 1));
-          // Push the resulting state of the reduction.
-          int state = yyLRGotoState(topState, yyr1_[yyrule]);
-          yycdebugNnl(" G" + state);
-          yylacStack.add(state);
+        else
+          {
+            // Use the action from yytable.
+            yyrule = yytable_[yyrule];
+            if (yyTableValueIsError(yyrule)) {
+              yycdebug(" Err");
+              return False;
+            }
+            if (0 < yyrule) {
+              yycdebug(" S" + yyrule);
+              return True;
+            }
+            yyrule = -yyrule;
+          }
+        // By now we know we have to simulate a reduce.
+        yycdebugNnl(" R" + (yyrule - 1));
+        // Pop the corresponding number of values from the stack.
+        {
+          int yylen = yyr2_[yyrule];
+          // First pop from the LAC stack as many tokens as possible.
+          int lacSize = yylacStack.size();
+          if (yylen < lacSize) {
+            // yylacStack.setSize(lacSize - yylen);
+            for (/* Nothing */; 0 < yylen; yylen -= 1) {
+              yylacStack.remove(yylacStack.size() - 1);
+            }
+            yylen = 0;
+          } else if (lacSize != 0) {
+            yylacStack.clear();
+            yylen -= lacSize;
+          }
+          // Only afterwards look at the main stack.
+          // We simulate popping elements by incrementing lacTop.
+          lacTop += yylen;
         }
-    }
+        // Keep topState in sync with the updated stack.
+        topState = (yylacStack.isEmpty()
+                    ? yystack.stateAt(lacTop)
+                    : yylacStack.get(yylacStack.size() - 1));
+        // Push the resulting state of the reduction.
+        int state = yyLRGotoState(topState, yyr1_[yyrule]);
+        yycdebugNnl(" G" + state);
+        yylacStack.add(state);
+      # }
+    # }
 
-    /** Establish the initial context if no initial context currently exists.
-     * \returns  true iff the token will be eventually shifted.
-     */
-    boolean yylacEstablish(YYStack yystack, SymbolKind yytoken) {
-      /* Establish the initial context for the current lookahead if no initial
-         context is currently established.
+    # /** Establish the initial context if no initial context currently exists.
+    #  * \returns  True iff the token will be eventually shifted.
+    #  */
+    def yylacEstablish(YYStack yystack, SymbolKind yytoken) :
+      # /* Establish the initial context for the current lookahead if no initial
+      #    context is currently established.
 
-         We define a context as a snapshot of the parser stacks.  We define
-         the initial context for a lookahead as the context in which the
-         parser initially examines that lookahead in order to select a
-         syntactic action.  Thus, if the lookahead eventually proves
-         syntactically unacceptable (possibly in a later context reached via a
-         series of reductions), the initial context can be used to determine
-         the exact set of tokens that would be syntactically acceptable in the
-         lookahead's place.  Moreover, it is the context after which any
-         further semantic actions would be erroneous because they would be
-         determined by a syntactically unacceptable token.
+      #    We define a context as a snapshot of the parser stacks.  We define
+      #    the initial context for a lookahead as the context in which the
+      #    parser initially examines that lookahead in order to select a
+      #    syntactic action.  Thus, if the lookahead eventually proves
+      #    syntactically unacceptable (possibly in a later context reached via a
+      #    series of reductions), the initial context can be used to determine
+      #    the exact set of tokens that would be syntactically acceptable in the
+      #    lookahead's place.  Moreover, it is the context after which any
+      #    further semantic actions would be erroneous because they would be
+      #    determined by a syntactically unacceptable token.
 
-         yylacEstablish should be invoked when a reduction is about to be
-         performed in an inconsistent state (which, for the purposes of LAC,
-         includes consistent states that don't know they're consistent because
-         their default reductions have been disabled).
+      #    yylacEstablish should be invoked when a reduction is about to be
+      #    performed in an inconsistent state (which, for the purposes of LAC,
+      #    includes consistent states that don't know they're consistent because
+      #    their default reductions have been disabled).
 
-         For parse.lac=full, the implementation of yylacEstablish is as
-         follows.  If no initial context is currently established for the
-         current lookahead, then check if that lookahead can eventually be
-         shifted if syntactic actions continue from the current context.  */
+      #    For parse.lac=full, the implementation of yylacEstablish is as
+      #    follows.  If no initial context is currently established for the
+      #    current lookahead, then check if that lookahead can eventually be
+      #    shifted if syntactic actions continue from the current context.  */
       if (yylacEstablished) {
-        return true;
+        return True;
       } else {
         yycdebug("LAC: initial context established for " + yytoken.getName());
-        yylacEstablished = true;
+        yylacEstablished = True;
         return yylacCheck(yystack, yytoken);
       }
     }
@@ -1227,7 +1228,7 @@ b4_dollar_popdef[]dnl
         such a context, it discards the lookahead.  */
       if (yylacEstablished) {
         yycdebug("LAC: initial context discarded due to " + event);
-        yylacEstablished = false;
+        yylacEstablished = False;
       }
     }
 
