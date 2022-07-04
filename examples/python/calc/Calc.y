@@ -206,10 +206,10 @@ class PositionReader ( ) :
     if (res > -1) :
       c = int( res);
       if (c == '\r' or c == '\n'):
-        position.line += 1;
-        position.column = 1;
+        self.position.line += 1;
+        self.position.column = 1;
       else:
-        position.column += 1;
+        self.position.column += 1;
       #}
     #}
     return res;

@@ -1782,21 +1782,21 @@ class Calc():
 
 
   # // Report on the debug stream that the rule yyrule is going to be reduced.
-  def yyReducePrint ( yyrule, yystack):
+  def yyReducePrint (self, yyrule, yystack):
   # {
-    if (yydebug == 0):
+    if (self.yydebug == 0):
       return;
 
-    yylno = yyrline_[yyrule];
-    yynrhs = yyr2_[yyrule];
+    yylno = self.yyrline_[yyrule];
+    yynrhs = self.yyr2_[yyrule];
     # /* Print the symbols being reduced, and their result.  */
     self.yycdebug ("Reducing stack by rule " + (yyrule - 1)
               + " (line " + yylno + "):");
 
     # /* The symbols being reduced.  */
     for  yyi in range( yynrhs):
-      yySymbolPrint("   $" + (yyi + 1) + " =",
-                    SymbolKind.get(yystos_[yystack.stateAt(yynrhs - (yyi + 1))]),
+      self.yySymbolPrint("   $" + (yyi + 1) + " =",
+                    SymbolKind.get(self.yystos_[yystack.stateAt(yynrhs - (yyi + 1))]),
                     yystack.valueAt ((yynrhs) - (yyi + 1)),
                     yystack.locationAt ((yynrhs) - (yyi + 1)));
   
@@ -1810,7 +1810,7 @@ class Calc():
     if (t <= 0):
       return SymbolKind.S_YYEOF;
     elif (t <= code_max):
-      return SymbolKind.get(yytranslate_table_[t]);
+      return SymbolKind.get(self.yytranslate_table_[t]);
     else:
       return SymbolKind.S_YYUNDEF;
   # }
@@ -1900,10 +1900,10 @@ class PositionReader ( ) :
     if (res > -1) :
       c = int( res);
       if (c == '\r' or c == '\n'):
-        position.line += 1;
-        position.column = 1;
+        self.position.line += 1;
+        self.position.column = 1;
       else:
-        position.column += 1;
+        self.position.column += 1;
       #}
     #}
     return res;

@@ -1362,21 +1362,21 @@ b4_dollar_popdef[]dnl
 
 
   # // Report on the debug stream that the rule yyrule is going to be reduced.
-  def yyReducePrint ( yyrule, yystack):
+  def yyReducePrint (self, yyrule, yystack):
   # {
-    if (yydebug == 0):
+    if (self.yydebug == 0):
       return;
 
-    yylno = yyrline_[yyrule];
-    yynrhs = yyr2_[yyrule];
+    yylno = self.yyrline_[yyrule];
+    yynrhs = self.yyr2_[yyrule];
     # /* Print the symbols being reduced, and their result.  */
     self.yycdebug ("Reducing stack by rule " + (yyrule - 1)
               + " (line " + yylno + "):");
 
     # /* The symbols being reduced.  */
     for  yyi in range( yynrhs):
-      yySymbolPrint("   $" + (yyi + 1) + " =",
-                    SymbolKind.get(yystos_[yystack.stateAt(yynrhs - (yyi + 1))]),
+      self.yySymbolPrint("   $" + (yyi + 1) + " =",
+                    SymbolKind.get(self.yystos_[yystack.stateAt(yynrhs - (yyi + 1))]),
                     ]b4_rhs_data(yynrhs, yyi + 1)b4_locations_if([,
                     b4_rhs_location(yynrhs, yyi + 1)])[);
   ]])[
@@ -1395,7 +1395,7 @@ b4_dollar_popdef[]dnl
     if (t <= 0):
       return ]b4_symbol(eof, kind)[;
     elif (t <= code_max):
-      return SymbolKind.get(yytranslate_table_[t]);
+      return SymbolKind.get(self.yytranslate_table_[t]);
     else:
       return ]b4_symbol(undef, kind)[;
   # }
