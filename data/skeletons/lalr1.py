@@ -654,7 +654,7 @@ YYGETTOKEN = 9# /* Signify that a new token is expected when doing push-parsing.
     # // previous invocation.
     yylacDiscard("init");]])[
 ]b4_parse_trace_if([[
-    yycdebug ("Starting parse");]])[
+    self.yycdebug ("Starting parse");]])[
     yyerrstatus_ = 0;
     yynerrs = 0;
 
@@ -1128,11 +1128,11 @@ b4_dollar_popdef[]dnl
         check = ]b4_parser_class[.yyPactValueIsDefault(yyrule)
         if (not check):
           yyrule += yytoken.getCode()
-          check = yyrule < 0 or YYLAST_ < yyrule or yycheck_[yyrule] != yytoken.getCode()
+          check = yyrule < 0 or YYLAST_ < yyrule or self.yycheck_[yyrule] != yytoken.getCode()
         if (check):
           # {
             # // Use the default action.
-            yyrule = yydefact_[+topState];
+            yyrule = self.yydefact_[+topState];
             if (yyrule == 0) :
               ]b4_parser_class[.yycdebug(" Err");
               return False;
@@ -1141,7 +1141,7 @@ b4_dollar_popdef[]dnl
         else:
           # {
             # // Use the action from yytable.
-            yyrule = yytable_[yyrule];
+            yyrule = self.yytable_[yyrule];
             if (]b4_parser_class[.yyTableValueIsError(yyrule)) :
               ]b4_parser_class[.yycdebug(" Err");
               return False;
@@ -1156,7 +1156,7 @@ b4_dollar_popdef[]dnl
         ]b4_parser_class[.yycdebugNnl(" R" + (yyrule - 1));
         # // Pop the corresponding number of values from the stack.
         # {
-        yylen = yyr2_[yyrule];
+        yylen = self.yyr2_[yyrule];
         # // First pop from the LAC stack as many tokens as possible.
         lacSize = yylacStack.size();
         if (yylen < lacSize) :
@@ -1185,7 +1185,7 @@ b4_dollar_popdef[]dnl
         #             ? yystack.stateAt(lacTop)
         #             : yylacStack.get(yylacStack.size() - 1));
         # // Push the resulting state of the reduction.
-        state = ]b4_parser_class[.yyLRGotoState(topState, yyr1_[yyrule]);
+        state = ]b4_parser_class[.yyLRGotoState(topState, self.yyr1_[yyrule]);
         ]b4_parser_class[.yycdebugNnl(" G" + state);
         yylacStack.add(state);
       # }
@@ -1221,9 +1221,9 @@ b4_dollar_popdef[]dnl
       if (self.yylacEstablished) :
         return True;
       else:
-        yycdebug("LAC: initial context established for " + yytoken.getName());
+        self.yycdebug("LAC: initial context established for " + yytoken.getName());
         self.yylacEstablished = True;
-        return yylacCheck(yystack, yytoken);
+        return self.yylacCheck(yystack, yytoken);
       # }
     # }
 
@@ -1243,7 +1243,7 @@ b4_dollar_popdef[]dnl
     #     current lookahead is syntactically acceptable.  If it fails to find
     #     such a context, it discards the lookahead.  */
       if (self.yylacEstablished) :
-        yycdebug("LAC: initial context discarded due to " + event);
+        self.yycdebug("LAC: initial context discarded due to " + event);
         self.yylacEstablished = False;
       # }
     # }
@@ -1370,7 +1370,7 @@ b4_dollar_popdef[]dnl
     yylno = yyrline_[yyrule];
     yynrhs = yyr2_[yyrule];
     # /* Print the symbols being reduced, and their result.  */
-    yycdebug ("Reducing stack by rule " + (yyrule - 1)
+    self.yycdebug ("Reducing stack by rule " + (yyrule - 1)
               + " (line " + yylno + "):");
 
     # /* The symbols being reduced.  */

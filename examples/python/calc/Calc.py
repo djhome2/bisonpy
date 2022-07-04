@@ -1457,11 +1457,11 @@ class Calc():
         check = Calc.yyPactValueIsDefault(yyrule)
         if (not check):
           yyrule += yytoken.getCode()
-          check = yyrule < 0 or YYLAST_ < yyrule or yycheck_[yyrule] != yytoken.getCode()
+          check = yyrule < 0 or YYLAST_ < yyrule or self.yycheck_[yyrule] != yytoken.getCode()
         if (check):
           # {
             # // Use the default action.
-            yyrule = yydefact_[+topState];
+            yyrule = self.yydefact_[+topState];
             if (yyrule == 0) :
               Calc.yycdebug(" Err");
               return False;
@@ -1470,7 +1470,7 @@ class Calc():
         else:
           # {
             # // Use the action from yytable.
-            yyrule = yytable_[yyrule];
+            yyrule = self.yytable_[yyrule];
             if (Calc.yyTableValueIsError(yyrule)) :
               Calc.yycdebug(" Err");
               return False;
@@ -1485,7 +1485,7 @@ class Calc():
         Calc.yycdebugNnl(" R" + (yyrule - 1));
         # // Pop the corresponding number of values from the stack.
         # {
-        yylen = yyr2_[yyrule];
+        yylen = self.yyr2_[yyrule];
         # // First pop from the LAC stack as many tokens as possible.
         lacSize = yylacStack.size();
         if (yylen < lacSize) :
@@ -1514,7 +1514,7 @@ class Calc():
         #             ? yystack.stateAt(lacTop)
         #             : yylacStack.get(yylacStack.size() - 1));
         # // Push the resulting state of the reduction.
-        state = Calc.yyLRGotoState(topState, yyr1_[yyrule]);
+        state = Calc.yyLRGotoState(topState, self.yyr1_[yyrule]);
         Calc.yycdebugNnl(" G" + state);
         yylacStack.add(state);
       # }
@@ -1550,9 +1550,9 @@ class Calc():
       if (self.yylacEstablished) :
         return True;
       else:
-        yycdebug("LAC: initial context established for " + yytoken.getName());
+        self.yycdebug("LAC: initial context established for " + yytoken.getName());
         self.yylacEstablished = True;
-        return yylacCheck(yystack, yytoken);
+        return self.yylacCheck(yystack, yytoken);
       # }
     # }
 
@@ -1572,7 +1572,7 @@ class Calc():
     #     current lookahead is syntactically acceptable.  If it fails to find
     #     such a context, it discards the lookahead.  */
       if (self.yylacEstablished) :
-        yycdebug("LAC: initial context discarded due to " + event);
+        self.yycdebug("LAC: initial context discarded due to " + event);
         self.yylacEstablished = False;
       # }
     # }
@@ -1790,7 +1790,7 @@ class Calc():
     yylno = yyrline_[yyrule];
     yynrhs = yyr2_[yyrule];
     # /* Print the symbols being reduced, and their result.  */
-    yycdebug ("Reducing stack by rule " + (yyrule - 1)
+    self.yycdebug ("Reducing stack by rule " + (yyrule - 1)
               + " (line " + yylno + "):");
 
     # /* The symbols being reduced.  */
